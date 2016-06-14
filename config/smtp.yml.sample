@@ -1,0 +1,20 @@
+default: &DEFAULT
+  :address: localhost
+  :port: 1025
+
+jazz: &JAZZ
+  :address: jazz.thefrontiergroup.net.au
+  :port: 25
+
+development:
+  <<: *DEFAULT
+
+test:
+  <<: *DEFAULT
+
+staging:
+  <<: *JAZZ
+
+# Use SendGrid for production
+production:
+  <<: *JAZZ

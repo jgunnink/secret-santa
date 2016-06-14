@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Back online shortly! We're doing some maintenance.</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      body {
+        background-color: #fff;
+        color: #333;
+        text-align: center;
+        font-family: Helvetica, Arial, sans-serif;
+        margin: 0;
+        font-size: 1em;
+      }
+
+      div.dialog {
+        width: 95%;
+        max-width: 31em;
+        margin: 2em auto 0;
+      }
+
+      div.dialog:before {
+        color: #96151b;
+        content: "Back soon!";
+        display: block;
+        font-size: 5em;
+        margin-bottom: 0.08em;
+      }
+
+      div.dialog > div {
+        background-color: #f7f7f7;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top: 4px solid #96151b;
+        line-height: 1.5;
+        margin-bottom: 2em;
+        padding: 5% 10%;
+      }
+
+      div.dialog p {
+        margin-top: 1em;
+        margin-bottom: 0;
+      }
+
+      h1 {
+        font-size: 1.3em;
+        color: #6a0f13;
+        line-height: 1.5em;
+        margin-top: 0;
+      }
+
+      a {
+        color: #333;
+      }
+
+      a.logo {
+        display: inline-block;
+        font-family: Courier, monospace;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      a.logo img {
+        vertical-align: middle;
+      }
+
+      @media (max-width: 568px) {
+        body {
+          font-size: 0.9em;
+        }
+
+        div.dialog {
+          margin-top: 0.5em;
+        }
+
+        div.dialog:before {
+          font-size: 4em;
+        }
+
+        div.dialog > div {
+          padding: 5% 7%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dialog">
+      <div>
+        <h1>Site is currently down for <%= reason ? reason : "maintenance" %> as of <%= Time.now.strftime("%H:%M %Z") %>.</h1>
+        <p>We are making some changes and will be back <%= deadline ? deadline : "shortly" %>, so please try again soon.</p>
+        <p>Thanks for your patience.</p>
+      </div>
+    </div>
+  </body>
+</html>

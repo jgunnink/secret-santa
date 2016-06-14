@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+require 'pathname'
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+
+# This can't be a rake task because the app won't spinup without these files.
+def copy_sample_files
+  system 'for filename in config/*.sample config/**/*.sample; do cp -n "$filename" "${filename/.sample/}"; done'
+end
+
+def run_task(name)
+  puts "== #{name} =="
+  yield
+  puts
+end
+
+Dir.chdir APP_ROOT do
+  run_task("Installing dependencies") do
+    system "gem install bundler --conservative"
+    system "bundle check || bundle install"
+  end
+
+  run_task("Copying sample files") do
+    copy_sample_files
+  end
+
+  run_task("Randomizing secrets") do
+    system "bin/rake setup:randomize_secrets"
+  end
+
+  run_task("Preparing database") do
+    if ENV['RAILS_ENV'] == "test"
+      system "bin/rake db:test:prepare"
+    else
+      system "bin/rake db:setup"
+    end
+  end
+
+  run_task("Removing old logs and tempfiles") do
+    system "rm -f log/*"
+    system "rm -rf tmp/cache"
+  end
+
+  run_task("Restarting application server") do
+    system "mkdir -p tmp"
+    system "touch tmp/restart.txt"
+  end
+end

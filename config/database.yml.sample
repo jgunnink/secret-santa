@@ -1,0 +1,17 @@
+base: &base
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: localhost
+
+development:
+  <<: *base
+  database: santa_development
+  username: develop
+  password: develop
+
+test:
+  <<: *base
+  database: santa_test
+  username: test
+  password: test
