@@ -6,8 +6,6 @@ Rails appliction which handles the secret santa operations for an organiser of a
 
 [JK Gunnink](http://twitter.com/jgunnink)
 
-## Developers
-
 ## Related Projects
 
 The Frontier Group's [Rails Template](https://github.com/thefrontiergroup/rails-template)
