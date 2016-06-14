@@ -1,6 +1,8 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   self.responder = ApplicationResponder
   respond_to :html
 
@@ -15,7 +17,10 @@ class ApplicationController < ActionController::Base
 protected
 
 # Devise Overrides
-
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << [:given_names, :last_name]
+    devise_parameter_sanitizer.for(:account_update) << [:given_names, :last_name]
+  end
   # Override CanCanCan method that expects an Ability object to be returned
   def current_ability
     AbilityLocator.new(current_user).get_ability

@@ -52,7 +52,7 @@ protected
   end
 
   def permitted_attributes
-    [:email, :password, :given_names, :last_name]
+    [:email, :password]
   end
 
 private
