@@ -44,7 +44,9 @@ RSpec.describe Admin::AdminsController do
         let(:params) do
           {
             email: "email@example.com",
-            password: "password"
+            password: "password",
+            given_names: "JK",
+            last_name: "Gunnink"
           }
         end
 
@@ -91,8 +93,10 @@ RSpec.describe Admin::AdminsController do
       context "with valid parameters" do
         let(:params) do
           {
-            email: "jordan@example.com",
-            password: ""
+            email: "jk@example.com",
+            password: "",
+            given_names: "JK",
+            last_name: "Gunnink"
           }
         end
 
@@ -100,7 +104,9 @@ RSpec.describe Admin::AdminsController do
           update_user
 
           target_user.reload
-          expect(target_user.email).to eq("jordan@example.com")
+          expect(target_user.email).to eq("jk@example.com")
+          expect(target_user.given_names).to eq("JK")
+          expect(target_user.last_name).to eq("Gunnink")
           expect(target_user).to be_admin
         end
 
