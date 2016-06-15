@@ -12,6 +12,8 @@ feature 'Admin can create a new User' do
     scenario 'Admin creates user with valid data' do
       fill_in("Email", with: "valid@example.com")
       fill_in("Password", with: "password")
+      fill_in("Given names", with: "John")
+      fill_in("Last name", with: "Smith")
       click_button("Create")
 
       # Current user should be redirected to the index
@@ -32,6 +34,7 @@ feature 'Admin can create a new User' do
       expect(page).to have_content("User could not be created.")
       expect(User.count).to eq(1)
       expect(page).to have_error_message(:email, "can't be blank")
+      expect(page).to have_error_message(:given_names, "can't be blank")
     end
   end
 end

@@ -9,6 +9,7 @@ feature 'A visitor can sign up' do
 
   scenario 'User signs up successfully' do
     fill_in("Email", with: "email@example.com")
+    fill_in("Given name", with: "John")
     fill_in("user_password", with: "password", exact: true)
     fill_in("Password confirmation", with: "password")
 
@@ -26,6 +27,7 @@ feature 'A visitor can sign up' do
     within("form") do
       # Errors show below the inputs, Capybara will show the error as follows
       expect(page).to have_error_message(:email, "can't be blank")
+      expect(page).to have_error_message(:given_names, "can't be blank")
       expect(page).to have_error_message(:password, "can't be blank")
       expect(page).to have_hint_message(:password, "Minimum is #{Rails.configuration.devise.password_length.min} characters")
     end
