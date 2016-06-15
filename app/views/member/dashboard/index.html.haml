@@ -1,2 +1,5 @@
 %main{role: "main"}
-  %h1= current_page_title
+  %h1 Dashboard
+
+  %p You have no secret santa lists yet!
+  %p= link_to "Create a list", new_member_list_path, class: "btn btn-default"

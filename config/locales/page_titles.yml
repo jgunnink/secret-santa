@@ -10,6 +10,11 @@ en:
     dashboard:
       index:
         title: "Member Dashboard"
+    lists:
+      new:
+        title: "Create new list"
+      show:
+        title: "Viewing list #{label}"
 
   admin:
     dashboard:

@@ -1,0 +1,8 @@
+%main{role: "main"}
+  %h1 New List
+
+  = simple_form_for(@list, url: member_lists_path) do |f|
+    = f.input :name, hint: "Name this list, for example: Family Secret Santa"
+    = f.input :user, input_html: {value: current_user.id}
+    = f.submit "Create list", class: "btn btn-default"
+    = link_to "Go back", :back, class: "btn btn-alt"
