@@ -1,10 +1,5 @@
 class Member::ListsController < Member::BaseController
 
-  def index
-    authorize!(:show, :list)
-    @lists = find_users_lists
-  end
-
   def new
     @list = current_user.lists.build
     authorize!(:new, @list)
@@ -52,10 +47,6 @@ private
 
   def find_list
     List.find(params[:id])
-  end
-
-  def find_users_lists
-    Lists.all.where(user_id == current_user.id)
   end
 
 end

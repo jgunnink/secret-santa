@@ -17,20 +17,28 @@ ActiveRecord::Schema.define(version: 20160615120514) do
   enable_extension "plpgsql"
 
   create_table "lists", force: :cascade do |t|
-    t.string  "name",    null: false
-    t.integer "user_id", null: false
+    t.string   "name",       null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_index "lists", ["created_at"], name: "index_lists_on_created_at", using: :btree
   add_index "lists", ["name"], name: "index_lists_on_name", using: :btree
+  add_index "lists", ["updated_at"], name: "index_lists_on_updated_at", using: :btree
   add_index "lists", ["user_id"], name: "index_lists_on_user_id", using: :btree
 
   create_table "santas", force: :cascade do |t|
-    t.string  "email", null: false
-    t.string  "name",  null: false
-    t.integer "list"
+    t.string   "email",      null: false
+    t.string   "name",       null: false
+    t.integer  "list"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_index "santas", ["created_at"], name: "index_santas_on_created_at", using: :btree
   add_index "santas", ["email"], name: "index_santas_on_email", using: :btree
+  add_index "santas", ["updated_at"], name: "index_santas_on_updated_at", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
