@@ -2,32 +2,60 @@ class Member::ListsController < Member::BaseController
 
   def index
     authorize!(:show, :list)
+    @lists = find_users_lists
   end
 
   def new
-    authorize!(:new, :list)
-    @list = List.new
+    @list = current_user.lists.build
+    authorize!(:new, @list)
   end
 
   def create
-    @list = List.new(list_params)
-    authorize!(:create, :list)
+    @list = current_user.lists.build(list_params)
+    authorize!(:create, @list)
     @list.update_attributes(list_params)
 
-    respond_with(@list, location: member_list_path(@list))
+    respond_with(@list, location: member_dashboard_index_path)
+  end
+
+  def edit
+    @list = find_list
+    authorize!(:edit, @list)
+  end
+
+  def update
+    @list = find_list
+    authorize!(:update, @list)
+    @list.update_attributes(list_params)
+
+    respond_with(@list, location: member_dashboard_index_path)
+  end
+
+  def destroy
+    @list = find_list
+    authorize!(:destroy, @list)
+    @list.destroy
+
+    respond_with(@list, location: member_dashboard_index_path, notice: "List was successfully deleted")
+  end
+
+  def show
+    @list = find_list
+    authorize!(:show, @list)
   end
 
 private
 
   def list_params
-    params.permit(:name, :user)
+    params.require(:list).permit(:name)
+  end
+
+  def find_list
+    List.find(params[:id])
+  end
+
+  def find_users_lists
+    Lists.all.where(user_id == current_user.id)
   end
 
 end
-
-
-# redirect_to @scorecard, notice: 'Scorecard was successfully created.'
-# else
-# flash.now[:alert] = "Your scorecard could not be updated."
-# render :new
-# end
