@@ -15,4 +15,8 @@ describe AdminAbility do
     it { should_not be_able_to(:show, :member_dashboard) }
   end
 
+  describe "managing Lists" do
+    it { should be_able_to(:manage, :list) }
+  end
+
 end

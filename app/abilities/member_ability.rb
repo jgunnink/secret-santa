@@ -6,7 +6,7 @@ class MemberAbility < BaseAbility
     cannot :show, :admin_controllers
     cannot :show, :admin_dashboard
     can :show, :member_dashboard
-    can :manage, List
+    can :manage, List, user_id: user.id
   end
 
 end
