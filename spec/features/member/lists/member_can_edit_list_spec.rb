@@ -4,6 +4,7 @@ feature 'Member can edit an existing list' do
 
   let!(:list) { FactoryGirl.create(:list, user_id: user.id) }
   let!(:user) { FactoryGirl.create(:user, :member) }
+
   background do
     sign_in_as(user)
     visit member_dashboard_index_path
