@@ -16,8 +16,18 @@ describe MemberAbility do
   end
 
   describe "managing Users" do
-    it { should be_able_to(:manager, user) }
-    it { should_not be_able_to(:manager, FactoryGirl.create(:user, :member)) }
+    it { should be_able_to(:manage, user) }
+    it { should_not be_able_to(:manage, FactoryGirl.create(:user, :member)) }
+  end
+
+  describe "managing lists" do
+    it { should be_able_to(:manage, List) }
+
+    context "user should not be able to manage other users lists" do
+      let!(:other_user) { FactoryGirl.create(:user, :member) }
+      it {should_not be_able_to(:manage, FactoryGirl.create(:list, user_id: other_user.id)) }
+    end
+
   end
 
 end

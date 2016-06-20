@@ -1,0 +1,6 @@
+= simple_form_for [:member, @list] do |f|
+  = f.input :name, hint: "Name this list, for example: Family Secret Santa"
+
+  .form-actions
+    = f.submit class: "btn btn-default"
+    = link_to "Go back", member_dashboard_index_path, class: "btn btn-alt"
