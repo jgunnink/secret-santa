@@ -11,13 +11,11 @@
         %h2 Your secret santa lists
         %tr
           %th Name
-          %th Santas
           %th.actions Actions
         %tbody
           - @lists.each do |list|
             %tr
               %td= list.name
-              %td= list.santas.count
               %td.actions
                 = link_to "View", member_list_path(list), class: "btn btn-small"
                 = link_to "Edit", edit_member_list_path(list), class: "btn btn-small"
