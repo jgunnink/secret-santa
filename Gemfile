@@ -12,6 +12,7 @@ gem 'devise'
 gem 'cancancan'
 
 # Presentation
+gem 'cocoon'
 gem 'coffee-rails'
 gem 'haml-rails'
 gem 'jquery-rails'

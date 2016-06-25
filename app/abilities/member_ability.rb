@@ -7,6 +7,7 @@ class MemberAbility < BaseAbility
     cannot :show, :admin_dashboard
     can :show, :member_dashboard
     can :manage, List, user_id: user.id
+    can :manage, Santa
   end
 
 end

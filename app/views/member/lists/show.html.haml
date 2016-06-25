@@ -1,2 +1,5 @@
 %main{role: "main"}
   %h1= current_page_title(@list.name)
+
+  %p There are no santas in this list.
+  = link_to "Add some?", new_member_list_santas_path(@list)

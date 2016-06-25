@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625083933) do
+ActiveRecord::Schema.define(version: 20160615120514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,23 +28,16 @@ ActiveRecord::Schema.define(version: 20160625083933) do
   add_index "lists", ["updated_at"], name: "index_lists_on_updated_at", using: :btree
   add_index "lists", ["user_id"], name: "index_lists_on_user_id", using: :btree
 
-  create_table "santa_lists", force: :cascade do |t|
-    t.integer "santas_id", null: false
-    t.integer "lists_id",  null: false
-  end
-
-  add_index "santa_lists", ["lists_id"], name: "index_santa_lists_on_lists_id", using: :btree
-  add_index "santa_lists", ["santas_id"], name: "index_santa_lists_on_santas_id", using: :btree
-
   create_table "santas", force: :cascade do |t|
     t.string   "email",      null: false
     t.string   "name",       null: false
+    t.integer  "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "santas", ["created_at"], name: "index_santas_on_created_at", using: :btree
-  add_index "santas", ["email"], name: "index_santas_on_email", using: :btree
+  add_index "santas", ["list_id"], name: "index_santas_on_list_id", using: :btree
   add_index "santas", ["updated_at"], name: "index_santas_on_updated_at", using: :btree
 
   create_table "users", force: :cascade do |t|
