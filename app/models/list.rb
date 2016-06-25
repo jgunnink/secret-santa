@@ -1,7 +1,7 @@
 class List < ActiveRecord::Base
 
   belongs_to :user, foreign_key: true
-  has_many :santas, dependent: :destroy, foreign_key: "list_id"
+  has_many :santas
 
   validates :name, presence: true
 
