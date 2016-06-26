@@ -6,11 +6,11 @@
   %p= link_to "Create a list", new_member_list_path, class: "btn btn-default"
 
   - if @lists.any?
+    %h3 Your Secret Santa lists
     %table
       %thead
-        %h2 Your secret santa lists
         %tr
-          %th Name
+          %th List Name
           %th.actions Actions
         %tbody
           - @lists.each do |list|

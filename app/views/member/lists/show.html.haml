@@ -1,5 +1,15 @@
 %main{role: "main"}
   %h1= current_page_title(@list.name)
 
-  %p There are no santas in this list.
-  = link_to "Add some?", new_member_list_santa_path(@list)
+  - if @list.santas.any?
+    %table
+      %thead
+        %tr
+          %th Name
+          %th Email
+        %tbody
+          - @list.santas.each do |santa|
+            %tr
+              %td= santa.name
+              %td= santa.email
+  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-default"

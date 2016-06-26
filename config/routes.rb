@@ -17,9 +17,7 @@ Rails.application.routes.draw do
 
   namespace :member do
     resources :dashboard, only: :index
-    resources :lists do
-      resources :santas
-    end
+    resources :lists
   end
 
 end
