@@ -1,4 +1,4 @@
-# Secret Santa
+# Secret Santa ![Build Status](https://travis-ci.org/jgunnink/vigilant-octo-happiness.svg?branch=master)](https://travis-ci.org/jgunnink/vigilant-octo-happiness)
 
 Rails appliction which handles the secret santa operations for an organiser of a secret santa.
 
@@ -17,8 +17,8 @@ The Frontier Group's [Rails Template](https://github.com/thefrontiergroup/rails-
 
 ## Staging Environment Information
 
-TODO: Add staging information. EG: Server name, location on server, where to get auth to access the server, any other special instructions
+TODO: Add staging information.
 
 ## Production Environment Information
 
-TODO: Add production information. EG: Server name, location on server, where to get auth to access the server, any other special instructions
+TODO: Add production information.
