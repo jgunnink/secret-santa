@@ -1,4 +1,4 @@
-# Secret Santa ![Build Status](https://travis-ci.org/jgunnink/vigilant-octo-happiness.svg?branch=master)](https://travis-ci.org/jgunnink/vigilant-octo-happiness)
+# Secret Santa [![Build Status](https://travis-ci.org/jgunnink/vigilant-octo-happiness.svg?branch=master)](https://travis-ci.org/jgunnink/vigilant-octo-happiness)
 
 Rails appliction which handles the secret santa operations for an organiser of a secret santa.
 
