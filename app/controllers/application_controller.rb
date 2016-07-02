@@ -18,8 +18,11 @@ protected
 
 # Devise Overrides
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:given_names, :last_name]
-    devise_parameter_sanitizer.for(:account_update) << [:given_names, :last_name]
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:given_names, :last_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:given_names, :last_name])
+    #
+    # devise_parameter_sanitizer.for(:sign_up) << [:given_names, :last_name]
+    # devise_parameter_sanitizer.for(:account_update) << [:given_names, :last_name]
   end
   # Override CanCanCan method that expects an Ability object to be returned
   def current_ability
