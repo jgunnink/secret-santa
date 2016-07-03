@@ -29,6 +29,27 @@ feature 'member can add santas to a list', :js do
         end
       end
 
+      scenario 'Member adds new list with invalid data' do
+        visit member_dashboard_index_path
+        click_on("Create a list")
+        fill_in("Name", with: "Winter is coming")
+
+        within "#santas" do
+          click_on("Add Santa")
+          fill_in("Name", with: "")
+          fill_in("Email", with: "not an email")
+        end
+
+        click_on("Create")
+
+        expect(page).to have_flash(:alert, "List could not be created. Please address the errors below.")
+        within "#santas" do
+          expect(page).to have_content("can't be blank")
+          expect(page).to have_content("is invalid")
+        end
+        expect(List.count).to be(0)
+      end
+
     end
 
     context 'a list already exists' do
