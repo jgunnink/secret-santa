@@ -54,6 +54,7 @@ end
 
 group :test do
   gem 'selenium-webdriver'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'shoulda-matchers'

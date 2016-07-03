@@ -12,8 +12,3 @@ before_script:
   - bundle exec rake secret
 script:
   - bundle exec rspec spec
-addons:
-  sauce_connect:
-    username: jgunnink
-    access_key:
-      secure: K7SkRSLsomrNmm5VLRq0q4yxde42/LGIFpmY9Fr3lwV+2jO2TBM78NXMR0Cp1+NAlkKRDBuxIYLy+1iKoc27E9SFbKqQUsC05u1rUAPLVNCc+N9S+BueADoXbMOK0N0n1ayAmYLQxE2vXnFFqko1TyH+KqwZo33WPuJKkt2HsJoHfIhmbpje1XOa6vCdMjlJGUmX6AuGqpk/TXQVPqixEwh43QYmT0bbh43r+ZqelGcgfkngxkBF+puwfiDGMYA6xypq1SE1rKw4jt77mzpA7s3dWYa+9cJl0hK5ImyHV3jHmiBB3ivcviid80gkS4ND69IFmzYJjX1NFbPWZ9ejNMi3WczYEVuAexQ+QdtzUyAtV3Sg/Wxa/QqjRENsd0bEPr0d8EX50QQX3AAbGpNLwnO0rxpk+DeSLB21NahoqmSFKL3jrq5GvW5x0O2KWG5mGQbUWTlYfP3jjmOCp6g8H5QK+v9x5sBzXdyJQfgNKzwsLrjP3u9m5eL6f8b5A287C6qVClllUd5PE2+p71bfdz60rbbPNVfP7o2SG+Mq2+tDnuXBNz5eKxAQGlam3ytPzYdppR1k9VR4YT+NbVxGgaON+a/4VsP1DOmNb+EOiyRlecQ/saO0on7V2hPovF/ch8SdAwPtnqG7XwkBXGiIEeecqT4fOsDTTR6VUnFThIk=
