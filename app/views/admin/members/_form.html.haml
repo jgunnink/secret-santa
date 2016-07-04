@@ -1,11 +1,10 @@
-= simple_form_for [:admin, @user], wrapper: "horizontal", html: { class: "form-horizontal"}, url: url do |f|
+= simple_form_for [:admin, @user], html: { class: "form-horizontal"}, url: url do |f|
 
   = f.input :email
   = f.input :given_names
-  = f.input :last_name
   = f.input :password, hint: "Minimum is #{Rails.configuration.devise.password_length.min} characters"
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: "btn btn-primary"
     %span.or or
-    = link_to "Cancel", admin_members_path
+    = link_to "Cancel", admin_members_path, class: "btn btn-default"

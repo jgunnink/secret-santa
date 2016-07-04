@@ -2,7 +2,7 @@
   %h1= current_page_title(@list.name)
 
   - if @list.santas.any?
-    %table
+    %table.table.table-hover
       %thead
         %tr
           %th Name
@@ -12,4 +12,4 @@
             %tr
               %td= santa.name
               %td= santa.email
-  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-default"
+  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"

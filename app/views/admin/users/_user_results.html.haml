@@ -5,23 +5,22 @@
     = s.button :submit, "Search"
 
 - if @users.present?
-  %table
-    %colgroup
-      %col{style: 'width: 80%'}
-      %col{style: 'width: 20%'}
+  %table.table.table-hover
     %thead
       %tr
         %th= sort_link(@ransack_query, :email)
-        %th.actions Actions
+        %th Name
+        %th.text-right Actions
     %tbody
       - @users.each do |user|
         %tr
           %td= user.email
-          %td.actions
+          %td= user.given_names
+          %td.text-right
             - if can?(:edit, user)
-              = link_to "Edit", edit_path_for_user(user), class: "btn btn-small"
+              = link_to "Edit", edit_path_for_user(user), class: "btn btn-small btn-primary"
             - if can?(:destroy, user)
-              = link_to "Delete", delete_path_for_user(user), method: :delete, data: { confirm: "Are you sure you want to delete #{user}?" }, class: "btn btn-small"
+              = link_to "Delete", delete_path_for_user(user), method: :delete, data: { confirm: "Are you sure you want to delete #{user}?" }, class: "btn btn-small btn-danger"
   = paginate @users
 
 - elsif params[:q].present?
