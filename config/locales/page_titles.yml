@@ -14,7 +14,7 @@ en:
       new:
         title: "Create new list"
       show:
-        title: "Viewing %{label} list"
+        title: "Viewing list: %{label}"
       edit:
         title: "Edit %{label} list"
 

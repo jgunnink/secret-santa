@@ -12,6 +12,7 @@ gem 'devise'
 gem 'cancancan'
 
 # Presentation
+gem 'cocoon'
 gem 'coffee-rails'
 gem 'haml-rails'
 gem 'jquery-rails'
@@ -52,6 +53,8 @@ group :development, :test do
 end
 
 group :test do
+  gem 'selenium-webdriver'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'shoulda-matchers'

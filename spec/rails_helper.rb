@@ -7,6 +7,9 @@ require 'simplecov'
 require 'simplecov-rcov'
 require 'capybara-screenshot/rspec'
 require 'database_cleaner'
+require 'capybara/poltergeist'
+
+Capybara.javascript_driver = :poltergeist
 
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails'
@@ -38,7 +41,7 @@ RSpec.configure do |config|
   config.include(AttributesComparisonSupport)
 
   # Controllers
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.extend Controller::AuthenticationSupport, type: :controller
   config.include Controller::ParameterSupport, type: :controller
   config.extend Controller::DescribeAssignsSupport, type: :controller
