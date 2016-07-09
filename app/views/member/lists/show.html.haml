@@ -12,4 +12,9 @@
             %tr
               %td= santa.name
               %td= santa.email
+  - else
+    %p There aren't any Santas in this list yet!
+    = link_to "Add some?", edit_member_list_path(@list), class: "btn btn-small btn-default"
+    or
+
   = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"
