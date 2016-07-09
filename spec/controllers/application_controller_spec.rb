@@ -15,7 +15,7 @@ RSpec.describe ApplicationController do
 
     it 'should display the unauthorized flash message' do
       subject
-      expect(request.flash[:alert]).to include "You are not authorized to perform this action."
+      expect(request.flash[:danger]).to include "You are not authorized to perform this action."
     end
   end
 

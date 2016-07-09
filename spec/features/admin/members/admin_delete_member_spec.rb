@@ -17,7 +17,7 @@ feature 'Admin can delete an existing User' do
 
       # User should be deleted
       expect(target_user.reload).to be_deleted
-      expect(page).to have_flash(:notice, "'something@nothing.com' deleted")
+      expect(page.find('.alert.alert-success')).to have_content("'something@nothing.com' deleted")
     end
   end
 end

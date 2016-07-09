@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'A user can sign in' do
+feature 'A user can sign in', :js do
 
   background do
     visit root_path
@@ -30,13 +30,13 @@ feature 'A user can sign in' do
       user_fills_in_sign_in_form(user)
       submit_form
 
-      expect(page).to have_flash :alert, /Invalid email or password./
+      expect(page.find('.alert.alert-danger')).to have_content("Invalid email or password.")
     end
   end
 
   scenario "User attempts to sign in with invalid credentials" do
     submit_form
-    expect(page).to have_flash :alert, /Invalid email or password./
+    expect(page.find('.alert.alert-danger')).to have_content("Invalid email or password.")
   end
 
 private

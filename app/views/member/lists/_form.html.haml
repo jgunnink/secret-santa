@@ -1,7 +1,6 @@
 = simple_form_for [:member, @list], html: { class: 'form' } do |f|
   .form-group
-    = f.label "Name"
-    = f.input :name, class: "form-control", label: false, hint: "Give this list a name, for example: Family Secret Santa"
+    = f.input :name, class: "form-control", label: "Name", hint: "Give this list a name, for example: Family Secret Santa"
 
   %h2 Santas
   #santas

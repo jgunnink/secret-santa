@@ -31,7 +31,7 @@ class Member::ListsController < Member::BaseController
     authorize!(:destroy, @list)
     @list.destroy
 
-    respond_with(@list, location: member_dashboard_index_path, notice: "List was successfully deleted")
+    respond_with(@list, location: member_dashboard_index_path, success: "List was successfully deleted")
   end
 
   def show

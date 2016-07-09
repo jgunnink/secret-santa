@@ -12,9 +12,9 @@
           %nav
             %ul.site-nav
               = render "layouts/navigation"
-          .container
-            - flash.each do |key, value|
-              .flash-wrapper
-                .alert{class: "alert-#{key}"}= value
+        .container
+          - flash.each do |key, value|
+            .flash-wrapper
+              .alert{class: "alert-#{key}"}= value
 
-            = content_for?(:content) ? yield(:content) : yield
+        = content_for?(:content) ? yield(:content) : yield
