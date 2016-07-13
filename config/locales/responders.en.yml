@@ -8,5 +8,5 @@ en:
         success: '%{resource_name} was successfully updated.'
         danger: '%{resource_name} could not be updated. Please address the errors below.'
       destroy:
-        success: '%{resource_name} was successfully archived.'
-        danger: '%{resource_name} could not be archived.'
+        success: '%{resource_name} was successfully deleted.'
+        danger: '%{resource_name} could not be deleted.'

@@ -6,8 +6,4 @@ shared_examples_for "action requiring authentication" do
     expect(response).to redirect_to(new_user_session_url)
   end
 
-  it 'should display the unauthorized flash message' do
-    expect(request.flash[:danger]).to include("You need to sign in or sign up before continuing.")
-  end
-
 end

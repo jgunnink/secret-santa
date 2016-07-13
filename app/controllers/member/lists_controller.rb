@@ -6,7 +6,7 @@ class Member::ListsController < Member::BaseController
   end
 
   def create
-    @list = current_user.lists.build(list_params)
+    @list = current_user.lists.build(name: params[:list][:name])
     authorize!(:create, @list)
     @list.update_attributes(list_params)
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'A user can sign in', :js do
+feature 'A user can sign in' do
 
   background do
     visit root_path
