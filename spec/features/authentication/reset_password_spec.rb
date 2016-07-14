@@ -20,7 +20,7 @@ feature 'Existing users can reset their passwords' do
     fill_in 'Confirm new password', with: 'password'
     submit_form
 
-    expect(page.find('.alert.alert-success')).to have_content("User was successfully updated.")
+    expect(page).to have_content("Your password was changed successfully. You are now signed in.")
   end
 
   scenario 'User enters an invalid email address' do

@@ -6,8 +6,8 @@ feature 'Admin can delete an existing User' do
     let!(:target_user) { FactoryGirl.create(:user, email: "something@nothing.com") }
 
     before do
-      click_header_option("Dashboard")
-      click_sidemenu_option("Members")
+      click_header_option("Administration")
+      click_on("Members")
     end
 
     scenario 'Admin can delete user' do

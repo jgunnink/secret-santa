@@ -9,9 +9,8 @@
     %header
       .container
         .navigation-wrapper
-          %nav
-            %ul.site-nav
-              = render "layouts/navigation"
+          %ul.site-nav
+            = render "layouts/navigation"
         .container
           - flash.each do |key, value|
             .flash-wrapper

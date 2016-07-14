@@ -7,8 +7,8 @@ feature 'Admin can sort an index of users' do
     let!(:beta_member)  { FactoryGirl.create(:user, :member, email: "beta@example.com") }
 
     before do
-      click_header_option("Dashboard")
-      click_sidemenu_option("Members")
+      click_header_option("Administration")
+      click_on("Members")
     end
 
     scenario do

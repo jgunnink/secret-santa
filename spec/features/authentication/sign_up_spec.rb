@@ -15,7 +15,7 @@ feature 'A visitor can sign up' do
 
     submit_form
 
-    expect(page).to have_flash :notice, /signed up/
+    expect(page).to have_content("Welcome! You have signed up successfully.")
     expect(current_path).to eq(member_dashboard_index_path)
 
     # Signing up should create the user as a member
@@ -27,9 +27,9 @@ feature 'A visitor can sign up' do
     within("form") do
       # Errors show below the inputs, Capybara will show the error as follows
       expect(page).to have_content("can't be blank")
-      expect(page).to have_error_message(:given_names, "can't be blank")
-      expect(page).to have_error_message(:password, "can't be blank")
-      expect(page).to have_hint_message(:password, "Minimum is #{Rails.configuration.devise.password_length.min} characters")
+      expect(page).to have_css(".form-group.string.required.user_given_names.has-error")
+      expect(page).to have_css(".form-group.password.required.user_password.has-error")
+      expect(page).to have_content("Minimum is #{Rails.configuration.devise.password_length.min} characters")
     end
   end
 end

@@ -69,7 +69,7 @@ feature 'member can add santas to a list', :js do
 
         click_on("Update List")
 
-        expect(page.find('.alert.alert-danger')).to have_content("List was successfully updated.")
+        expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
         expect(Santa.first.email).to eq("littlejohnny@example.com")
       end
     end

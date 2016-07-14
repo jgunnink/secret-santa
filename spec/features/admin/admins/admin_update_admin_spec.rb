@@ -6,8 +6,8 @@ feature 'Admin can update an existing User' do
     let!(:target_user) { FactoryGirl.create(:user, :admin, email: "something@nothing.com") }
 
     before do
-      click_header_option("Dashboard")
-      click_sidemenu_option("Admins")
+      click_header_option("Administration")
+      click_on("Admins")
       within_row(target_user.email) do
         click_link("Edit")
       end
@@ -16,7 +16,7 @@ feature 'Admin can update an existing User' do
     scenario 'Admin updates user with valid data' do
       fill_in("Email", with: "valid@example.com")
       fill_in("Given names", with: "John")
-      click_button("Save Changes")
+      click_button("Update User")
 
       # Current user should be redirected to the index
       expect(current_path).to eq(admin_admins_path)
@@ -28,13 +28,13 @@ feature 'Admin can update an existing User' do
     scenario 'Admin updates user with invalid data' do
       fill_in("Email", with: "")
       fill_in("Given names", with: "")
-      click_button("Save Changes")
+      click_button("Update User")
 
       # Ensure user is not updated
       expect(page).to have_content("User could not be updated.")
       expect(target_user.reload.email).to eq("something@nothing.com")
       expect(page).to have_content("can't be blank")
-      expect(page).to have_error_message(:given_names, "can't be blank")
+      expect(page).to have_css(".form-group.string.required.user_given_names.has-error")
     end
   end
 end
