@@ -19,7 +19,7 @@ feature 'Member can delete an existing list' do
       click_on("Delete")
     end
 
-    expect(page).to have_flash(:notice, "List was successfully deleted")
+    expect(page.find('.alert.alert-success')).to have_content("List was successfully deleted")
     expect(page).to_not have_content(list.name)
     expect(page).to have_content("You have no secret santa lists yet!")
   end

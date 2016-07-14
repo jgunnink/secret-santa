@@ -15,9 +15,9 @@ feature 'Member can edit an existing list' do
 
   scenario 'Member updates an existing list with valid data' do
     fill_in("Name", with: "Winter is coming")
-    click_on("Save Changes")
+    click_on("Update List")
 
-    expect(page).to have_flash(:notice, "List was successfully updated.")
+    expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
     within "table" do
       expect(page).to have_content("Winter is coming")
     end
@@ -26,10 +26,10 @@ feature 'Member can edit an existing list' do
 
   scenario 'Member updates list with invalid data' do
     fill_in("Name", with: "")
-    click_on("Save Changes")
+    click_on("Update List")
 
-    expect(page).to have_flash(:alert, "List could not be updated. Please address the errors below.")
-    expect(page).to have_error_message(:name, "can't be blank")
+    expect(page.find('.alert.alert-danger')).to have_content("List could not be updated. Please address the errors below.")
+    expect(page).to have_content("can't be blank")
     click_on("Go back")
     expect(current_path).to eq(member_dashboard_index_path)
   end

@@ -7,8 +7,8 @@ feature 'Admin can sort an index of users' do
 
   before do
     sign_in_as(alpha_admin)
-    click_header_option("Dashboard")
-    click_sidemenu_option("Admins")
+    click_header_option("Administration")
+    click_on("Admins")
   end
 
   scenario do

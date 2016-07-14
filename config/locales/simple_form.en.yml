@@ -1,8 +1,4 @@
 en:
-  helpers:
-    submit:
-      create: "Create"
-      update: "Save Changes"
   simple_form:
     "yes": 'Yes'
     "no": 'No'

@@ -1,4 +1,22 @@
-- if can?(:show, :member_dashboard)
-  = active_link_to "Dashboard", member_dashboard_index_path, wrap_tag: :li
-- if can?(:show, :admin_dashboard)
-  = active_link_to "Administration", admin_dashboard_index_path, wrap_tag: :li
+%nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: root_path} Secret Santa
+    #navbar.navbar-collapse.collapse
+      %ul.nav.navbar-nav
+        - if can?(:show, :member_dashboard)
+          = active_link_to "Dashboard", member_dashboard_index_path, wrap_tag: :li
+        - if can?(:show, :admin_dashboard)
+          = active_link_to "Administration", admin_dashboard_index_path, wrap_tag: :li
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
+          = active_link_to "Sign out", destroy_user_session_path, method: :delete, wrap_tag: :li
+          = active_link_to "My Profile", edit_user_registration_path, wrap_tag: :li
+        - else
+          = active_link_to "Sign in", new_user_session_path, wrap_tag: :li
+          = active_link_to "Sign up", new_user_registration_path, wrap_tag: :li

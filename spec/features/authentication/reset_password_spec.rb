@@ -20,7 +20,7 @@ feature 'Existing users can reset their passwords' do
     fill_in 'Confirm new password', with: 'password'
     submit_form
 
-    expect(page).to have_flash :notice, /password was changed/
+    expect(page).to have_content("Your password was changed successfully. You are now signed in.")
   end
 
   scenario 'User enters an invalid email address' do

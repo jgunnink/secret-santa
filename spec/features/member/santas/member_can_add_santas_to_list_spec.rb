@@ -17,9 +17,9 @@ feature 'member can add santas to a list', :js do
           fill_in("Email", with: "littlejohnny@example.com")
         end
 
-        click_on("Create")
+        click_on("Create List")
 
-        expect(page).to have_flash(:notice, "List was successfully created.")
+        expect(page.find('.alert.alert-success')).to have_content("List was successfully created.")
         expect(List.count).to be(1)
         # the following test is currently commented out because of an issue with cocoon.
         # expect(List.last.santas.count).to be(1)
@@ -40,9 +40,9 @@ feature 'member can add santas to a list', :js do
           fill_in("Email", with: "not an email")
         end
 
-        click_on("Create")
+        click_on("Create List")
 
-        expect(page).to have_flash(:alert, "List could not be created. Please address the errors below.")
+        expect(page.find('.alert.alert-danger')).to have_content("List could not be created. Please address the errors below.")
         within "#santas" do
           expect(page).to have_content("can't be blank")
           expect(page).to have_content("is invalid")
@@ -67,9 +67,9 @@ feature 'member can add santas to a list', :js do
           fill_in("Email", with: "littlejohnny@example.com")
         end
 
-        click_on("Save Changes")
+        click_on("Update List")
 
-        expect(page).to have_flash(:notice, "List was successfully updated.")
+        expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
         expect(Santa.first.email).to eq("littlejohnny@example.com")
       end
     end

@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module TfgTemplate
+module SecretSanta
   class Application < Rails::Application
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
@@ -17,5 +17,7 @@ module TfgTemplate
     config.should_show_easy_login = false
 
     config.time_zone = "Australia/Perth"
+
+    config.responders.flash_keys = [ :success, :danger ]
   end
 end

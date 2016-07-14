@@ -40,11 +40,16 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (6.0.3)
+    autoprefixer-rails (6.3.7)
+      execjs
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
+    bootstrap-sass (3.3.6)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -260,6 +265,9 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
+    turbolinks (5.0.0)
+      turbolinks-source (~> 5)
+    turbolinks-source (5.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -285,6 +293,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   better_errors
+  bootstrap-sass
   bourbon
   byebug
   cancancan
@@ -323,6 +332,7 @@ DEPENDENCIES
   simple_form
   simplecov
   simplecov-rcov
+  turbolinks
   uglifier
   uri_query_merger
   web-console

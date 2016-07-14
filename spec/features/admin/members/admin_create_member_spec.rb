@@ -4,8 +4,8 @@ feature 'Admin can create a new User' do
 
   signed_in_as(:admin) do
     before do
-      click_header_option("Dashboard")
-      click_sidemenu_option("Members")
+      click_header_option("Administration")
+      click_on("Members")
       click_link("Add new member")
     end
 
@@ -13,7 +13,6 @@ feature 'Admin can create a new User' do
       fill_in("Email", with: "valid@example.com")
       fill_in("Password", with: "password")
       fill_in("Given names", with: "John")
-      fill_in("Last name", with: "Smith")
       click_button("Create")
 
       # Current user should be redirected to the index
@@ -33,8 +32,8 @@ feature 'Admin can create a new User' do
       # Ensure no user is created
       expect(page).to have_content("User could not be created.")
       expect(User.count).to eq(1)
-      expect(page).to have_error_message(:email, "can't be blank")
-      expect(page).to have_error_message(:given_names, "can't be blank")
+      expect(page).to have_content("can't be blank")
+      expect(page).to have_css(".form-group.string.required.user_given_names.has-error")
     end
   end
 end

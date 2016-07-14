@@ -6,8 +6,8 @@ feature 'Admin can search for admins by email' do
     let!(:matching_admin) { FactoryGirl.create(:user, :admin) }
 
     before do
-      click_header_option("Dashboard")
-      click_sidemenu_option("Admins")
+      click_header_option("Administration")
+      click_on("Admins")
     end
 
     scenario "Search with matching data" do

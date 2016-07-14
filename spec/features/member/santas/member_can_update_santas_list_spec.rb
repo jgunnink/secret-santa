@@ -19,9 +19,9 @@ feature 'member can update santas on a list', :js do
           fill_in("Email", with: "littlejohnny@example.com")
         end
 
-        click_on("Save Changes")
+        click_on("Update List")
 
-        expect(page).to have_flash(:notice, "List was successfully updated.")
+        expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
         expect(Santa.first.email).to eq("littlejohnny@example.com")
       end
 
@@ -37,9 +37,9 @@ feature 'member can update santas on a list', :js do
           fill_in("Email", with: "not an email")
         end
 
-        click_on("Save Changes")
+        click_on("Update List")
 
-        expect(page).to have_flash(:alert, "List could not be updated. Please address the errors below.")
+        expect(page.find('.alert.alert-danger')).to have_content("List could not be updated. Please address the errors below.")
         within "#santas" do
           expect(page).to have_content("can't be blank")
           expect(page).to have_content("is invalid")

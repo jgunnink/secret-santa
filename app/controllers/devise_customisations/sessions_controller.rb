@@ -5,7 +5,7 @@ class DeviseCustomisations::SessionsController < Devise::SessionsController
 private
 
   def remove_notice
-    flash.clear[:notice]
+    flash.clear[:success]
   end
 
 end

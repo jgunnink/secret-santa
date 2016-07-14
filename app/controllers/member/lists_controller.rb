@@ -6,7 +6,7 @@ class Member::ListsController < Member::BaseController
   end
 
   def create
-    @list = current_user.lists.build(list_params)
+    @list = current_user.lists.build(name: params[:list][:name])
     authorize!(:create, @list)
     @list.update_attributes(list_params)
 
@@ -31,7 +31,7 @@ class Member::ListsController < Member::BaseController
     authorize!(:destroy, @list)
     @list.destroy
 
-    respond_with(@list, location: member_dashboard_index_path, notice: "List was successfully deleted")
+    respond_with(@list, location: member_dashboard_index_path, success: "List was successfully deleted")
   end
 
   def show

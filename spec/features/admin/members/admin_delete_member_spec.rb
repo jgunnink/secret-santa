@@ -6,8 +6,8 @@ feature 'Admin can delete an existing User' do
     let!(:target_user) { FactoryGirl.create(:user, email: "something@nothing.com") }
 
     before do
-      click_header_option("Dashboard")
-      click_sidemenu_option("Members")
+      click_header_option("Administration")
+      click_on("Members")
     end
 
     scenario 'Admin can delete user' do
@@ -17,7 +17,7 @@ feature 'Admin can delete an existing User' do
 
       # User should be deleted
       expect(target_user.reload).to be_deleted
-      expect(page).to have_flash(:notice, "'something@nothing.com' deleted")
+      expect(page.find('.alert.alert-success')).to have_content("'something@nothing.com' deleted")
     end
   end
 end

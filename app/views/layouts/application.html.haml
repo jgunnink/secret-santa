@@ -1,49 +1,24 @@
 !!! 5
 %html
   %head
-    %meta{charset: "utf-8"}
-    %title= page_title
-    = yield(:stylesheets)
-    = csrf_meta_tags
-    = favicon_link_tag "favicon.ico"
-    %meta{name: "viewport", content: "width=device-width,initial-scale=1"}
-
+  %title= page_title
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
   %body
-    = link_to "Skip to main content", "#skip-to-content", class: "visually-hidden"
-    %h1= page_title
-
-    %header{role: "banner"}
+    %header
       .container
-        = link_to root_path, class: "logo", rel: "home" do
-          = image_tag "create-glyph-logo.svg", size: "34x34"
-
         .navigation-wrapper
-          %button.mobile-nav.js-nav-toggle{aria: {label: "Toggle Navigation"}, data: {navigation_toggle_target: "#site-nav", requires_modal: "true"}}
-            %span Menu
+          %ul.site-nav
+            = render "layouts/navigation"
+        .container
+          - flash.each do |key, value|
+            .flash-wrapper
+              -# the following two conditionals override devise
+              - if key == 'notice'
+                - key = 'success'
+              - if key == 'alert'
+                - key = 'danger'
+              .alert{class: "alert-#{key}"}= value
 
-          %nav#site-nav.is-collapsed{role: "navigation"}
-            %h1 Navigation
-
-            %ul.site-nav
-              - if content_for?(:navigation)
-                = yield(:navigation)
-              - else
-                = render "layouts/navigation"
-
-            %ul.session
-              - if current_user
-                %li= link_to "Sign out", destroy_user_session_path, method: :delete
-              - else
-                %li= link_to "Sign in", new_user_session_path
-                %li= link_to "Sign up", new_user_registration_path
-
-    #skip-to-content.container
-      - flash.each do |key, value|
-        .flash-wrapper
-          .flash{class: "flash-#{key}"}= value
-
-      = content_for?(:content) ? yield(:content) : yield
-
-    #js-fade-screen
-    = yield(:javascripts)
-    = javascript_include_tag "easy_sign_in" if Rails.application.config.should_show_easy_login
+        = content_for?(:content) ? yield(:content) : yield

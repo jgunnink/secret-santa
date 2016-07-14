@@ -17,9 +17,9 @@ feature 'a member can remove a santa from a list', :js do
         click_on("Remove Santa")
       end
 
-      click_on("Save Changes")
+      click_on("Update List")
 
-      expect(page).to have_flash(:notice, "List was successfully updated.")
+      expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
       expect(Santa.first).to be_nil
     end
   end
