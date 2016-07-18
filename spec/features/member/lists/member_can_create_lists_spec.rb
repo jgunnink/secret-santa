@@ -9,6 +9,7 @@ feature 'Member can create a new list' do
     scenario 'Member adds new list with valid data' do
       click_on("Create a list")
       fill_in("Name", with: "Winter is coming")
+      fill_in_valid_gift_date
       click_on("Create List")
 
       expect(page.find('.alert.alert-success')).to have_content "List was successfully created."
@@ -21,6 +22,7 @@ feature 'Member can create a new list' do
     scenario 'Member adds new list with invalid data' do
       click_on("Create a list")
       fill_in("Name", with: "")
+      fill_in_invalid_gift_date
       click_on("Create List")
 
       expect(page.find('.alert.alert-danger')).to have_content "List could not be created. Please address the errors below."

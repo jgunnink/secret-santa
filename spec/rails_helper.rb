@@ -50,6 +50,7 @@ RSpec.configure do |config|
   config.include Feature::Support, type: :feature
   config.include Feature::AttributesSupport, type: :feature
   config.include Feature::AuthenticationSupport, type: :feature
+  config.include Feature::DateFillInSupport, type: :feature
   config.include Feature::NavigationSupport, type: :feature
   config.include Feature::TableSupport, type: :feature
   config.include Warden::Test::Helpers

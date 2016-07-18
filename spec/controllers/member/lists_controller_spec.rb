@@ -22,7 +22,8 @@ RSpec.describe Member::ListsController do
       context "with valid parameters" do
         let(:params) do
           {
-            name: "Family Secret Santa"
+            name: "Family Secret Santa",
+            gift_day: Date.tomorrow
           }
         end
 
@@ -37,7 +38,7 @@ RSpec.describe Member::ListsController do
       end
 
       context "with invalid parameters" do
-        let(:params) { {name: nil} }
+        let(:params) { {name: nil, gift_day: Date.yesterday} }
         specify { expect { create_list }.not_to change(List, :count) }
       end
     end
@@ -78,9 +79,9 @@ RSpec.describe Member::ListsController do
     authenticated_as(:user) do
 
       context "with valid parameters" do
-        let(:params) { {name: "JK's List"} }
+        let(:params) { {name: "JK's List", gift_day: Date.tomorrow} }
 
-        it "creates a List object with the given attributes" do
+        it "updates a List object with the given attributes" do
           update_list
 
           target_list.reload
@@ -92,7 +93,7 @@ RSpec.describe Member::ListsController do
       end
 
       context "with invalid parameters" do
-        let(:params) { {name: ""} }
+        let(:params) { {name: "", gift_day: Date.yesterday} }
 
         it "doesn't update the List" do
           update_list

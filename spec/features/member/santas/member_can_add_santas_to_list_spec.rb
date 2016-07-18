@@ -10,6 +10,15 @@ feature 'member can add santas to a list', :js do
         visit member_dashboard_index_path
         click_on("Create a list")
         fill_in("Name", with: "Winter is coming")
+        within "#list_gift_day_1i" do
+          select Date.tomorrow.strftime('%Y')
+        end
+        within "#list_gift_day_2i" do
+          select Date.tomorrow.strftime('%B')
+        end
+        within "#list_gift_day_3i" do
+          select Date.tomorrow.strftime('%d')
+        end
 
         within "#santas" do
           click_on("Add Santa")

@@ -15,6 +15,7 @@ feature 'Member can edit an existing list' do
 
   scenario 'Member updates an existing list with valid data' do
     fill_in("Name", with: "Winter is coming")
+    fill_in_valid_gift_date
     click_on("Update List")
 
     expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
@@ -26,6 +27,7 @@ feature 'Member can edit an existing list' do
 
   scenario 'Member updates list with invalid data' do
     fill_in("Name", with: "")
+    fill_in_invalid_gift_date
     click_on("Update List")
 
     expect(page.find('.alert.alert-danger')).to have_content("List could not be updated. Please address the errors below.")
