@@ -65,6 +65,15 @@ RSpec.describe Member::ListsController do
       end
     end
 
+    context "when the gift day has occurred" do
+      authenticated_as(:user) do
+        scenario "user cannot update list" do
+          list.update_attributes(gift_day: Date.yesterday)
+          should_not be_success
+        end
+      end
+    end
+
     it_behaves_like "action requiring authentication"
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
@@ -100,6 +109,16 @@ RSpec.describe Member::ListsController do
           expect(target_list.reload.name).not_to eq(params[:name])
         end
       end
+
+      context "when the gift day has occurred" do
+        let(:params) { {name: "JK's List"} }
+
+        scenario "user cannot update list" do
+          target_list.update_attributes(gift_day: Date.yesterday)
+          expect(target_list.reload.name).not_to eq(params[:name])
+          should redirect_to(member_dashboard_index_path)
+        end
+      end
     end
 
     authenticated_as(:other_user) do
@@ -121,6 +140,12 @@ RSpec.describe Member::ListsController do
         expect { subject }.to change{List.count}.by(-1)
       end
       it { should redirect_to(member_dashboard_index_path) }
+
+      scenario "when the gift day has occurred" do
+        target_list.update_attributes(gift_day: Date.yesterday)
+        expect { subject }.to_not change{List.count}
+        should redirect_to(member_dashboard_index_path)
+      end
     end
 
     authenticated_as(:other_user) do

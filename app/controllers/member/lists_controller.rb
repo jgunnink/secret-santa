@@ -1,5 +1,7 @@
 class Member::ListsController < Member::BaseController
 
+  before_filter :check_if_gift_day_has_passed, only: [:edit, :update, :destroy]
+
   def new
     @list = current_user.lists.build
     authorize!(:new, @list)
@@ -47,6 +49,14 @@ private
 
   def find_list
     List.find(params[:id])
+  end
+
+  def check_if_gift_day_has_passed
+    @list = find_list
+    if Time.now > @list.gift_day
+      flash[:warning] = "Sorry! As the gift day has passed, you can no longer modify or delete this list!"
+      redirect_to member_dashboard_index_path
+    end
   end
 
 end
