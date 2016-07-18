@@ -42,7 +42,7 @@ class Member::ListsController < Member::BaseController
 private
 
   def list_params
-    params.require(:list).permit(:name, santas_attributes: [:id, :name, :email, :_destroy])
+    params.require(:list).permit(:name, :gift_day, santas_attributes: [:id, :name, :email, :_destroy])
   end
 
   def find_list
