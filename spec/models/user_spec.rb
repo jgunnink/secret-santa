@@ -26,6 +26,15 @@ RSpec.describe User do
     end
   end
 
+  describe "@lists" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:santa_list) { FactoryGirl.create(:list, user_id: user.id) }
+
+    it "deletes associated lists if the user account is deleted" do
+      expect { user.destroy }.to change { List.count }.by(-1)
+    end
+  end
+
   describe '@password' do
     it { should validate_presence_of(:password) }
   end

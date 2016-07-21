@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   validates :password, length: {within: Devise.password_length, allow_blank: true}
   validates :role, presence: true
 
-  has_many :lists
+  has_many :lists, dependent: :destroy
 
   def to_s
     email
