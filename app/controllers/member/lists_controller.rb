@@ -16,12 +16,12 @@ class Member::ListsController < Member::BaseController
   end
 
   def edit
-    @list = find_list
+    find_list
     authorize!(:edit, @list)
   end
 
   def update
-    @list = find_list
+    find_list
     authorize!(:update, @list)
     @list.update_attributes(list_params)
 
@@ -29,7 +29,7 @@ class Member::ListsController < Member::BaseController
   end
 
   def destroy
-    @list = find_list
+    find_list
     authorize!(:destroy, @list)
     @list.destroy
 
@@ -37,7 +37,7 @@ class Member::ListsController < Member::BaseController
   end
 
   def show
-    @list = find_list
+    find_list
     authorize!(:show, @list)
   end
 
@@ -48,11 +48,11 @@ private
   end
 
   def find_list
-    List.find(params[:id])
+    @list = List.find(params[:id])
   end
 
   def check_if_gift_day_has_passed
-    @list = find_list
+    find_list
     if Time.now > @list.gift_day
       flash[:warning] = "Sorry! As the gift day has passed, you can no longer modify or delete this list!"
       redirect_to member_dashboard_index_path

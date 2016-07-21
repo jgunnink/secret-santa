@@ -14,7 +14,7 @@ module Controller
 
         before { sign_in(current_user) }
 
-        instance_eval &block
+        instance_eval(&block)
       end
     end
   end

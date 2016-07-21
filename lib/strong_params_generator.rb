@@ -3,12 +3,12 @@ class StrongParamsGenerator
   attr_reader :klass_or_instance, :user
 
   def initialize(user, klass_or_instance)
-    @user     = user
+    @user = user
     @klass_or_instance = klass_or_instance
   end
 
   def permitted_attributes
-    params_policy_class(klass_or_instance).new(user, klass_or_instance).permitted_attributes
+    params_policy_class.new(user, klass_or_instance).permitted_attributes
   end
 
 private
@@ -24,7 +24,7 @@ private
   end
 
   # EG: UserPolicyParams
-  def params_policy_class(klass_or_instance)
+  def params_policy_class
     "#{resource_as_constant_name}Params".constantize
   end
 

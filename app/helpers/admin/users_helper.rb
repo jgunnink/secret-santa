@@ -1,6 +1,6 @@
 module Admin::UsersHelper
 
-   def edit_path_for_user(user)
+  def edit_path_for_user(user)
     case user.role
     when "admin"
       edit_admin_admin_path(user)

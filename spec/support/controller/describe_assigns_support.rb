@@ -17,7 +17,7 @@ module Controller
           assigns[var_name]
         end
 
-        instance_eval &block
+        instance_eval(&block)
       end
     end
   end
