@@ -11,7 +11,7 @@ class List < ActiveRecord::Base
   validate :gift_day_cannot_be_in_the_past, on: :create
 
   def gift_day_cannot_be_in_the_past
-    if gift_day.present? && gift_day < Date.today
+    if gift_day.present? && gift_day < Time.zone.today
       errors.add(:gift_day, "You can't set the gift day to be in the past")
     end
   end
