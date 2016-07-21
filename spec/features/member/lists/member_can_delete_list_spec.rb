@@ -11,7 +11,7 @@ feature 'Member can delete an existing list' do
   end
 
   scenario "signed in user deletes existing list" do
-    #ensure list exists before attempting to delete.
+    # Ensure list exists before attempting to delete.
     expect(page).to have_content(list.name)
 
     within "table" do

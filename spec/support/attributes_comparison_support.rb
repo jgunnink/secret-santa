@@ -8,7 +8,7 @@ module AttributesComparisonSupport
     # Times are also hard to compare, as they get out by ms
     time_attributes, sanitized_attributes = sanitized_attributes.partition(&time_lambda)
     # Ignore any nested attributes - these should be tested specifically if required.
-    sanitized_attributes.reject! {|key, value| key =~ /_attributes/}
+    sanitized_attributes.reject! {|key| key =~ /_attributes/}
 
     expect(target_object).to have_attributes(Hash[*sanitized_attributes.flatten])
 
@@ -19,23 +19,23 @@ module AttributesComparisonSupport
 private
 
   def expect_files_to_match(target_object, file_attributes)
-    file_attributes.each do |file_attribute_name, value|
+    file_attributes.each do |file_attribute_name|
       expect(target_object.send(file_attribute_name).file).to be_present
     end
   end
 
   def expect_times_to_match(target_object, time_attributes)
-    time_attributes.each do |time_attribute_name, value|
+    time_attributes.each do |time_attribute_name|
       expect(target_object.send(time_attribute_name).to_i).to eq(value.to_i)
     end
   end
 
   def file_lambda
-    lambda {|name, value| value.is_a?(File) || value.is_a?(Rack::Test::UploadedFile) }
+    -> (_name, value) { value.is_a?(File) || value.is_a?(Rack::Test::UploadedFile) }
   end
 
   def time_lambda
-    lambda {|name, value| value.is_a?(DateTime) || value.is_a?(Time) }
+    -> (_name, value) { value.is_a?(DateTime) || value.is_a?(Time) }
   end
 
 end
