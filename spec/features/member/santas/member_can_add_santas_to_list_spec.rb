@@ -10,6 +10,7 @@ feature 'member can add santas to a list', :js do
         visit member_dashboard_index_path
         click_on("Create a list")
         fill_in("Name", with: "Winter is coming")
+        fill_in_valid_gift_date
 
         within "#santas" do
           click_on("Add Santa")

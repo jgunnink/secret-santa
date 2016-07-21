@@ -4,7 +4,7 @@ class TestModel
 end
 
 class TestModelParams
-  def initialize(user, object)
+  def initialize(*)
   end
 
   def permitted_attributes

@@ -8,13 +8,14 @@ feature 'Member can edit an existing list' do
   background do
     sign_in_as(user)
     visit member_dashboard_index_path
-    within "table" do
-      click_on("Edit")
-    end
   end
 
   scenario 'Member updates an existing list with valid data' do
+    within "table" do
+      click_on("Edit")
+    end
     fill_in("Name", with: "Winter is coming")
+    fill_in_valid_gift_date
     click_on("Update List")
 
     expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
@@ -25,13 +26,30 @@ feature 'Member can edit an existing list' do
   end
 
   scenario 'Member updates list with invalid data' do
+    within "table" do
+      click_on("Edit")
+    end
     fill_in("Name", with: "")
+    fill_in_invalid_gift_date
     click_on("Update List")
 
     expect(page.find('.alert.alert-danger')).to have_content("List could not be updated. Please address the errors below.")
     expect(page).to have_content("can't be blank")
     click_on("Go back")
     expect(current_path).to eq(member_dashboard_index_path)
+  end
+
+  context "the gift day has passed" do
+    scenario "user cannot update list" do
+      list.update_attributes(gift_day: Date.yesterday)
+
+      within "table" do
+        click_on("Edit")
+      end
+
+      expect(page.find('.alert.alert-warning')).to have_content("Sorry! As the gift day has passed, you can no longer modify or delete this list!")
+      expect(page).to have_content(list.name)
+    end
   end
 
 end
