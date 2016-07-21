@@ -36,4 +36,13 @@ RSpec.describe List do
     end
   end
 
+  describe "@santas" do
+    let!(:list) { FactoryGirl.create(:list) }
+    let!(:santa) { FactoryGirl.create(:santa, list_id: list.id) }
+
+    it "deletes associated santas if the list is deleted" do
+      expect { list.destroy }.to change { Santa.count }.by(-1)
+    end
+  end
+
 end
