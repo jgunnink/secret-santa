@@ -17,7 +17,9 @@ Rails.application.routes.draw do
 
   namespace :member do
     resources :dashboard, only: :index
-    resources :lists
+    resources :lists do
+      patch :lock_and_assign
+    end
   end
 
 end

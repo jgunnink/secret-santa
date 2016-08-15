@@ -15,6 +15,11 @@ class Member::ListsController < Member::BaseController
     respond_with(@list, location: member_dashboard_index_path)
   end
 
+  def lock_and_assign
+    @list = List.find(params[:list_id])
+    List::ShuffleAndAssignSantas.new(@list).assign
+  end
+
   def edit
     find_list
     authorize!(:edit, @list)
