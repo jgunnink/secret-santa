@@ -22,7 +22,7 @@ class Member::ListsController < Member::BaseController
       #TODO Lock the list preventing further changes
       respond_with(@list, location: member_dashboard_index_path, success: "Recipients set and Santas notified")
     else
-      respond_with(@list, location: member_dashboard_index_path, warning: "Something went wrong, please try again.")
+      respond_with(@list, location: member_dashboard_index_path, danger: "Something went wrong, please try again.")
     end
   end
 
