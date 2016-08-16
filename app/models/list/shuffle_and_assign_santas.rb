@@ -5,9 +5,12 @@ class List::ShuffleAndAssignSantas
     @santas = @list.santas
   end
 
-  def assign
+  def assign_and_email
     @recipient_list = @santas.to_a
     randomise_and_assign(@recipient_list, @recipient_list, [], [])
+    @santas.each do |santa|
+      AssignmentMailer.send_assignment(santa)
+    end
   end
 
 private
@@ -23,7 +26,6 @@ private
     assigned_recipients << recipient
 
     santa.giving_to = recipient.id
-    puts "#{santa.name} is giving to #{recipient.name}"
     santa.save!
 
     randomise_and_assign(available_santas, unassigned_santas, assigned_santas, assigned_recipients)

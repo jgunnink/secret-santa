@@ -1,0 +1,14 @@
+Dear <%= @user.name %>
+
+Your on the list for <%= @list.name %>!
+
+This year, you are buying a gift for <%= @recipient.name %>.
+
+Remember to keep it a secret!
+
+Note: Your organiser, <%= @list.user.given_names %>, has set the day to exchange
+  gifts to be on <%= @list.gift_day.strftime("%A, %B %-d, %Y") %>.
+
+Thanks for participating, and have a great day!
+
+Captain Santa

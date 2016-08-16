@@ -17,7 +17,7 @@ class Member::ListsController < Member::BaseController
 
   def lock_and_assign
     @list = List.find(params[:list_id])
-    List::ShuffleAndAssignSantas.new(@list).assign
+    List::ShuffleAndAssignSantas.new(@list).assign_and_email
   end
 
   def edit
