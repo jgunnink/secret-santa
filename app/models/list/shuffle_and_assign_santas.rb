@@ -9,7 +9,7 @@ class List::ShuffleAndAssignSantas
     @recipient_list = @santas.to_a
     randomise_and_assign(@recipient_list, @recipient_list, [], [])
     @santas.each do |santa|
-      AssignmentMailer.send_assignment(santa)
+      AssignmentMailer.send_assignment(santa).deliver_later
     end
   end
 

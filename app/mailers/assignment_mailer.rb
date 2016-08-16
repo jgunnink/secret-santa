@@ -4,7 +4,7 @@ class AssignmentMailer < ApplicationMailer
     @santa = santa
     @recipient = find_recipient(@santa)
     @list = @santa.list
-    mail(to: @santa.email, subject: "Your Secret Santa for #{@list.name}").deliver_now
+    mail(to: @santa.email, subject: "Your Secret Santa for #{@list.name}")
   end
 
 private

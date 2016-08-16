@@ -17,7 +17,13 @@ class Member::ListsController < Member::BaseController
 
   def lock_and_assign
     @list = List.find(params[:list_id])
-    List::ShuffleAndAssignSantas.new(@list).assign_and_email
+    authorize!(:update, @list)
+    if List::ShuffleAndAssignSantas.new(@list).assign_and_email
+      #TODO Lock the list preventing further changes
+      respond_with(@list, location: member_dashboard_index_path, success: "Recipients set and Santas notified")
+    else
+      respond_with(@list, location: member_dashboard_index_path, warning: "Something went wrong, please try again.")
+    end
   end
 
   def edit
