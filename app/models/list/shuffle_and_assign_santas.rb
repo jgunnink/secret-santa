@@ -2,12 +2,11 @@ class List::ShuffleAndAssignSantas
 
   def initialize(list)
     @list = list
-    @santas = @list.santas
+    @santas = @list.santas.to_a
   end
 
   def assign_and_email
-    @recipient_list = @santas.to_a
-    randomise_and_assign(@recipient_list, @recipient_list, [], [])
+    randomise_and_assign(@santas)
     @santas.each do |santa|
       AssignmentMailer.send_assignment(santa).deliver_later
     end
@@ -15,20 +14,23 @@ class List::ShuffleAndAssignSantas
 
 private
 
-  def randomise_and_assign(available_santas, unassigned_santas, assigned_santas, assigned_recipients)
-    return if unassigned_santas.length == 0
+  def randomise_and_assign(available_santas)
 
-    santa = (available_santas - assigned_santas).sample
-    recipient = (available_santas - assigned_recipients - [santa]).sample
+    list_size = available_santas.size
+    shuffled_list = CircularList::List.new(available_santas.shuffle)
 
-    assigned_santas << santa
-    unassigned_santas = available_santas - assigned_santas
-    assigned_recipients << recipient
+    list_size.times do
+      santa = shuffled_list.fetch_previous
+      recipient = shuffled_list.fetch_next
 
-    santa.giving_to = recipient.id
-    santa.save!
+      santa.giving_to = recipient.id
+      santa.save!
 
-    randomise_and_assign(available_santas, unassigned_santas, assigned_santas, assigned_recipients)
+      shuffled_list.fetch_next
+
+      puts "The current santa is #{santa.name}"
+      puts "The current recipient is #{recipient.name}"
+    end
   end
 
 end
