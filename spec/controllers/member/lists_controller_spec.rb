@@ -159,4 +159,27 @@ RSpec.describe Member::ListsController do
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
 
+  describe 'PATCH lock_and_assign' do
+    subject { patch :lock_and_assign, list_id: target_list.id }
+
+    let(:user) { FactoryGirl.create(:user, :member) }
+    let(:target_list) { FactoryGirl.create(:list, user_id: user.id) }
+    let(:instance) { double }
+
+    authenticated_as(:user) do
+      it "shuffles users and assigns them a recipient" do
+        expect(List::ShuffleAndAssignSantas).to receive(:new).with(anything).and_return(instance)
+        expect(instance).to receive(:assign_and_email)
+
+        subject
+
+        expect(flash[:success]).to be_present
+        should render_template :show
+      end
+    end
+
+    it_behaves_like "action requiring authentication"
+    it_behaves_like "action authorizes roles", [:member, :admin]
+  end
+
 end
