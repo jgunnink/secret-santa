@@ -1,6 +1,6 @@
+# This is the class which handles the organising of santas and recipients
 class List
   class ShuffleAndAssignSantas
-
     def initialize(list)
       @list = list
       @santas = @list.santas.to_a
