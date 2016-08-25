@@ -18,10 +18,16 @@ class Member::ListsController < Member::BaseController
   def lock_and_assign
     @list = List.find(params[:list_id])
     authorize!(:update, @list)
-    List::ShuffleAndAssignSantas.new(@list).assign_and_email
-    #TODO Lock the list preventing further changes
-    flash.now[:success] = "Recipients set and Santas notified"
-    render :show
+    if @list.santas.count > 3
+      List::ShuffleAndAssignSantas.new(@list).assign_and_email
+      flash.now[:success] = "Recipients set and Santas notified"
+      render :show
+      #TODO Lock the list preventing further changes
+    else
+      flash.now[:danger] = "You must have at least three Santas in the list first!"
+      render :show
+    end
+
   end
 
   def edit

@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Member::ListsController do
 
-  describe 'GET new' do
+  describe "GET new" do
     subject { get :new }
 
     authenticated_as(:member) do
@@ -13,7 +13,7 @@ RSpec.describe Member::ListsController do
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
 
-  describe 'POST create' do
+  describe "POST create" do
     subject(:create_list) { post :create, list: params }
     let(:params) { {} }
 
@@ -47,19 +47,58 @@ RSpec.describe Member::ListsController do
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
 
-  describe 'GET edit' do
-    subject { get :edit, id: list.id }
-    let(:user) { FactoryGirl.create(:user, :member) }
+  describe "PATCH lock_and_assign" do
+    subject { patch :lock_and_assign, list_id: list.id }
+    let(:user)       { FactoryGirl.create(:user, :member) }
     let(:other_user) { FactoryGirl.create(:user, :member) }
-    let(:list) { FactoryGirl.create(:list, user_id: user.id) }
+    let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
+    let!(:santas)    { FactoryGirl.create_list(:santa, 5, list_id: list.id)}
+    let(:instance)   { double }
 
-    context 'user can edit their own list' do
+    context "user can lock and assign their own list" do
+      authenticated_as(:user) do
+        it { should be_success }
+
+        it "shuffles and assigns the santas in the list" do
+          expect(List::ShuffleAndAssignSantas).to receive(:new).with(list).and_return(instance)
+          expect(instance).to receive(:assign_and_email)
+          subject
+          expect(flash[:success]).to be_present
+        end
+
+        context "there are less than three santas" do
+          let!(:santas)    { FactoryGirl.create_list(:santa, 2, list_id: list.id)}
+
+          it "won't run, and will display an error" do
+            expect(List::ShuffleAndAssignSantas).to_not receive(:new).with(list)
+            expect(instance).to_not receive(:assign_and_email)
+            subject
+            expect(flash[:danger]).to be_present
+          end
+        end
+      end
+    end
+
+    context "user cannot lock and assign a list they do not own" do
+      authenticated_as(:other_user) do
+        it { should_not be_success }
+      end
+    end
+  end
+
+  describe "GET edit" do
+    subject { get :edit, id: list.id }
+    let(:user)       { FactoryGirl.create(:user, :member) }
+    let(:other_user) { FactoryGirl.create(:user, :member) }
+    let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
+
+    context "user can edit their own list" do
       authenticated_as(:user) do
         it { should be_success }
       end
     end
 
-    context 'user cannot edit a list they do not own' do
+    context "user cannot edit a list they do not own" do
       authenticated_as(:other_user) do
         it { should_not be_success }
       end
@@ -78,7 +117,7 @@ RSpec.describe Member::ListsController do
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
 
-  describe 'POST update' do
+  describe "PATCH update" do
     subject(:update_list) { post :update, id: target_list.id, list: params }
     let(:params) { {} }
     let(:user) { FactoryGirl.create(:user, :member) }
@@ -129,7 +168,7 @@ RSpec.describe Member::ListsController do
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
 
-  describe 'DELETE destroy' do
+  describe "DELETE destroy" do
     subject { delete :destroy, id: target_list.id }
     let!(:target_list) { FactoryGirl.create(:list, user_id: user.id) }
     let(:user) { FactoryGirl.create(:user, :member) }
@@ -159,7 +198,7 @@ RSpec.describe Member::ListsController do
     it_behaves_like "action authorizes roles", [:member, :admin]
   end
 
-  describe 'PATCH lock_and_assign' do
+  describe "PATCH lock_and_assign" do
     subject { patch :lock_and_assign, list_id: target_list.id }
 
     let(:user) { FactoryGirl.create(:user, :member) }
