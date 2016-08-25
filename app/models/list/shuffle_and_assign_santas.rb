@@ -27,9 +27,6 @@ private
       santa.save!
 
       shuffled_list.fetch_next
-
-      puts "The current santa is #{santa.name}"
-      puts "The current recipient is #{recipient.name}"
     end
   end
 
