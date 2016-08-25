@@ -52,7 +52,7 @@ RSpec.describe Member::ListsController do
     let(:user)       { FactoryGirl.create(:user, :member) }
     let(:other_user) { FactoryGirl.create(:user, :member) }
     let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
-    let!(:santas)    { FactoryGirl.create_list(:santa, 5, list_id: list.id)}
+    let!(:santas)    { FactoryGirl.create_list(:santa, 5, list_id: list.id) }
     let(:instance)   { double }
 
     context 'user can lock and assign their own list' do
@@ -67,7 +67,7 @@ RSpec.describe Member::ListsController do
         end
 
         context 'there are less than three santas' do
-          let!(:santas)    { FactoryGirl.create_list(:santa, 2, list_id: list.id)}
+          let!(:santas) { FactoryGirl.create_list(:santa, 2, list_id: list.id) }
 
           it 'will not run, and will display an error' do
             expect(List::ShuffleAndAssignSantas).to_not receive(:new).with(list)
@@ -143,7 +143,7 @@ RSpec.describe Member::ListsController do
       end
 
       context 'with invalid parameters' do
-        let(:params) { {name: '', gift_day: Date.yesterday} }
+        let(:params) { { name: '', gift_day: Date.yesterday } }
 
         it 'does not update the List' do
           update_list
