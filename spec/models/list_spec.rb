@@ -6,6 +6,10 @@ RSpec.describe List do
     it { should validate_presence_of(:name) }
   end
 
+  describe '@santas' do
+    it { should have_many(:santas).inverse_of(:list) }
+  end
+
   describe '@gift_day' do
     it { should validate_presence_of(:gift_day) }
 

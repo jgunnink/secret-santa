@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :santa do
-    name  { FFaker::Lorem.phrase }
+    name  { FFaker::Name.first_name }
     email { FFaker::Internet.email }
     list
   end

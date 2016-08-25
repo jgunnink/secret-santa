@@ -15,6 +15,19 @@ class Member::ListsController < Member::BaseController
     respond_with(@list, location: member_dashboard_index_path)
   end
 
+  def lock_and_assign
+    @list = List.find(params[:list_id])
+    authorize!(:update, @list)
+    if @list.santas.count > 3
+      List::ShuffleAndAssignSantas.new(@list).assign_and_email
+      flash.now[:success] = 'Recipients set and Santas notified'
+      #TODO Lock the list preventing further changes
+    else
+      flash.now[:danger] = 'You must have at least three Santas in the list first!'
+    end
+    render :show
+  end
+
   def edit
     find_list
     authorize!(:edit, @list)
@@ -33,7 +46,7 @@ class Member::ListsController < Member::BaseController
     authorize!(:destroy, @list)
     @list.destroy
 
-    respond_with(@list, location: member_dashboard_index_path, success: "List was successfully deleted")
+    respond_with(@list, location: member_dashboard_index_path, success: 'List was successfully deleted')
   end
 
   def show
@@ -54,7 +67,7 @@ private
   def check_if_gift_day_has_passed
     find_list
     if Time.now > @list.gift_day
-      flash[:warning] = "Sorry! As the gift day has passed, you can no longer modify or delete this list!"
+      flash[:warning] = 'Sorry! As the gift day has passed, you can no longer modify or delete this list!'
       redirect_to member_dashboard_index_path
     end
   end

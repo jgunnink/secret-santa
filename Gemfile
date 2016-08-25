@@ -6,6 +6,7 @@ gem 'rails'
 gem 'paranoia'
 gem 'pg'
 gem 'ransack'
+gem 'circular_list'
 
 # Authentication & Authorization
 gem 'devise'
