@@ -9,6 +9,7 @@
       = f.simple_fields_for :santas do |santa|
         = render "santa_fields", f: santa
     .links
+      %br
       = link_to_add_association "Add Santa", f, :santas, class: "btn btn-small btn-success"
 
   .form-actions

@@ -1,7 +1,7 @@
 class List < ActiveRecord::Base
 
   belongs_to :user
-  has_many :santas, dependent: :destroy
+  has_many :santas, dependent: :destroy, inverse_of: :list
 
   accepts_nested_attributes_for :santas, reject_if: :all_blank, allow_destroy: true
 
