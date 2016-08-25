@@ -22,7 +22,7 @@ RSpec.describe List::ShuffleAndAssignSantas do
     end
 
     scenario 'each santa should recieve an email' do
-      expect{ subject }.to change(ActionMailer::Base.deliveries, :count).by(santas.count)
+      expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(5)
     end
   end
 end
