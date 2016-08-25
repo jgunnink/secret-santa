@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Member can view an existing list' do
+feature "Member can view an existing list" do
 
   let!(:list)  { FactoryGirl.create(:list, user_id: user.id) }
   let!(:user)  { FactoryGirl.create(:user, :member) }

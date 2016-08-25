@@ -1,7 +1,7 @@
 module Capybara
   class Session
     def has_flash?(name, value=nil)
-      has_css?(".flash.flash-#{name}", text: value)
+      has_css?(".alert.alert-#{name}", text: value)
     end
 
     def has_error_message?(field, message)
