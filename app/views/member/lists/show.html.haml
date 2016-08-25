@@ -4,17 +4,20 @@
   - not_enough = @list.santas.count < 3
 
   - if @list.santas.any?
-    %p Ready to set recipients for your list and lock it in?
-    %p
-      = button_to "Lock, assign and send",
-      member_list_lock_and_assign_url(@list),
-      method: :patch, class: "btn btn-large btn-danger",
-      data: { confirm: "Are you sure?" },
-      disabled: (not_enough)
-      - if not_enough
-        %i= "Not available if there are less than three (3) Santas in your list"
-      - else
-        %i Note this cannot be undone, please be certain!
+    - unless @list.is_locked
+      %p Ready to set recipients for your list and lock it in?
+      %p
+        = button_to "Lock, assign and send",
+        member_list_lock_and_assign_url(@list),
+        method: :patch, class: "btn btn-large btn-danger",
+        data: { confirm: "Are you sure?" },
+        disabled: (not_enough)
+        - if not_enough
+          %i= "Not available if there are less than three (3) Santas in your list"
+        - else
+          %i Note this cannot be undone, please be certain!
+    - else
+      %i Note: List is locked. Santas have been assigned and emailed.
 
     %table.table.table-hover
       %thead

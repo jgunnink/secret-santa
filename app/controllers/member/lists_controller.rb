@@ -21,7 +21,7 @@ class Member::ListsController < Member::BaseController
     if @list.santas.count > 3
       List::ShuffleAndAssignSantas.new(@list).assign_and_email
       flash.now[:success] = 'Recipients set and Santas notified'
-      #TODO Lock the list preventing further changes
+      @list.update_attributes(is_locked: true)
     else
       flash.now[:danger] = 'You must have at least three Santas in the list first!'
     end
