@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Member can view an existing list' do
-
   let!(:list)  { FactoryGirl.create(:list, user_id: user.id) }
   let!(:user)  { FactoryGirl.create(:user, :member) }
   let!(:santa) { FactoryGirl.create(:santa, list: list) }
@@ -17,11 +16,12 @@ feature 'Member can view an existing list' do
     end
 
     expect(page).to have_content("Viewing list: #{list.name}")
+    expect(page).to have_content('Ready to set recipients for your list and lock it in?')
+    expect(page).to have_button('Lock, assign and send', disabled: true)
 
     within 'table' do
       expect(page).to have_content(santa.name)
       expect(page).to have_content(santa.email)
     end
   end
-
 end
