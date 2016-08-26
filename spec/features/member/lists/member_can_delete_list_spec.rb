@@ -31,7 +31,7 @@ feature 'Member can delete an existing list' do
         click_on("Delete")
       end
 
-      expect(page.find('.alert.alert-warning')).to have_content("Sorry! As the gift day has passed, you can no longer modify or delete this list!")
+      expect(page.find('.alert.alert-warning')).to have_content("Sorry! You can no longer modify or delete this list! Either the list is locked or the gift day has passed.")
       expect(page).to have_content(list.name)
     end
   end

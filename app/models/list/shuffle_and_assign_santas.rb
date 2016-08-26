@@ -11,6 +11,7 @@ class List
       @santas.each do |santa|
         AssignmentMailer.send_assignment(santa).deliver_later
       end
+      @list.update_attribute(:is_locked, true)
     end
 
     private

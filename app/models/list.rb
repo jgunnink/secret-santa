@@ -7,7 +7,6 @@ class List < ActiveRecord::Base
 
   validates :name, presence: true
   validates :gift_day, presence: true
-  validates :is_locked, inclusion: [true, false]
 
   validate :gift_day_cannot_be_in_the_past, on: :create
   validate :cannot_be_changed, on: :update
@@ -22,7 +21,7 @@ class List < ActiveRecord::Base
 
   def cannot_be_changed
     if is_locked
-      errors.add(:is_locked, 'List has been locked and Santas already emailed.')
+      errors.add(:is_locked, "List has been locked and Santas already emailed.")
     end
   end
 

@@ -1,6 +1,6 @@
 class Member::ListsController < Member::BaseController
 
-  before_filter :check_if_gift_day_has_passed, only: [:edit, :update, :destroy]
+  before_filter :check_if_gift_day_has_passed_or_locked, only: [:lock_and_assign, :edit, :update, :destroy]
 
   def new
     @list = current_user.lists.build
@@ -18,10 +18,9 @@ class Member::ListsController < Member::BaseController
   def lock_and_assign
     @list = List.find(params[:list_id])
     authorize!(:update, @list)
-    if @list.santas.count > 3
+    if @list.santas.count > 2
       List::ShuffleAndAssignSantas.new(@list).assign_and_email
       flash.now[:success] = 'Recipients set and Santas notified'
-      @list.update_attributes(is_locked: true)
     else
       flash.now[:danger] = 'You must have at least three Santas in the list first!'
     end
@@ -61,13 +60,19 @@ private
   end
 
   def find_list
-    @list = List.find(params[:id])
+    if params.include?("list_id")
+      @list = List.find(params[:list_id])
+    else
+      @list = List.find(params[:id])
+    end
   end
 
-  def check_if_gift_day_has_passed
+  def check_if_gift_day_has_passed_or_locked
     find_list
-    if Time.now > @list.gift_day
-      flash[:warning] = 'Sorry! As the gift day has passed, you can no longer modify or delete this list!'
+    if Time.now > @list.gift_day || @list.is_locked
+      flash[:warning] =
+        'Sorry! You can no longer modify or delete this list!
+        Either the list is locked or the gift day has passed.'
       redirect_to member_dashboard_index_path
     end
   end
