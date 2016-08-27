@@ -10,7 +10,7 @@
         = button_to "Lock, assign and send",
         member_list_lock_and_assign_url(@list),
         method: :patch, class: "btn btn-large btn-danger",
-        data: { confirm: "Are you sure?" },
+        data: { confirm: "Are you sure?", disable_with: "Please wait..." },
         disabled: (not_enough)
         - if not_enough
           %i= "Not available if there are less than three (3) Santas in your list"
@@ -35,4 +35,5 @@
     class: "btn btn-small btn-default"
     or
 
-  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"
+  .form-actions
+    = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"
