@@ -17,7 +17,7 @@ class List < ActiveRecord::Base
     end
   end
 
-  private
+private
 
   def cannot_be_changed
     if is_locked
