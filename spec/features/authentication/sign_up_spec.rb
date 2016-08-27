@@ -4,7 +4,7 @@ feature 'A visitor can sign up' do
 
   background do
     visit root_path
-    click_link 'Sign up'
+    within('nav') { click_link 'Sign up' }
   end
 
   scenario 'User signs up successfully' do

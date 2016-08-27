@@ -5,7 +5,7 @@ feature 'Existing users can reset their passwords' do
 
   background do
     visit root_path
-    click_link 'Sign in'
+    within('nav') { click_link 'Sign in' }
     click_link 'Forgot your password?'
   end
 
