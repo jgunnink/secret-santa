@@ -5,17 +5,14 @@
 
   - if @list.santas.any?
     - unless @list.is_locked
-      %p Ready to set recipients for your list and lock it in?
-      %p
-        = button_to "Lock, assign and send",
-        member_list_lock_and_assign_url(@list),
-        method: :patch, class: "btn btn-large btn-danger",
-        data: { confirm: "Are you sure?", disable_with: "Please wait..." },
-        disabled: (not_enough)
-        - if not_enough
-          %i= "Not available if there are less than three (3) Santas in your list"
-        - else
-          %i Note this cannot be undone, please be certain!
+      - if not_enough
+        %i= "Please add some more Santas to your list. We need at least three."
+      - else
+        %p Ready to set recipients for your list and lock it in?
+        %button.btn.btn-primary.btn-large.btn-danger{"data-target" => "#confirm_lock_and_send", "data-toggle" => "modal", type: "button"}
+          Lock, assign and send
+        #confirm_lock_and_send.modal.fade{"aria-labelledby" => "confirm_lock_and_sendLabel", role: "dialog", tabindex: "-1"}
+          = render 'confirm_modal'
     - else
       %i Note: List is locked. Santas have been assigned and emailed.
 
@@ -35,5 +32,4 @@
     class: "btn btn-small btn-default"
     or
 
-  .form-actions
-    = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"
+  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"
