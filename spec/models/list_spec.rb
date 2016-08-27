@@ -59,17 +59,14 @@ RSpec.describe List do
       it "should have errors" do
         expect(list).to_not be_valid
         expect(list.errors[:is_locked]).to be_present
+        expect(list.errors.count).to be(1)
         expect(list.errors.first).to include("List has been locked and Santas already emailed.")
       end
     end
 
     context "where the list is unlocked" do
       let(:status) { false }
-
-      it "should pass validation" do
-        expect(list).to be_valid
-        expect(list.errors.count).to be(0)
-      end
+      specify { expect(list).to be_valid }
     end
   end
 

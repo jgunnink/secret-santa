@@ -16,7 +16,7 @@ class Member::ListsController < Member::BaseController
   end
 
   def lock_and_assign
-    @list = List.find(params[:list_id])
+    find_list
     authorize!(:update, @list)
     if @list.santas.count >= 3
       List::ShuffleAndAssignSantas.new(@list).assign_and_email
@@ -69,7 +69,7 @@ private
 
   def check_if_gift_day_has_passed_or_locked
     find_list
-    if Time.now > @list.gift_day || @list.is_locked
+    if Time.current > @list.gift_day || @list.is_locked
       flash[:warning] =
         'Sorry! You can no longer modify or delete this list!
         Either the list is locked or the gift day has passed.'

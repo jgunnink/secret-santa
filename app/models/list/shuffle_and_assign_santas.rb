@@ -11,6 +11,8 @@ class List::ShuffleAndAssignSantas
     @santas.each do |santa|
       AssignmentMailer.send_assignment(santa).deliver_later
     end
+    # We override the validation here otherwise the is_locked validation kicks in
+    # which prevents us from saving the instance of list.
     @list.update_attribute(:is_locked, true)
   end
 
