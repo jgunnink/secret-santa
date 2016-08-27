@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Member can view an existing list' do
-
   let!(:list)  { FactoryGirl.create(:list, user_id: user.id) }
   let!(:user)  { FactoryGirl.create(:user, :member) }
   let!(:santa) { FactoryGirl.create(:santa, list: list) }
@@ -23,5 +22,4 @@ feature 'Member can view an existing list' do
       expect(page).to have_content(santa.email)
     end
   end
-
 end

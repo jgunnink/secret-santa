@@ -49,4 +49,25 @@ RSpec.describe List do
     end
   end
 
+  describe "@cannot_be_changed" do
+    let!(:list) { FactoryGirl.create(:list, is_locked: status) }
+    let!(:santa) { FactoryGirl.create(:santa, list_id: list.id) }
+
+    context "where the list is locked" do
+      let(:status) { true }
+
+      it "should have errors" do
+        expect(list).to_not be_valid
+        expect(list.errors[:is_locked]).to be_present
+        expect(list.errors.count).to be(1)
+        expect(list.errors.first).to include("List has been locked and Santas already emailed.")
+      end
+    end
+
+    context "where the list is unlocked" do
+      let(:status) { false }
+      specify { expect(list).to be_valid }
+    end
+  end
+
 end

@@ -1,0 +1,18 @@
+.modal-dialog{role: "document"}
+  .modal-content
+    .modal-header
+      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+        %span{"aria-hidden" => "true"} ×
+      %h4#confirm_lock_and_sendLabel.modal-title Lock, assign and send
+    .modal-body
+      - not_enough = @list.santas.count < 3
+      %h3 Heads up!
+      %p By proceeding now, your list will be locked!
+      %p Your santas will be assigned someone and everyone in your list will be emailed.
+      %p Once this happens, there is no going back, so please be certain!
+    .modal-footer
+      %p= button_to "Lock, assign and send",
+        member_list_lock_and_assign_url(@list),
+        method: :patch, class: "btn btn-large btn-danger",
+        data: { disable_with: "Please wait..." },
+        disabled: (not_enough)

@@ -9,16 +9,14 @@
     %header
       .container
         .navigation-wrapper
-          %ul.site-nav
-            = render "layouts/navigation"
-        .container
-          - flash.each do |key, value|
-            .flash-wrapper
-              -# the following two conditionals override devise
-              - if key == 'notice'
-                - key = 'success'
-              - if key == 'alert'
-                - key = 'danger'
-              .alert{class: "alert-#{key}"}= value
+          = render "layouts/navigation"
+        - flash.each do |key, value|
+          .flash-wrapper
+            -# the following two conditionals override devise
+            - if key == 'notice'
+              - key = 'success'
+            - if key == 'alert'
+              - key = 'danger'
+            .alert{class: "alert-#{key}"}= value
 
         = content_for?(:content) ? yield(:content) : yield

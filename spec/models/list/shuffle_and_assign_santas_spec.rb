@@ -24,5 +24,11 @@ RSpec.describe List::ShuffleAndAssignSantas do
     scenario 'each santa should recieve an email' do
       expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(5)
     end
+
+    scenario 'the list should be locked after the method runs' do
+      expect(list.is_locked).to be_falsey
+      subject
+      expect(list.is_locked).to be_truthy
+    end
   end
 end
