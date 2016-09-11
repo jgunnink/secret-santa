@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Member::ListsController do
-
   describe 'GET new' do
     subject { get :new }
 
@@ -39,7 +38,7 @@ RSpec.describe Member::ListsController do
 
       context 'with invalid parameters' do
         let(:params) { {name: nil, gift_day: Date.yesterday} }
-        specify { expect { create_list }.not_to change(List, :count) }
+        specify { expect { create_list }.not_to change{ List.count } }
       end
     end
 
@@ -178,20 +177,20 @@ RSpec.describe Member::ListsController do
 
     authenticated_as(:user) do
       it 'deletes the list' do
-        expect { subject }.to change{List.count}.by(-1)
+        expect { subject }.to change{ List.count }.by(-1)
       end
       it { should redirect_to(member_dashboard_index_path) }
 
       scenario 'when the gift day has occurred' do
         target_list.update_attributes(gift_day: Date.yesterday)
-        expect { subject }.to_not change{List.count}
+        expect { subject }.to_not change{ List.count }
         should redirect_to(member_dashboard_index_path)
       end
     end
 
     authenticated_as(:other_user) do
       it 'does not delete the list' do
-        expect { subject }.to_not change{List.count}
+        expect { subject }.to_not change{ List.count }
       end
       it { should redirect_to(root_path) }
     end
@@ -199,5 +198,4 @@ RSpec.describe Member::ListsController do
     it_behaves_like 'action requiring authentication'
     it_behaves_like 'action authorizes roles', [:member, :admin]
   end
-
 end

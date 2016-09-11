@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 describe AdminAbility do
-
   subject { ability }
 
   let(:ability) { AdminAbility.new(user) }
@@ -18,5 +17,4 @@ describe AdminAbility do
   describe "managing Lists" do
     it { should be_able_to(:manage, :list) }
   end
-
 end

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'member can update santas on a list', :js do
-
   signed_in_as(:member) do
 
     context 'a list already exists' do
@@ -46,7 +45,6 @@ feature 'member can update santas on a list', :js do
         end
       end
     end
-
+    
   end
-
 end

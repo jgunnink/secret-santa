@@ -1,7 +1,5 @@
 class AfterSignInPath
-
   include Rails.application.routes.url_helpers
-
   attr_reader :user
 
   def initialize(user)
@@ -19,5 +17,4 @@ class AfterSignInPath
       root_path
     end
   end
-
 end

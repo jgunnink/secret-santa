@@ -49,5 +49,4 @@ Rails.application.configure do
 
   # Shows some menu options on sign in that can sign in the seed users
   config.should_show_easy_login = true
-
 end

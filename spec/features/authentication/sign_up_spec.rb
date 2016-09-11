@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'A visitor can sign up' do
-
   background do
     visit root_path
     within('nav') { click_link 'Sign up' }

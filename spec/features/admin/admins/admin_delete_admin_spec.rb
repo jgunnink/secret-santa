@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Admin can delete an existing User' do
-
   signed_in_as(:admin) do
     let!(:target_user) { FactoryGirl.create(:user, :admin, email: "something@nothing.com") }
 

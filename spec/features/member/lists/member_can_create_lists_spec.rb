@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 feature 'Member can create a new list' do
-
   background { visit member_dashboard_index_path }
 
   signed_in_as(:member) do
-
     scenario 'Member adds new list with valid data' do
       click_on("Create a list")
       fill_in("Name", with: "Winter is coming")

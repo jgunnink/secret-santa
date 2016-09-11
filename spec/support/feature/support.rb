@@ -1,9 +1,7 @@
 # Include any general purpose helper functions in this file, that would be applicable for
 # any project they were dropped into.
-#
 module Feature
   module Support
-
     def submit_form
       find('input[name="commit"]').click
     end
@@ -20,6 +18,5 @@ module Feature
       # For example, searching for a user named John O'Hanniganskivic
       within(:xpath, "//tr[td[contains(., \"#{name}\")]]") { yield }
     end
-
   end
 end
