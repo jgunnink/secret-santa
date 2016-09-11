@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Member::ListsController do
-
   describe 'GET new' do
     subject { get :new }
 
@@ -199,5 +198,4 @@ RSpec.describe Member::ListsController do
     it_behaves_like 'action requiring authentication'
     it_behaves_like 'action authorizes roles', [:member, :admin]
   end
-
 end

@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   # Soft delete - uses deleted_at field
   acts_as_paranoid
 
-  enum role: {admin: 0, member: 1}
+  enum role: { admin: 0, member: 1 }
 
   validates :given_names, presence: true, length: { minimum: 2 }
   validates :email, presence: true

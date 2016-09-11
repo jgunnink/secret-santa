@@ -1,6 +1,5 @@
 module Feature
   module AuthenticationMacros
-
     def signed_in_as(*roles, &specs)
       roles.each do |role_name|
         context "when signed in as #{role_name}" do
@@ -30,6 +29,5 @@ module Feature
 
       let(:current_user) { @current_user }
     end
-
   end
 end

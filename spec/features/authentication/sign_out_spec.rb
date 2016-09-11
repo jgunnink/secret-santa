@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Signed in users can sign out' do
-
   sign_in_as(:admin)
 
   scenario 'User signs out successfully' do

@@ -1,5 +1,4 @@
 module Feature::TableSupport
-
   def first_row
     nth_row(1)
   end
@@ -11,5 +10,4 @@ module Feature::TableSupport
   def nth_row(num)
     find("table tbody tr:nth-child(#{num})")
   end
-
 end

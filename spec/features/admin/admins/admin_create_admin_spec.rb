@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Admin can create a new User' do
-
   signed_in_as(:admin) do
     before do
       click_header_option("Administration")

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Admin can view an index of users' do
-
   signed_in_as(:admin) do
     let!(:member) { FactoryGirl.create(:user, :member) }
 
@@ -15,5 +14,4 @@ feature 'Admin can view an index of users' do
       expect(page).not_to have_content(current_user.email)
     end
   end
-
 end
