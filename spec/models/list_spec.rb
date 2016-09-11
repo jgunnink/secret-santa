@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe List do
-
   describe '@name' do
     it { should validate_presence_of(:name) }
   end
@@ -69,5 +68,4 @@ RSpec.describe List do
       specify { expect(list).to be_valid }
     end
   end
-
 end

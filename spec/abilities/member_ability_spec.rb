@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 describe MemberAbility do
-
   subject { ability }
 
   let(:ability) { MemberAbility.new(user) }
@@ -25,9 +24,7 @@ describe MemberAbility do
 
     context "user should not be able to manage other users lists" do
       let!(:other_user) { FactoryGirl.create(:user, :member) }
-      it {should_not be_able_to(:manage, FactoryGirl.create(:list, user_id: other_user.id)) }
+      it { should_not be_able_to(:manage, FactoryGirl.create(:list, user_id: other_user.id)) }
     end
-
   end
-
 end

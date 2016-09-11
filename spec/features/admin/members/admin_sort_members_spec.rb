@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Admin can sort an index of users' do
-
   signed_in_as(:admin) do
     let!(:alpha_member) { FactoryGirl.create(:user, :member, email: "alpha@example.com") }
     let!(:beta_member)  { FactoryGirl.create(:user, :member, email: "beta@example.com") }

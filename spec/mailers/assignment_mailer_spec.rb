@@ -7,8 +7,8 @@ describe AssignmentMailer do
     let!(:other_santa) { FactoryGirl.create(:santa) }
     let!(:santa) do
       FactoryGirl.create(:santa,
-      list: other_santa.list,
-      giving_to: other_santa.id)
+                         list: other_santa.list,
+                         giving_to: other_santa.id)
     end
 
     it { should deliver_from('Captain Santa <santa@secretsanta.com>') }

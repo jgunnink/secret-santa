@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Member can edit an existing list' do
-
   let!(:list) { FactoryGirl.create(:list, user_id: user.id) }
   let!(:user) { FactoryGirl.create(:user, :member) }
 
@@ -51,5 +50,4 @@ feature 'Member can edit an existing list' do
       expect(page).to have_content(list.name)
     end
   end
-
 end
