@@ -22,7 +22,8 @@ RSpec.describe Member::ListsController do
         let(:params) do
           {
             name: 'Family Secret Santa',
-            gift_day: Date.tomorrow
+            gift_day: Date.tomorrow,
+            gift_value: 20.5
           }
         end
 
@@ -31,6 +32,8 @@ RSpec.describe Member::ListsController do
 
           list = List.find_by(name: params[:name])
           expect(list).to be_present
+          expect(list.gift_day).to eq(Date.tomorrow.to_time)
+          expect(list.gift_value).to eq(20.5)
         end
 
         it { should redirect_to(member_dashboard_index_path) }
@@ -128,7 +131,13 @@ RSpec.describe Member::ListsController do
     authenticated_as(:user) do
 
       context 'with valid parameters' do
-        let(:params) { {name: "JK's List", gift_day: Date.tomorrow} }
+        let(:params) do
+          {
+            name: "JK's List",
+            gift_day: Date.tomorrow,
+            gift_value: 20.00
+          }
+        end
 
         it 'updates a List object with the given attributes' do
           update_list
@@ -136,13 +145,15 @@ RSpec.describe Member::ListsController do
           target_list.reload
           expect(target_list.name).to eq("JK's List")
           expect(target_list.user_id).to eq(user.id)
+          expect(target_list.gift_day).to eq(Date.tomorrow.to_time)
+          expect(target_list.gift_value).to eq(20.0)
         end
 
         it { should redirect_to(member_dashboard_index_path) }
       end
 
       context 'with invalid parameters' do
-        let(:params) { { name: '', gift_day: Date.yesterday } }
+        let(:params) { { name: '', gift_day: Date.yesterday, gift_value: -1 } }
 
         it 'does not update the List' do
           update_list
