@@ -7,7 +7,7 @@ class List < ActiveRecord::Base
 
   validates :name, presence: true
   validates :gift_day, presence: true
-  validates :gift_value, numericality: { greater_than: 0, less_than: 10_000 },
+  validates :gift_value, numericality: { greater_than: 0, less_than: 10_000, only_integer: true },
                          allow_blank: true
 
   validate :gift_day_cannot_be_in_the_past, on: :create
