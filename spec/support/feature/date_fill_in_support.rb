@@ -9,7 +9,7 @@ module Feature
         select Date.tomorrow.strftime('%B')
       end
       within "#list_gift_day_3i" do
-        select Date.tomorrow.strftime('%d')
+        select Date.tomorrow.strftime('%-d')
       end
     end
 
@@ -21,9 +21,9 @@ module Feature
         select Date.yesterday.strftime('%B')
       end
       within "#list_gift_day_3i" do
-        select Date.yesterday.strftime('%d')
+        select Date.yesterday.strftime('%-d')
       end
     end
-    
+
   end
 end

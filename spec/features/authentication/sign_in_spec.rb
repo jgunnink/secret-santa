@@ -4,7 +4,7 @@ feature 'A user can sign in' do
 
   background do
     visit root_path
-    click_link 'Sign in'
+    within('nav') { click_link 'Sign in' }
   end
 
   context "As admin" do

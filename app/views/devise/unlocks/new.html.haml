@@ -2,9 +2,10 @@
 
   %h2= current_page_title
 
-  = simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { class: "authentication-form", method: :post }) do |f|
+  .col-md-6
+    = simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { class: "authentication-form", method: :post }) do |f|
 
-    = f.input :email, autofocus: true
-    = f.button :submit, "Resend unlock instructions"
-
-  = render "devise/shared/links"
+      = f.input :email, autofocus: true
+      .form-actions
+        = f.button :submit, "Resend unlock instructions"
+        = render "devise/shared/links"

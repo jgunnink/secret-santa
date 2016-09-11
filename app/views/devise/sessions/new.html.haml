@@ -2,19 +2,12 @@
 
   %h2= current_page_title
 
-  = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "authentication-form" }) do |f|
-
-    = f.input :email, autofocus: true
-    = f.input :password, autocomplete: "off"
-    - if devise_mapping.rememberable?
-      = f.input :remember_me, as: :boolean
-    = f.button :submit, "Sign in"
-
-  = render "devise/shared/links"
-
-- if Rails.application.config.should_show_easy_login
-  .easy-sign-in
-    %h3 Easy Sign-in
-    %ul
-      - User.roles.keys.each do |role_name|
-        %li= link_to "Sign in as #{role_name.titleize}", '#', data: { email: "#{role_name}@example.com", password: "password" }
+  .col-md-6
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "authentication-form" }) do |f|
+      = f.input :email, autofocus: true
+      = f.input :password, autocomplete: "off"
+      - if devise_mapping.rememberable?
+        = f.input :remember_me, as: :boolean
+      .form-actions
+        = f.button :submit, "Sign in", class: "btn btn-primary"
+        = render 'devise/shared/links'
