@@ -23,7 +23,7 @@ RSpec.describe Member::ListsController do
           {
             name: 'Family Secret Santa',
             gift_day: Date.tomorrow,
-            gift_value: 20.5
+            gift_value: 20
           }
         end
 
@@ -33,7 +33,7 @@ RSpec.describe Member::ListsController do
           list = List.find_by(name: params[:name])
           expect(list).to be_present
           expect(list.gift_day).to eq(Date.tomorrow.to_time)
-          expect(list.gift_value).to eq(20.5)
+          expect(list.gift_value).to eq(20)
         end
 
         it { should redirect_to(member_dashboard_index_path) }
@@ -135,7 +135,7 @@ RSpec.describe Member::ListsController do
           {
             name: "JK's List",
             gift_day: Date.tomorrow,
-            gift_value: 20.00
+            gift_value: 20
           }
         end
 
@@ -146,7 +146,7 @@ RSpec.describe Member::ListsController do
           expect(target_list.name).to eq("JK's List")
           expect(target_list.user_id).to eq(user.id)
           expect(target_list.gift_day).to eq(Date.tomorrow.to_time)
-          expect(target_list.gift_value).to eq(20.0)
+          expect(target_list.gift_value).to eq(20)
         end
 
         it { should redirect_to(member_dashboard_index_path) }
