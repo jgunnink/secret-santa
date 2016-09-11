@@ -12,3 +12,5 @@ before_script:
   - bundle exec rake secret
 script:
   - bundle exec rspec spec
+before_install:
+- export TZ=Australia/Perth
