@@ -9,7 +9,7 @@
         %i= "Please add some more Santas to your list. We need at least three."
       - else
         %p Ready to set recipients for your list and lock it in?
-        %button.btn.btn-primary.btn-large.btn-danger{"data-target" => "#confirm_lock_and_send", "data-toggle" => "modal", type: "button"}
+        %button.btn.btn-primary.btn-large.btn-success{"data-target" => "#confirm_lock_and_send", "data-toggle" => "modal", type: "button"}
           Lock, assign and send
         #confirm_lock_and_send.modal.fade{"aria-labelledby" => "confirm_lock_and_sendLabel", role: "dialog", tabindex: "-1"}
           = render 'confirm_modal'
