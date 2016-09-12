@@ -11,21 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825144621) do
+ActiveRecord::Schema.define(version: 20160911035447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "givers_receivers", id: false, force: :cascade do |t|
-    t.integer  "giver_id",    null: false
-    t.integer  "receiver_id", null: false
-    t.integer  "list_id",     null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "givers_receivers", ["giver_id"], name: "index_givers_receivers_on_giver_id", using: :btree
-  add_index "givers_receivers", ["receiver_id"], name: "index_givers_receivers_on_receiver_id", using: :btree
 
   create_table "lists", force: :cascade do |t|
     t.string   "name",                       null: false
@@ -34,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160825144621) do
     t.datetime "updated_at",                 null: false
     t.datetime "gift_day"
     t.boolean  "is_locked",  default: false, null: false
+    t.integer  "gift_value"
   end
 
   add_index "lists", ["created_at"], name: "index_lists_on_created_at", using: :btree

@@ -14,6 +14,7 @@ feature 'Member can edit an existing list' do
       click_on("Edit")
     end
     fill_in("Name", with: "Winter is coming")
+    fill_in("Gift value", with: 95)
     fill_in_valid_gift_date
     click_on("Update List")
 
@@ -29,6 +30,7 @@ feature 'Member can edit an existing list' do
       click_on("Edit")
     end
     fill_in("Name", with: "")
+    fill_in("Gift value", with: 10000)
     fill_in_invalid_gift_date
     click_on("Update List")
 

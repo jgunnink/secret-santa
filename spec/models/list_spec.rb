@@ -5,8 +5,10 @@ RSpec.describe List do
     it { should validate_presence_of(:name) }
   end
 
-  describe '@santas' do
-    it { should have_many(:santas).inverse_of(:list) }
+  describe '@gift_value' do
+    it { should validate_numericality_of(:gift_value).is_less_than(10_000)
+                                                     .is_greater_than(0) }
+    it { should allow_value("", nil).for(:gift_value) }
   end
 
   describe '@gift_day' do
@@ -43,6 +45,7 @@ RSpec.describe List do
     let!(:list) { FactoryGirl.create(:list) }
     let!(:santa) { FactoryGirl.create(:santa, list_id: list.id) }
 
+    it { should have_many(:santas).inverse_of(:list) }
     it "deletes associated santas if the list is deleted" do
       expect { list.destroy }.to change { Santa.count }.by(-1)
     end
