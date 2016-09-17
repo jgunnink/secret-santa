@@ -28,6 +28,7 @@ gem 'normalize-rails'
 gem 'page_title_helper'
 gem 'sass-rails'
 gem 'simple_form'
+gem 'tachyons-rails'
 gem 'turbolinks'
 gem 'uglifier'
 
