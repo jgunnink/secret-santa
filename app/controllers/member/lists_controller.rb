@@ -27,6 +27,21 @@ class Member::ListsController < Member::BaseController
     render :show
   end
 
+  def copy_list
+    find_list
+    authorize!(:copy, @list)
+    new_list = @list.deep_clone include: :santas
+    new_list.gift_day = Time.now + 2.months
+    new_list.is_locked = false
+    new_list.save!
+    @list = new_list
+    respond_with(@list,
+                 location: edit_member_list_path(@list),
+                 success: "List was successfully copied. Gift day set as #{@list.gift_day.strftime("%A, %B %-d, %Y")}
+                           Please update as necessary."
+                )
+  end
+
   def edit
     find_list
     authorize!(:edit, @list)

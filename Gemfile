@@ -3,10 +3,11 @@ source 'https://rubygems.org'
 gem 'rails'
 
 # Database & ORM
+gem 'circular_list'
+gem 'deep_cloneable'
 gem 'paranoia'
 gem 'pg'
 gem 'ransack'
-gem 'circular_list'
 
 # Authentication & Authorization
 gem 'devise'
