@@ -12,4 +12,4 @@ en:
         danger: '%{resource_name} could not be deleted.'
       copy_list:
         success: '%{resource_name} was successfully copied. Please update details below.'
-        danger: '%{resource_name} could not be copied.'
+        warning: "%{resource_name} is not locked, or the gift day hasn't passed, please edit it instead!"

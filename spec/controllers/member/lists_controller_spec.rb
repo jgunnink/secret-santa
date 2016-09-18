@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Member::ListsController do
+  let(:user) { FactoryGirl.create(:user, :member) }
+
   describe 'GET new' do
     subject { get :new }
 
@@ -51,7 +53,6 @@ RSpec.describe Member::ListsController do
 
   describe 'PATCH lock_and_assign' do
     subject { patch :lock_and_assign, list_id: list.id }
-    let(:user)       { FactoryGirl.create(:user, :member) }
     let(:other_user) { FactoryGirl.create(:user, :member) }
     let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
     let!(:santas)    { FactoryGirl.create_list(:santa, 5, list_id: list.id) }
@@ -90,9 +91,66 @@ RSpec.describe Member::ListsController do
     it_behaves_like 'action authorizes roles', [:member, :admin]
   end
 
+  describe 'POST copy_list' do
+    subject { post :copy_list, list_id: list_with_santas.id }
+    let!(:list_with_santas) { FactoryGirl.create(:list, :with_santas, user: user) }
+
+    context 'user can copy their own list' do
+      authenticated_as(:user) do
+
+        context 'where the gift day of the list is in the past' do
+          before { list_with_santas.update_attribute(:gift_day, Date.yesterday) }
+
+          it 'should copy the list with the santas' do
+            expect { subject }.to change{ List.count }.by(1)
+            new_list = List.order(:created_at).last
+            expect(new_list.santas.count).to eq(list_with_santas.santas.count)
+            expect(new_list.name).to eq(list_with_santas.name)
+            expect(new_list.gift_value).to eq(list_with_santas.gift_value)
+          end
+          it 'sets a flash for the user' do
+            subject
+            expect(controller).to set_flash[:success].to('List was successfully copied. Please update details below.')
+          end
+        end
+
+        context 'where the gift day of the list is not in the past' do
+          # This is an edge case since the button will not be available. The user
+          # will be redirected to edit the list with a flash.
+          before { list_with_santas.update_attributes(gift_day: Date.tomorrow) }
+
+          it 'should not copy the list and redirect the user with a flash' do
+            expect { subject }.to_not change{ List.count }
+            expect(controller).to set_flash[:warning].to("List is not locked, or the gift day hasn't passed, please edit it instead!")
+          end
+        end
+
+        context 'if the list is locked' do
+          before do
+            list_with_santas.update_attribute(:is_locked, true)
+          end
+
+          it 'should copy the list with the santas' do
+            expect { subject }.to change{ List.count }.by(1)
+            new_list = List.order(:created_at).last
+            expect(new_list.santas.count).to eq(list_with_santas.santas.count)
+            expect(new_list.name).to eq(list_with_santas.name)
+            expect(new_list.gift_value).to eq(list_with_santas.gift_value)
+          end
+          it 'sets a flash for the user' do
+            subject
+            expect(controller).to set_flash[:success].to('List was successfully copied. Please update details below.')
+          end
+        end
+      end
+    end
+
+    it_behaves_like 'action requiring authentication'
+    it_behaves_like 'action authorizes roles', [:member, :admin]
+  end
+
   describe 'GET edit' do
     subject { get :edit, id: list.id }
-    let(:user)       { FactoryGirl.create(:user, :member) }
     let(:other_user) { FactoryGirl.create(:user, :member) }
     let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
 
@@ -124,7 +182,6 @@ RSpec.describe Member::ListsController do
   describe 'PATCH update' do
     subject(:update_list) { post :update, id: target_list.id, list: params }
     let(:params) { {} }
-    let(:user) { FactoryGirl.create(:user, :member) }
     let(:other_user) { FactoryGirl.create(:user, :member) }
     let(:target_list) { FactoryGirl.create(:list, user_id: user.id) }
 
@@ -183,7 +240,6 @@ RSpec.describe Member::ListsController do
   describe 'DELETE destroy' do
     subject { delete :destroy, id: target_list.id }
     let!(:target_list) { FactoryGirl.create(:list, user_id: user.id) }
-    let(:user) { FactoryGirl.create(:user, :member) }
     let(:other_user) { FactoryGirl.create(:user, :member) }
 
     authenticated_as(:user) do
