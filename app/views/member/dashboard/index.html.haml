@@ -10,12 +10,14 @@
     %thead
       %tr
         %th List Name
-        %th.actions Actions
+        %th Date created
+        %th.actions.tr Actions
       %tbody
         - @lists.each do |list|
           %tr
             %td= list.name
-            %td.actions
+            %td= list.created_at.strftime("%B %-d, %Y")
+            %td.actions.tr
               = link_to "View", member_list_path(list), class: "btn btn-small btn-default"
               - unless list.is_locked || list.gift_day_cannot_be_in_the_past
                 = link_to "Edit", edit_member_list_path(list), class: "btn btn-small btn-default"
