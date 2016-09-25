@@ -1,0 +1,19 @@
+body {
+  background-image: image-url("wallpaper.jpg");
+  background-repeat: repeat-x;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.transparent{
+    background-color: rgba(0,0,0,0.15);
+}
+
+.white-text{
+  color: white;
+}
