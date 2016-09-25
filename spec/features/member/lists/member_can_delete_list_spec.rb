@@ -18,33 +18,33 @@ feature 'Member can delete an existing list' do
       click_on('Delete')
     end
 
-    expect(page.find('.alert.alert-success')).to have_content('List was successfully deleted')
+    expect(page).to have_flash :success, 'List was successfully deleted'
     expect(page).to_not have_content(list.name)
     expect(page).to have_content('You have no secret santa lists yet!')
   end
 
   context 'the gift day has passed' do
-    scenario 'user cannot delete list' do
-      list.update_attributes(gift_day: Date.yesterday)
+    before { list.update_attribute(:gift_day, Date.yesterday) }
 
+    scenario 'user cannot delete list' do
       within 'table' do
         click_on('Delete')
       end
 
-      expect(page.find('.alert.alert-warning')).to have_content('Sorry! You can no longer modify or delete this list! Either the list is locked or the gift day has passed.')
+      expect(page).to have_flash :warning, 'Sorry! You can no longer modify or delete this list! Either the list is locked or the gift day has passed.'
       expect(page).to have_content(list.name)
     end
   end
 
   context 'the list has been locked' do
-    scenario 'user cannot delete list' do
-      list.update_attribute(:is_locked, true)
+    before { list.update_attribute(:is_locked, true) }
 
+    scenario 'user cannot delete list' do
       within 'table' do
         click_on('Delete')
       end
 
-      expect(page.find('.alert.alert-warning')).to have_content('Sorry! You can no longer modify or delete this list! Either the list is locked or the gift day has passed.')
+      expect(page).to have_flash :warning, 'Sorry! You can no longer modify or delete this list! Either the list is locked or the gift day has passed.'
       expect(page).to have_content(list.name)
     end
   end

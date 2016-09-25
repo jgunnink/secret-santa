@@ -110,9 +110,11 @@ RSpec.describe Member::ListsController do
 
     context 'when the gift day has occurred' do
       authenticated_as(:user) do
-        scenario 'user cannot update list' do
-          list.update_attributes(gift_day: Date.yesterday)
-          should_not be_success
+        before { list.update_attribute(:gift_day, Date.yesterday) }
+        it 'sends the user back to the dashboard and sets a flash' do
+          subject
+          expect(flash[:warning]).to be_present
+          should redirect_to member_dashboard_index_path
         end
       end
     end
@@ -194,6 +196,12 @@ RSpec.describe Member::ListsController do
 
       scenario 'when the gift day has occurred' do
         target_list.update_attributes(gift_day: Date.yesterday)
+        expect { subject }.to change{ List.count }.by(-1)
+        should redirect_to(member_dashboard_index_path)
+      end
+
+      scenario 'when the list is locked' do
+        target_list.update_attribute(:is_locked, true)
         expect { subject }.to_not change{ List.count }
         should redirect_to(member_dashboard_index_path)
       end
