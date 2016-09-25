@@ -1,13 +1,10 @@
-.container
-  .col-lg-2
-  .col-lg-6
-    %h1 Secret Santa
-    %p Welcome to Secret Santa
-    %p
-      = link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg"
-      = link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg"
-  .col-lg{style:"text-align:left;"}
-    = image_tag("santa_with_sack_med.png")
+.container{style:"text-align:center;"}
+  %h1 Secret Santa
+  %p Welcome to Secret Santa
+  %p
+    = link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg"
+    = link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg"
+  = image_tag("santa_with_sack_full.png")
 %br
 %br
 .row
