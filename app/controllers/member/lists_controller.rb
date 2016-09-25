@@ -1,6 +1,6 @@
 class Member::ListsController < Member::BaseController
 
-  before_filter :check_if_gift_day_has_passed_or_locked, only: [:lock_and_assign, :edit, :update, :destroy]
+  before_filter :redirect_if_gift_day_has_passed_or_locked, only: [:lock_and_assign, :edit, :update, :destroy]
 
   def new
     @list = current_user.lists.build
@@ -25,6 +25,20 @@ class Member::ListsController < Member::BaseController
       flash.now[:danger] = 'You must have at least three Santas in the list first!'
     end
     render :show
+  end
+
+  def copy_list
+    find_list
+    authorize!(:copy, @list)
+    if @list.is_locked? || Time.now > @list.gift_day
+      new_list = @list.deep_clone include: :santas
+      new_list.update_attributes(gift_day: Time.now + 2.months, is_locked: false)
+      @list = new_list
+      respond_with(@list, location: edit_member_list_path(@list))
+    else
+      flash[:warning] = "List is not locked, or the gift day hasn't passed, please edit it instead!"
+      render :show
+    end
   end
 
   def edit
@@ -72,7 +86,7 @@ private
     end
   end
 
-  def check_if_gift_day_has_passed_or_locked
+  def redirect_if_gift_day_has_passed_or_locked
     find_list
     if Time.current > @list.gift_day || @list.is_locked
       flash[:warning] =
