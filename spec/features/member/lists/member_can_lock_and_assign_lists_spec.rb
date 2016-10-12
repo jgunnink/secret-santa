@@ -22,6 +22,7 @@ feature 'Member can lock and assign santas within a list' do
       click_on('Lock, assign and send')
     end
 
+    wait_for_ajax!
     expect(page).to have_flash :success, 'Recipients set and Santas notified'
     expect(page).to have_content('Note: List is locked. Santas have been assigned and emailed.')
   end

@@ -5,7 +5,7 @@
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
-  %body.bg-light-blue
+  %body.bg-lightest-blue
     %header
       .container
         .navigation-wrapper
@@ -19,4 +19,4 @@
               - key = 'danger'
             .alert{class: "alert-#{key}"}= value
 
-        = content_for?(:content) ? yield(:content) : yield
+    = content_for?(:content) ? yield(:content) : yield

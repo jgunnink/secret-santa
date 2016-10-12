@@ -8,7 +8,7 @@ module Feature
 
     # http://robots.thoughtbot.com/automatically-wait-for-ajax-with-capybara
     def wait_for_ajax!
-      Timeout.timeout(Capybara.default_wait_time) do
+      Timeout.timeout(Capybara.default_max_wait_time) do
         loop until page.evaluate_script('jQuery.active').zero?
       end
     end
