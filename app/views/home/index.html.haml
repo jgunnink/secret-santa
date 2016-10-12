@@ -1,21 +1,17 @@
 %script{src:"//cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js"}
-.container{style:"text-align:center;"}
-  %h1 Secret Santa
-  %p Welcome to Secret Santa
-  %p
-    - if current_user
-      = link_to "Go to your dashboard", member_dashboard_index_path, class: "btn btn-primary btn-lg"
-    - else
-      = link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg"
-      = link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg"
-  = image_tag("santa_with_sack_full.png")
-%br
-%br
+.container
+  .col-md-4
+    %h1.blue Secret Santa
+    - unless current_user
+      %p= link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg"
+      %p= link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg"
+  .col-md-8{style:"text-align:center;"}
+    = image_tag("santa_with_sack_full.png")
 .row{style:"text-align:center;"}
   .col-lg-4
     %img.img-circle{height: "140", src: "assets/checklist.png", width: "140"}
-    %h2 Easy organising
-    %p
+    %h2.blue Easy organising
+    %p{style:"text-align:justify;"}
       If you're organising a gift exchange for your family or workplace, let
       Secret Santa take care of the organising for you. Easily add lists of your
       contacts, send out notification emails, and shuffle your list of santas.
@@ -23,8 +19,8 @@
       = link_to "Find out more", "#", class: "btn btn-primary"
   .col-lg-4
     %img.img-circle{height: "140", src: "assets/open_letter.png", width: "140"}
-    %h2 How it works
-    %p
+    %h2.blue How it works
+    %p{style:"text-align:justify;"}
       Once you have your list of Santas, let computer take care of the rest!
       It will shuffle all your users around, no matter how big your list is, and
       randomly assign each person a Santa. Once everyone is assigned, each Santa
@@ -33,12 +29,10 @@
       = link_to "Watch example video", "#", class: "btn btn-primary"
   .col-lg-4
     %img.img-circle{height: "140", src: "assets/gift.png", width: "140"}
-    %h2 It's free!
-    %p
+    %h2.blue It's free!
+    %p{style:"text-align:justify;"}
       Secret Santa is free to use. There's no adverts, no spamming and we keep
-      your details safe.
-    %p
-      The Secret Santa is free to use for lists of up to 15 people, but if you
-      need more, we offer bigger list sizes.
+      your details safe. The Secret Santa is free to use for lists of up to 15
+      people, but if you need more, we offer bigger list sizes.
     %p
       = link_to "Find out more", "#", class: "btn btn-primary"

@@ -7,16 +7,15 @@
   = csrf_meta_tags
   %body.bg-lightest-blue
     %header
-      .container
-        .navigation-wrapper
-          = render "layouts/navigation"
-        - flash.each do |key, value|
-          .flash-wrapper
-            -# the following two conditionals override devise
-            - if key == 'notice'
-              - key = 'success'
-            - if key == 'alert'
-              - key = 'danger'
-            .alert{class: "alert-#{key}"}= value
+      .navigation-wrapper
+        = render "layouts/navigation"
+      - flash.each do |key, value|
+        .flash-wrapper
+          -# the following two conditionals override devise
+          - if key == 'notice'
+            - key = 'success'
+          - if key == 'alert'
+            - key = 'danger'
+          .alert{class: "alert-#{key}"}= value
 
     = content_for?(:content) ? yield(:content) : yield
