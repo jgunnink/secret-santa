@@ -12,7 +12,6 @@ module SecretSanta
     config.app_generators.scaffold_controller :responders_controller
 
     config.autoload_paths << Rails.root.join('lib')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
     config.should_seed_application_data = false
     config.should_show_easy_login = false

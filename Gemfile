@@ -15,6 +15,7 @@ gem 'cancancan'
 
 # Presentation
 gem 'active_link_to'
+gem 'bootstrap-material-design'
 gem 'bootstrap-sass'
 gem 'bourbon'
 gem 'cocoon'
