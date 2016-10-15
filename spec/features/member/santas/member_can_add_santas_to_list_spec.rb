@@ -25,7 +25,7 @@ feature 'member can add santas to a list', :js do
         # the following test is currently commented out because of an issue with cocoon.
         # expect(List.last.santas.count).to be(1)
         within "table" do
-          within_row("Winter is coming") { click_on("View") }
+          within_row("Winter is coming") { click_on("Review List and Send") }
           expect(page).to have_content("littlejohnny@example.com")
         end
       end
