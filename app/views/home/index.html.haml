@@ -2,6 +2,7 @@
 .container
   .col-md-4
     %h1.b Secret Santa
+    %p Organise your secret santa gift exchange in minutes!
     - unless current_user
       %p= link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg btn-raised"
       %p= link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg btn-raised"
