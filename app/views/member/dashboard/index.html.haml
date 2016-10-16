@@ -18,13 +18,15 @@
             %td= list.name
             %td= list.created_at.strftime("%B %-d, %Y")
             %td.actions.tr
-              = link_to "Review List and Send", member_list_path(list), class: "btn btn-xs btn-primary btn-raised"
               - unless list.is_locked || list.gift_day_cannot_be_in_the_past
+                = link_to "Add Santas", member_list_santas_path(list), class: "btn btn-xs btn-success btn-raised"
+                = link_to "Review List and Send", member_list_path(list), class: "btn btn-xs btn-primary btn-raised"
                 = link_to "Edit", edit_member_list_path(list), class: "btn btn-xs btn-default btn-raised"
-                = link_to "Delete", member_list_path(list), class: "btn btn-xs btn-danger btn-raised",
-                  data: { confirm: "Are you sure you want to delete this list?" },
-                  method: :delete
               - else
-                = link_to "Copy list", member_list_copy_list_path(list),
+                = link_to "Review List", member_list_path(list), class: "btn btn-xs btn-primary btn-raised"
+                = link_to "Copy", member_list_copy_list_path(list),
                   class: "btn btn-xs btn-default btn-raised",
                   method: :post
+              = link_to "Delete", member_list_path(list), class: "btn btn-xs btn-danger btn-raised",
+                data: { confirm: "Are you sure you want to delete this list?" },
+                method: :delete

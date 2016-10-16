@@ -1,6 +1,6 @@
 class Member::ListsController < Member::BaseController
 
-  before_filter :redirect_if_gift_day_has_passed_or_locked, only: [:lock_and_assign, :edit, :update, :destroy]
+  before_filter :redirect_if_gift_day_has_passed_or_locked, only: [:lock_and_assign, :santas, :edit, :update]
 
   def new
     @list = current_user.lists.build
@@ -12,7 +12,7 @@ class Member::ListsController < Member::BaseController
     authorize!(:create, @list)
     @list.update_attributes(list_params)
 
-    respond_with(@list, location: member_dashboard_index_path)
+    respond_with(@list, location: member_list_santas_path(@list))
   end
 
   def lock_and_assign
@@ -46,12 +46,22 @@ class Member::ListsController < Member::BaseController
     authorize!(:edit, @list)
   end
 
+  def santas
+    find_list
+    authorize!(:edit, @list)
+  end
+
   def update
     find_list
     authorize!(:update, @list)
     @list.update_attributes(list_params)
 
-    respond_with(@list, location: member_dashboard_index_path)
+    if !@list.valid? && params[:list].include?(:santas_attributes)
+      flash.now[:danger] = "Santas could not be saved! Please try again."
+      render :santas
+    else
+      respond_with(@list, location: member_dashboard_index_path)
+    end
   end
 
   def destroy
