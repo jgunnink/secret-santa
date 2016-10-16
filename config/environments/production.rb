@@ -43,7 +43,15 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # ActionMailer settings
-  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :user_name => ENV["sendgrid_username"],
+    :password => ENV["sendgrid_password"],
+    :domain => 'yourdomain.com',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
