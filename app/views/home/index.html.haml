@@ -1,6 +1,36 @@
-.jumbotron
-  %h1 Secret Santa
-  %p Welcome to Secret Santa
-  %p
-    = link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg"
-    = link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg"
+%script{src:"//cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js"}
+.container
+  .col-md-4
+    %h1.b Secret Santa
+    %p Organise your secret santa gift exchange in minutes!
+    - unless current_user
+      %p= link_to "Create your first list!", new_user_registration_path, class: "btn btn-primary btn-lg btn-raised"
+      %p= link_to "Already an organiser? Sign in", new_user_session_path, class: "btn btn-default btn-lg btn-raised"
+    - else
+      %p= link_to "You're signed in! Go to Dashboard", member_dashboard_index_path, class: "btn btn-primary btn-lg btn-raised"
+  .col-md-8.tc
+    = image_tag("santa_with_sack_full.png")
+.container
+  .row.tc
+    .col-lg-4
+      %img.img-circle{height: "140", src: "assets/checklist.png", width: "140"}
+      %h3 Easy organising
+      %p
+        If you're organising a gift exchange for your family or workplace, let
+        Secret Santa take care of the organising for you. Easily add lists of your
+        contacts, send out notification emails, and shuffle your list of santas.
+    .col-lg-4
+      %img.img-circle{height: "140", src: "assets/open_letter.png", width: "140"}
+      %h3 How it works
+      %p
+        Once you have your list of Santas, let computer take care of the rest!
+        It will shuffle all your users around, no matter how big your list is, and
+        randomly assign each person a Santa. Once everyone is assigned, each Santa
+        recieves a notification email letting them know what the details are.
+    .col-lg-4
+      %img.img-circle{height: "140", src: "assets/gift.png", width: "140"}
+      %h3 It's free!
+      %p
+        Secret Santa is free to use. There's no adverts, no spamming and we keep
+        your details safe. The Secret Santa is free to use for lists of up to 15
+        people, but if you need more, we offer bigger list sizes.

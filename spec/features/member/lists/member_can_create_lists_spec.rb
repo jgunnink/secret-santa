@@ -5,7 +5,7 @@ feature 'Member can create a new list' do
 
   signed_in_as(:member) do
     scenario 'Member adds new list with valid data' do
-      click_on("Create a list")
+      click_on("Add new list")
       fill_in("Name", with: "Winter is coming")
       fill_in("Gift value", with: 20)
       fill_in_valid_gift_date
@@ -19,7 +19,7 @@ feature 'Member can create a new list' do
     end
 
     scenario 'Member adds new list with invalid data' do
-      click_on("Create a list")
+      click_on("Add new list")
       fill_in("Name", with: "")
       fill_in("Gift value", with: -5)
       fill_in_invalid_gift_date

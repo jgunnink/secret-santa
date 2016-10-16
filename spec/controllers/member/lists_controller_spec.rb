@@ -34,7 +34,7 @@ RSpec.describe Member::ListsController do
 
           list = List.find_by(name: params[:name])
           expect(list).to be_present
-          expect(list.gift_day).to eq(Date.tomorrow.to_time)
+          expect(list.gift_day).to eq(Date.tomorrow)
           expect(list.gift_value).to eq(20)
         end
 
@@ -204,7 +204,7 @@ RSpec.describe Member::ListsController do
           target_list.reload
           expect(target_list.name).to eq("JK's List")
           expect(target_list.user_id).to eq(user.id)
-          expect(target_list.gift_day).to eq(Date.tomorrow.to_time)
+          expect(target_list.gift_day).to eq(Date.tomorrow)
           expect(target_list.gift_value).to eq(20)
         end
 

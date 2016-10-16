@@ -19,6 +19,8 @@ feature 'Member can lock and assign santas within a list' do
     expect(page).to have_content("By proceeding now, your list will be locked!")
 
     within('.modal-footer') do
+      # We add the sleep here to give enough time for the modal to pop up in JS
+      sleep 1
       click_on('Lock, assign and send')
     end
 

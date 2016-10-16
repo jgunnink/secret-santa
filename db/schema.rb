@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20160911035447) do
     t.integer  "user_id",                    null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.datetime "gift_day"
+    t.date     "gift_day"
     t.boolean  "is_locked",  default: false, null: false
     t.integer  "gift_value"
   end
