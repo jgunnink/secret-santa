@@ -5,6 +5,7 @@ gem 'rails'
 # Database & ORM
 gem 'circular_list'
 gem 'deep_cloneable'
+gem 'exception_notification'
 gem 'paranoia'
 gem 'pg'
 gem 'ransack'

@@ -41,6 +41,9 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # ActionMailer settings
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.smtp_settings = {
     :user_name => ENV["sendgrid_username"],
     :password => ENV["sendgrid_password"],
@@ -49,6 +52,15 @@ Rails.application.configure do
     :port => 587,
     :authentication => :plain,
     :enable_starttls_auto => true
+  }
+
+  # Exception Notifications
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    :deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
+    :email_prefix => "[ERROR] ",
+    :sender_address => %{"Santa Notifier" <errors@secretsanta.website>},
+    :exception_recipients => %w{jgunnink@gmail.com}
   }
 
   # Send deprecation notices to registered listeners.
