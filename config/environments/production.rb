@@ -46,7 +46,7 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
     :user_name => ENV["sendgrid_username"],
     :password => ENV["sendgrid_password"],
-    :domain => 'yourdomain.com',
+    :domain => 'secretsanta.website',
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,
