@@ -1,6 +1,7 @@
 .nested-fields
   .col-md-5
-    = f.input :name, class: "form-control"
-  .col-md-7
-    = f.input :email, class: "form-control"
-  = link_to_remove_association "Remove Santa", f, class: "btn btn-danger btn-xs btn-raised"
+    = f.input :name, class: "form-control", required: true
+  .col-md-5
+    = f.input :email, class: "form-control", required: true
+  .col-md-2.form-actions
+    = link_to_remove_association "Remove Santa", f, class: "btn btn-danger btn-xs btn-raised"

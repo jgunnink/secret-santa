@@ -41,15 +41,13 @@ feature "Member can edit an existing list" do
     expect(current_path).to eq(member_dashboard_index_path)
   end
 
-  context "the gift day has passed" do
-    before { list.update_attribute(:gift_day, Date.yesterday) }
+  context "the list is locked" do
+    before { list.update_attribute(:is_locked, true) }
 
-    scenario "user cannot update list" do
-      within "table" do
-        click_on("Edit")
-      end
+    scenario "user cannot edit list" do
+      visit edit_member_list_path(list)
 
-      expect(page).to have_flash :warning, "Sorry! You can no longer modify or delete this list! Either the list is locked or the gift day has passed."
+      expect(page).to have_flash :warning, "Sorry! You can no longer modify this list! The list has been locked and Santas notified."
       expect(page).to have_content(list.name)
     end
   end
