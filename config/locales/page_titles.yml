@@ -17,6 +17,9 @@ en:
         title: "Viewing list: %{label}"
       edit:
         title: "Edit %{label} list"
+      santas:
+        title: "Add or remove Santas"
+
 
   admin:
     dashboard:

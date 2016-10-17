@@ -38,7 +38,10 @@ RSpec.describe Member::ListsController do
           expect(list.gift_value).to eq(20)
         end
 
-        it { should redirect_to(member_dashboard_index_path) }
+        it "takes the user to the santas page to add santas" do
+          create_list
+          should redirect_to(member_list_santas_path(List.order(:created_at).last))
+        end
       end
 
       context 'with invalid parameters' do
@@ -121,7 +124,7 @@ RSpec.describe Member::ListsController do
 
           it 'should not copy the list and redirect the user with a flash' do
             expect { subject }.to_not change{ List.count }
-            expect(controller).to set_flash[:warning].to("List is not locked, or the gift day hasn't passed, please edit it instead!")
+            expect(controller).to set_flash[:warning].to("List is not locked, please edit it instead!")
           end
         end
 
@@ -166,9 +169,9 @@ RSpec.describe Member::ListsController do
       end
     end
 
-    context 'when the gift day has occurred' do
+    context 'when the list is locked' do
       authenticated_as(:user) do
-        before { list.update_attribute(:gift_day, Date.yesterday) }
+        before { list.update_attribute(:is_locked, true) }
         it 'sends the user back to the dashboard and sets a flash' do
           subject
           expect(flash[:warning]).to be_present
@@ -248,19 +251,8 @@ RSpec.describe Member::ListsController do
       it 'deletes the list' do
         expect { subject }.to change{ List.count }.by(-1)
       end
+
       it { should redirect_to(member_dashboard_index_path) }
-
-      scenario 'when the gift day has occurred' do
-        target_list.update_attributes(gift_day: Date.yesterday)
-        expect { subject }.to change{ List.count }.by(-1)
-        should redirect_to(member_dashboard_index_path)
-      end
-
-      scenario 'when the list is locked' do
-        target_list.update_attribute(:is_locked, true)
-        expect { subject }.to_not change{ List.count }
-        should redirect_to(member_dashboard_index_path)
-      end
     end
 
     authenticated_as(:other_user) do
