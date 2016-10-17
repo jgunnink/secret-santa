@@ -19,5 +19,6 @@ module SecretSanta
     config.time_zone = "Australia/Perth"
 
     config.responders.flash_keys = [ :success, :danger ]
+    config.serve_static_assets = true
   end
 end
