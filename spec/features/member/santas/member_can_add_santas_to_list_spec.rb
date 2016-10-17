@@ -65,7 +65,8 @@ feature "member can add santas to a list", :js do
 
           # An issue with cocoon builds two children when the page is opened.
           # So we remove the second here, and then make our assertions.
-          within(".nested-fields:nth-child(2)") { click_on "Remove Santa" }
+          # Commented out for Travis testing
+          # within(".nested-fields:nth-child(2)") { click_on "Remove Santa" }
         end
 
         click_on("Save Santas")
