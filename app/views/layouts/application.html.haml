@@ -3,6 +3,7 @@
   %head
   %title= page_title
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
   %body.bg-lightest-blue
     %header
@@ -26,6 +27,3 @@
       Made for fun in Perth, Western Australia by
       = succeed "." do
         = link_to "JK Gunnink", "http://twitter.com/jgunnink/", class: "link underline black"
-
-
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
