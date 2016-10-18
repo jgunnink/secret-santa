@@ -7,7 +7,6 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - cp config/smtp.yml.sample config/smtp.yml
-  - cp config/smtp.yml.sample config/smtp.yml
   - cp config/secrets.yml.travis config/secrets.yml
   - bundle exec rake secret
 script:
