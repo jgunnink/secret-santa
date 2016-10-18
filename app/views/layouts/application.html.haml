@@ -5,18 +5,25 @@
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
-  %body
+  %body.bg-lightest-blue
     %header
-      .container
-        .navigation-wrapper
-          = render "layouts/navigation"
-        - flash.each do |key, value|
-          .flash-wrapper
-            -# the following two conditionals override devise
-            - if key == 'notice'
-              - key = 'success'
-            - if key == 'alert'
-              - key = 'danger'
-            .alert{class: "alert-#{key}"}= value
+      .navigation-wrapper
+        = render "layouts/navigation"
+      - flash.each do |key, value|
+        .flash-wrapper
+          -# the following two conditionals override devise
+          - if key == 'notice'
+            - key = 'success'
+          - if key == 'alert'
+            - key = 'danger'
+          .alert{class: "alert-#{key}"}= value
 
-        = content_for?(:content) ? yield(:content) : yield
+  .container
+    = content_for?(:content) ? yield(:content) : yield
+
+  .container.footer.bt.b--black-30
+    %p.muted.credit.tc.pa2
+      = image_tag("santa_face_40.png")
+      Made for fun in Perth, Western Australia by
+      = succeed "." do
+        = link_to "JK Gunnink", "http://twitter.com/jgunnink/", class: "link underline black"

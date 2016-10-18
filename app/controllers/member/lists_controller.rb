@@ -1,6 +1,6 @@
 class Member::ListsController < Member::BaseController
 
-  before_filter :check_if_gift_day_has_passed_or_locked, only: [:lock_and_assign, :edit, :update, :destroy]
+  before_filter :redirect_if_locked, only: [:lock_and_assign, :santas, :edit, :update]
 
   def new
     @list = current_user.lists.build
@@ -12,7 +12,12 @@ class Member::ListsController < Member::BaseController
     authorize!(:create, @list)
     @list.update_attributes(list_params)
 
-    respond_with(@list, location: member_dashboard_index_path)
+    if !@list.valid?
+      flash.now[:danger] = "List could not be created. Please address the errors below."
+      render :new
+    else
+      respond_with(@list, location: member_list_santas_path(@list))
+    end
   end
 
   def lock_and_assign
@@ -27,7 +32,26 @@ class Member::ListsController < Member::BaseController
     render :show
   end
 
+  def copy_list
+    find_list
+    authorize!(:copy, @list)
+    if @list.is_locked? || Time.now > @list.gift_day
+      new_list = @list.deep_clone include: :santas
+      new_list.update_attributes(gift_day: Time.now + 2.months, is_locked: false)
+      @list = new_list
+      respond_with(@list, location: edit_member_list_path(@list))
+    else
+      flash[:warning] = "List is not locked, please edit it instead!"
+      render :show
+    end
+  end
+
   def edit
+    find_list
+    authorize!(:edit, @list)
+  end
+
+  def santas
     find_list
     authorize!(:edit, @list)
   end
@@ -35,9 +59,15 @@ class Member::ListsController < Member::BaseController
   def update
     find_list
     authorize!(:update, @list)
-    @list.update_attributes(list_params)
+    # This prevents the list from being updated with nothing preventing an exception.
+    @list.update_attributes(list_params) if params.include?(:list)
 
-    respond_with(@list, location: member_dashboard_index_path)
+    if !@list.valid? && params[:list].include?(:santas_attributes)
+      flash.now[:danger] = "Santas could not be saved! Please try again."
+      render :santas
+    else
+      respond_with(@list, location: member_dashboard_index_path)
+    end
   end
 
   def destroy
@@ -45,7 +75,7 @@ class Member::ListsController < Member::BaseController
     authorize!(:destroy, @list)
     @list.destroy
 
-    respond_with(@list, location: member_dashboard_index_path, success: 'List was successfully deleted')
+    respond_with(@list, location: member_dashboard_index_path, success: "List was successfully deleted.")
   end
 
   def show
@@ -72,12 +102,11 @@ private
     end
   end
 
-  def check_if_gift_day_has_passed_or_locked
+  def redirect_if_locked
     find_list
-    if Time.current > @list.gift_day || @list.is_locked
-      flash[:warning] =
-        'Sorry! You can no longer modify or delete this list!
-        Either the list is locked or the gift day has passed.'
+    if @list.is_locked?
+      flash[:warning] = "Sorry! You can no longer modify this list!
+                        The list has been locked and Santas notified."
       redirect_to member_dashboard_index_path
     end
   end

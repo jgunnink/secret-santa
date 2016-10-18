@@ -2,9 +2,14 @@ default: &DEFAULT
   :address: localhost
   :port: 1025
 
-jazz: &JAZZ
-  :address: jazz.thefrontiergroup.net.au
-  :port: 25
+sendgrid: &SENDGRID
+  :address: smtp.sendgrid.net
+  :port: 587
+  :user_name: ENV["sendgrid_username"]
+  :password: ENV["sendgrid_password"]
+  :domain: secretsanta.website
+  :authentication: :plain,
+  :enable_starttls_auto: true
 
 development:
   <<: *DEFAULT
@@ -13,8 +18,8 @@ test:
   <<: *DEFAULT
 
 staging:
-  <<: *JAZZ
+  <<: *SENDGRID
 
 # Use SendGrid for production
 production:
-  <<: *JAZZ
+  <<: *SENDGRID

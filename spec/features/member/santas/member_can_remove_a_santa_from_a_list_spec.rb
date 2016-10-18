@@ -10,14 +10,14 @@ feature 'a member can remove a santa from a list', :js do
     scenario 'member edits list and removes santa' do
       visit member_dashboard_index_path
       within "table" do
-        within_row(list.name) { click_on("Edit") }
+        within_row(list.name) { click_on("Add Santas") }
       end
 
       within "#santas" do
         click_on("Remove Santa")
       end
 
-      click_on("Update List")
+      click_on("Save Santas")
 
       expect(page.find('.alert.alert-success')).to have_content("List was successfully updated.")
       expect(Santa.first).to be_nil

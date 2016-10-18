@@ -17,5 +17,3 @@ coverage/*
 
 # Ignore config files
 config/database.yml
-config/secrets.yml
-config/smtp.yml

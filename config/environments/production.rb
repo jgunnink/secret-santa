@@ -19,15 +19,13 @@ Rails.application.configure do
   # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
   # config.action_dispatch.rack_cache = true
 
-  # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_files = false
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
-  # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -43,7 +41,27 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # ActionMailer settings
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: 'staging.secretsanta.website' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :user_name => ENV["sendgrid_username"],
+    :password => ENV["sendgrid_password"],
+    :domain => 'staging.secretsanta.website',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
+
+  # Exception Notifications
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  email: {
+    email_prefix: "[ERROR] ",
+    sender_address: %{"Santa Notifier" <errors@secretsanta.website>},
+    exception_recipients: %w{jgunnink@gmail.com}
+  }
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify

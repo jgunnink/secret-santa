@@ -3,10 +3,11 @@ source 'https://rubygems.org'
 gem 'rails'
 
 # Database & ORM
+gem 'circular_list'
+gem 'deep_cloneable'
 gem 'paranoia'
 gem 'pg'
 gem 'ransack'
-gem 'circular_list'
 
 # Authentication & Authorization
 gem 'devise'
@@ -14,6 +15,7 @@ gem 'cancancan'
 
 # Presentation
 gem 'active_link_to'
+gem 'bootstrap-material-design'
 gem 'bootstrap-sass'
 gem 'bourbon'
 gem 'cocoon'
@@ -28,6 +30,7 @@ gem 'normalize-rails'
 gem 'page_title_helper'
 gem 'sass-rails'
 gem 'simple_form'
+gem 'tachyons-rails'
 gem 'turbolinks'
 gem 'uglifier'
 
@@ -66,4 +69,9 @@ end
 group :staging do
   # Enable "Staging" ribbon on top right corner
   gem 'rack-dev-mark'
+end
+
+group :staging, :production do
+  gem 'rails_12factor'
+  gem 'exception_notification'
 end

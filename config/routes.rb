@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :dashboard, only: :index
     resources :lists do
       patch :lock_and_assign
+      post :copy_list
+      get :santas
     end
   end
 

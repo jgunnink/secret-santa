@@ -10,9 +10,12 @@
       %p By proceeding now, your list will be locked!
       %p Your santas will be assigned someone and everyone in your list will be emailed.
       %p Once this happens, there is no going back, so please be certain!
+      %p A sample of the email that will be sent out is shown below.
+      %hr
+      %p= image_tag "sample_email.png"
     .modal-footer
       %p= button_to "Lock, assign and send",
         member_list_lock_and_assign_url(@list),
-        method: :patch, class: "btn btn-large btn-danger",
+        method: :patch, class: "btn btn-large btn-danger btn-raised",
         data: { disable_with: "Please wait..." },
         disabled: (not_enough)

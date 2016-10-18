@@ -9,7 +9,7 @@ class List::ShuffleAndAssignSantas
   def assign_and_email
     randomise_and_assign(@santas)
     @santas.each do |santa|
-      AssignmentMailer.send_assignment(santa).deliver_later
+      AssignmentMailer.send_assignment(santa).deliver_now
     end
     # We override the validation here otherwise the is_locked validation kicks in
     # which prevents us from saving the instance of list.

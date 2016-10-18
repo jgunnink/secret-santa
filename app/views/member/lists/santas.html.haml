@@ -1,0 +1,15 @@
+.col-md-9
+  %h2 Santas
+  = simple_form_for [:member, @list], html: { class: 'form', novalidate: false  } do |f|
+    %i Don't forget to include your own Name and Email if you're taking part
+    #santas
+      .form-group
+        = f.simple_fields_for :santas do |santa|
+          = render "santa_fields", f: santa
+      .form-group
+        .links
+          = link_to_add_association "Add Santa", f, :santas, class: "btn btn-default btn-raised"
+          = f.submit "Save Santas", class: "btn btn-primary btn-raised"
+
+.col-md-3.tr.pt5
+  = image_tag("santa_with_sack_full.png")

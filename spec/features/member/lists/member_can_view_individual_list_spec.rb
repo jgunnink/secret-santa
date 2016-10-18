@@ -12,7 +12,7 @@ feature 'Member can view an existing list' do
 
   scenario 'signed in user can view existing list' do
     within 'table' do
-      click_on('View')
+      click_on('Review List and Send')
     end
 
     expect(page).to have_content("Viewing list: #{list.name}")

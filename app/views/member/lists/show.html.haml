@@ -1,5 +1,7 @@
 %main{role: "main"}
   %h1= current_page_title(@list.name)
+  %i The gift day set for this list is #{@list.gift_day.strftime("%A, %B %-d, %Y")}
+  %hr
 
   - not_enough = @list.santas.count < 3
 
@@ -7,10 +9,18 @@
     - unless @list.is_locked
       - if not_enough
         %i= "Please add some more Santas to your list. We need at least three."
+        = link_to "Add more Santas", member_list_santas_path(@list),
+          class: "btn btn-small btn-default btn-raised"
+      - elsif @list.gift_day < Time.zone.today
+        .alert.alert-warning{role: "alert"}
+          The gift day has passed. Before you can email your users, you must set a new date.
+          = link_to "Set new date", "#", class: "btn btn-default"
       - else
         %p Ready to set recipients for your list and lock it in?
-        %button.btn.btn-primary.btn-large.btn-success{"data-target" => "#confirm_lock_and_send", "data-toggle" => "modal", type: "button"}
+        %button.btn.btn-large.btn-success.btn-raised{"data-target" => "#confirm_lock_and_send", "data-toggle" => "modal", type: "button"}
           Lock, assign and send
+        = link_to "Add more Santas to this list", member_list_santas_path(@list),
+          class: "btn btn-small btn-default btn-raised"
         #confirm_lock_and_send.modal.fade{"aria-labelledby" => "confirm_lock_and_sendLabel", role: "dialog", tabindex: "-1"}
           = render 'confirm_modal'
     - else
@@ -28,8 +38,8 @@
               %td= santa.email
   - else
     %p There aren't any Santas in this list yet!
-    = link_to "Add some?", edit_member_list_path(@list),
-    class: "btn btn-small btn-default"
+    = link_to "Add some?", member_list_santas_path(@list),
+    class: "btn btn-small btn-default btn-raised"
     or
 
-  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary"
+  = link_to "Go Back", member_dashboard_index_path, class: "btn btn-primary btn-raised"
