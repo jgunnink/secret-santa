@@ -41,14 +41,26 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # ActionMailer settings
+  config.action_mailer.default_url_options = { host: 'staging.secretsanta.website' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :user_name => ENV["sendgrid_username"],
     :password => ENV["sendgrid_password"],
-    :domain => 'secretsanta.website',
+    :domain => 'staging.secretsanta.website',
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,
     :enable_starttls_auto => true
+  }
+
+  # Exception Notifications
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  email: {
+    email_prefix: "[ERROR] ",
+    sender_address: %{"Santa Notifier" <errors@secretsanta.website>},
+    exception_recipients: %w{jgunnink@gmail.com}
   }
 
   # Send deprecation notices to registered listeners.

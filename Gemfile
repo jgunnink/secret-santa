@@ -70,3 +70,8 @@ group :staging do
   # Enable "Staging" ribbon on top right corner
   gem 'rack-dev-mark'
 end
+
+group :staging, :production do
+  gem 'rails_12factor'
+  gem 'exception_notification'
+end
