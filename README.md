@@ -3,7 +3,7 @@
 
 Rails application which handles the secret santa operations for an organiser of a secret santa.
 
-## Project Champion
+## Developer
 
 [JK Gunnink](http://twitter.com/jgunnink)
 
@@ -18,7 +18,7 @@ The Frontier Group's [Rails Template](https://github.com/thefrontiergroup/rails-
 
 ## Staging Environment Information
 
-TODO: Add staging information.
+URL: http://staging.secretsanta.website/
 
 ## Production Environment Information
 
