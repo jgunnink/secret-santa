@@ -5,7 +5,7 @@ class List < ActiveRecord::Base
 
   accepts_nested_attributes_for :santas, reject_if: :all_blank, allow_destroy: true
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :gift_day, presence: true
   validates :gift_value, numericality: { greater_than: 0, less_than: 10_000, only_integer: true },
                          allow_blank: true

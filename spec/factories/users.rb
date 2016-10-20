@@ -3,16 +3,16 @@ FactoryGirl.define do
   factory :user do
     email    { FFaker::Internet.email }
     password "password"
-    role "member"
+    role :member
     given_names { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
 
     trait :admin do
-      role "admin"
+      role :admin
     end
 
     trait :member do
-      role "member"
+      role :member
     end
   end
 

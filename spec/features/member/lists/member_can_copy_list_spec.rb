@@ -49,10 +49,8 @@ feature "Member can copy an existing list" do
     end
 
     scenario "member cannot see the Copy button" do
-      within "table" do
-        within_row(list.name) do
-          expect(page).to_not have_link("Copy")
-        end
+      within_row(list.name) do
+        expect(page).to_not have_link("Copy")
       end
     end
   end
