@@ -12,7 +12,7 @@ describe AssignmentMailer do
     end
     let!(:list) { santa.list }
 
-    it { should deliver_from('Captain Santa <captain-santa@secretsanta.website>') }
+    it { should deliver_from('Captain Santa <captain-santa@notifications.secretsanta.website>') }
     it { should have_subject "Your Secret Santa for #{list.name}" }
     it { should have_content "Dear #{santa.name}" }
     it { should have_content "You're on the list for #{list.name}" }
