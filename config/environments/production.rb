@@ -48,7 +48,7 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
     :user_name => ENV["sendgrid_username"],
     :password => ENV["sendgrid_password"],
-    :domain => 'staging.secretsanta.website',
+    :domain => 'notifications.secretsanta.website',
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,
@@ -59,7 +59,7 @@ Rails.application.configure do
   Rails.application.config.middleware.use ExceptionNotification::Rack,
   email: {
     email_prefix: "[ERROR] ",
-    sender_address: %{"Santa Notifier" <errors@secretsanta.website>},
+    sender_address: %{"Santa Notifier" <errors@notifications.secretsanta.website>},
     exception_recipients: %w{jgunnink@gmail.com}
   }
 
