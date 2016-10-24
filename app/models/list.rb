@@ -12,11 +12,16 @@ class List < ActiveRecord::Base
 
   validate :gift_day_cannot_be_in_the_past, on: [:create, :update]
   validate :cannot_be_changed, on: :update
+  validate :list_size_limit
 
   def gift_day_cannot_be_in_the_past
     if gift_day.present? && gift_day < Time.zone.today
       errors.add(:gift_day, "You can't set the gift day to be today or in the past")
     end
+  end
+
+  def list_size_limit
+    errors.add(:santa, "This list is limited to 15 Santas") if santas.size > 15
   end
 
 private

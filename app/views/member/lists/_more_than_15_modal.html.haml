@@ -1,0 +1,20 @@
+.modal-dialog{role: "document"}
+  .modal-content
+    .modal-header
+      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+        %span{"aria-hidden" => "true"} ×
+      %h4#more_than_15Label.modal-title Too many Santas!
+    .modal-body
+      %h3 Heads up!
+      %p At this time, Secret Santa only supports lists of up to 15 people.
+      %p
+        Soon, we'll be introducing paid options which allows people to purchase
+        additional slots in their lists supporting more people.
+      %p
+        However until then we regret (mostly due to spam and abuse prevention
+        reasons) that this limit must be enforced, and we trust you understand
+        this decision.
+      %hr
+      %p.tc= image_tag "santa_with_sack_med.png"
+    .modal-footer
+      %button.close{"aria-label" => "Thanks, I understand!", "data-dismiss" => "modal", type: "button"}

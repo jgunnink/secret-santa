@@ -1,6 +1,13 @@
 .col-md-9
   %h2 Santas
   = simple_form_for [:member, @list], html: { class: 'form', novalidate: false  } do |f|
+    - if @list.santas.size > 15
+      %button.btn.btn-large.btn-warning{"data-target" => "#more_than_15", "data-toggle" => "modal", type: "button"}
+        Too many Santas!
+      #more_than_15.modal.fade{"aria-labelledby" => "more_than_15Label", role: "dialog", tabindex: "-1"}
+        = render "more_than_15_modal"
+        %br
+        %br
     %i Don't forget to include your own Name and Email if you're taking part
     #santas
       .form-group

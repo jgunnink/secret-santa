@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911035447) do
+ActiveRecord::Schema.define(version: 20161024134447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160911035447) do
     t.date     "gift_day"
     t.boolean  "is_locked",  default: false, null: false
     t.integer  "gift_value"
+    t.boolean  "limited",    default: false, null: false
   end
 
   add_index "lists", ["created_at"], name: "index_lists_on_created_at", using: :btree
