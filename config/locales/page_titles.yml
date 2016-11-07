@@ -16,7 +16,7 @@ en:
       show:
         title: "Viewing list: %{label}"
       edit:
-        title: "Edit %{label} list"
+        title: "Edit list"
       santas:
         title: "Add or remove Santas"
 

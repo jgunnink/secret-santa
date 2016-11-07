@@ -1,42 +1,68 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe List do
-  describe '@name' do
+  describe "@name" do
     it { should validate_presence_of(:name) }
+    it { should validate_length_of(:name).is_at_least(2).is_at_most(50) }
   end
 
-  describe '@gift_value' do
+  describe "@gift_value" do
     it { should validate_numericality_of(:gift_value).is_less_than(10_000)
                                                      .is_greater_than(0) }
     it { should allow_value("", nil).for(:gift_value) }
   end
 
-  describe '@gift_day' do
+  describe "@gift_day" do
     it { should validate_presence_of(:gift_day) }
 
-    context 'the gift day is set in the past' do
+    context "the gift day is set in the past" do
       let!(:list) { FactoryGirl.build(:list, gift_day: Date.yesterday) }
 
-      it 'should not be valid and give errors' do
+      it "should not be valid and give errors" do
         expect(list).to_not be_valid
         expect(list.errors[:gift_day]).to be_present
       end
     end
 
-    context 'the gift day is set in the future' do
+    context "the gift day is set in the future" do
       let!(:list) { FactoryGirl.build(:list, gift_day: Date.tomorrow) }
 
-      it 'should be valid' do
+      it "should be valid" do
         expect(list).to be_valid
       end
     end
 
-    context 'the gift day is not set' do
+    context "the gift day is not set" do
       let!(:list) { FactoryGirl.build(:list, gift_day: nil) }
 
-      it 'should not be valid and give errors' do
+      it "should not be valid and give errors" do
         expect(list).to_not be_valid
         expect(list.errors[:gift_day]).to be_present
+      end
+    end
+  end
+
+  describe "#list_size_limit" do
+    let!(:size_limited_list) { FactoryGirl.build(:list, santas: santas) }
+    let!(:santas) { FactoryGirl.build_list(:santa, number) }
+    subject { size_limited_list }
+
+    context "where the number of santas is less than 15" do
+      let(:number) { 14 }
+      it { should be_valid }
+    end
+
+    context "where the number of santas is 15" do
+      let(:number) { 15 }
+      it { should be_valid }
+    end
+
+    context "where the number of santas is greater than 15" do
+      let(:number) { 16 }
+      it { should_not be_valid }
+      it "has errors on the object" do
+        subject.valid?
+        expect(size_limited_list.errors.first).to include "This list is limited to 15 Santas"
       end
     end
   end

@@ -72,6 +72,7 @@ group :staging do
 end
 
 group :staging, :production do
+  gem 'puma'
   gem 'rails_12factor'
   gem 'exception_notification'
 end

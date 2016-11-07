@@ -1,8 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User do
 
-  describe '@email' do
+  describe "@given_names" do
+    it { should validate_presence_of(:given_names) }
+    it { should validate_length_of(:given_names).is_at_least(2).is_at_most(20) }
+  end
+
+  describe "@email" do
     let!(:user)    { FactoryGirl.create(:user) }
     let(:new_user) { FactoryGirl.build(:user, email: user.email) }
 
@@ -35,15 +40,15 @@ RSpec.describe User do
     end
   end
 
-  describe '@password' do
+  describe "@password" do
     it { should validate_presence_of(:password) }
   end
 
-  describe '@role' do
+  describe "@role" do
     it { should validate_presence_of(:role) }
   end
 
-  describe '#to_s' do
+  describe "#to_s" do
     specify { expect(User.new(email: "yolo").to_s).to eq("yolo") }
   end
 
