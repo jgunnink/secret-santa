@@ -29,6 +29,45 @@ RSpec.describe User do
       new_user.deleted_at = user.deleted_at
       expect(new_user).to be_valid
     end
+
+    context "testing validity of email address with regex matcher" do
+      let!(:user) { FactoryGirl.build(:user, email: email) }
+
+      context "where the email is abc@example.com" do
+        let(:email) { "abc@example.com" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is q@123.com" do
+        let(:email) { "q@123.com" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is user@staff.secretsanta.website" do
+        let(:email) { "user@staff.secretsanta.website" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is user@secret-staff.secretsanta.website" do
+        let(:email) { "user@secret-staff.secretsanta.website" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is craig@gmail" do
+        let(:email) { "craig@gmail" }
+        specify { expect(user).to_not be_valid }
+      end
+
+      context "where the email is someone@example.c" do
+        let(:email) { "someone@example.c" }
+        specify { expect(user).to_not be_valid }
+      end
+
+      context "where the email is (&^%(@example.com" do
+        let(:email) { "(&^%(@example.com" }
+        specify { expect(user).to_not be_valid }
+      end
+    end
   end
 
   describe "@lists" do
