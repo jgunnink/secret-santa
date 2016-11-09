@@ -1,3 +1,36 @@
-%hmtl
-  %body
-    = yield
+!!!
+%html
+  %head
+    %title
+      Secret Santa
+    :sass
+      body
+        margin: 0px !important
+        padding: 0px !important
+      a
+        color: #357edd
+        font-weight: bold
+        text-decoration: none
+
+      h1
+        font-size: 18px
+      p
+        line-height: 1.5
+
+      table.content
+        margin: 0px auto !important
+        width: 520px !important
+
+      @media screen and (max-width: 480px)
+        table.content
+          width: 300px !important
+  %body{style: 'background-color: #f5f3f3; font-family: Helvetica, Lato, Arial, sans-serif; color: #49515f; font-size: 16px' }
+    %table{ width: '100%', background: '#f5f3f3', style: 'background-color: #f5f3f3; font-family: Helvetica, Arial, sans-serif; color: #49515f; font-size: 16px'}
+      %tbody
+        %tr
+          %td{style: 'padding: 2%;'}
+            %table.content{cellpadding: 0, cellspacing: 0, border: 0}
+              %tbody
+                %tr
+                  %td.content{colspan: 3, background: '#ffffff', style: 'padding: 30px; background-color: #ffffff; font-size: 16px;'}
+                    = yield
