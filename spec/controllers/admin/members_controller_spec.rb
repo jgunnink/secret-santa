@@ -86,7 +86,7 @@ RSpec.describe Admin::MembersController do
   describe 'POST update' do
     subject(:update_user) { post :update, id: target_user.id, user: params }
     let(:params) { {} }
-    let(:target_user) { FactoryGirl.create(:user, :member) }
+    let(:target_user) { FactoryGirl.create(:user, :member, email: "pending@example.com") }
 
     authenticated_as(:admin) do
 
@@ -100,11 +100,11 @@ RSpec.describe Admin::MembersController do
           }
         end
 
-        it "creates a User object with the given attributes" do
+        it "updates a User object with the given attributes" do
           update_user
 
           target_user.reload
-          expect(target_user.email).to eq("jk@example.com")
+          expect(target_user.email).to eq("pending@example.com")
           expect(target_user.given_names).to eq("JK")
           expect(target_user.last_name).to eq("Gunnink")
           expect(target_user).to be_member
