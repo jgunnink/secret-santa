@@ -15,14 +15,16 @@ feature 'Admin can update an existing User' do
 
     scenario 'Admin updates user with valid data' do
       fill_in("Email", with: "valid@example.com")
-      fill_in("Given names", with: "John")
+      fill_in("Given names", with: "Jean-Klaas")
       click_button("Update User")
 
       # Current user should be redirected to the index
       expect(current_path).to eq(admin_admins_path)
 
+      # Email will not change until confirmed
+      expect(target_user.reload.email).to eq("something@nothing.com")
       # User should be saved
-      expect(target_user.reload.email).to eq("valid@example.com")
+      expect(target_user.reload.given_names).to eq("Jean-Klaas")
     end
 
     scenario 'Admin updates user with invalid data' do

@@ -2,26 +2,27 @@ require 'rails_helper'
 
 feature 'Member can update their profile' do
 
-  signed_in_as(:member) do
-    before do
-      click_header_option("My Profile")
-    end
+  let(:member) { FactoryGirl.create(:user, :member, email: "jk@example.com") }
 
-    scenario 'With valid data' do
-      fill_in("Email", with: "valid@example.com")
-      fill_in("Current password", with: "password")
-      click_button("Update")
+  background do
+    sign_in_as(member)
+    click_header_option("My Profile")
+  end
 
-      # User should be saved
-      click_header_option("My Profile")
-      expect(current_user.reload.email).to eq("valid@example.com")
-    end
+  scenario 'With valid data' do
+    fill_in("Email", with: "valid@example.com")
+    fill_in("Current password", with: "password")
+    click_button("Update")
 
-    scenario 'With invalid data' do
-      fill_in("Email", with: "")
-      click_button("Update")
+    # Email will not change until confirmed
+    expect(member.email).to eq("jk@example.com")
+    expect(page).to have_flash :success, "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
+  end
 
-      expect(page).to have_content("can't be blank")
-    end
+  scenario 'With invalid data' do
+    fill_in("Email", with: "")
+    click_button("Update")
+
+    expect(page).to have_content("can't be blank")
   end
 end
