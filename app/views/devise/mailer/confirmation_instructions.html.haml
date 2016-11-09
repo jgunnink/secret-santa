@@ -1,4 +1,6 @@
-%p
-  Welcome #{@email}!
+%p Welcome to Secret Santa!
 %p You can confirm your account email through the link below:
-%p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+%p= link_to "Confirm my account", confirmation_url(@resource, confirmation_token: @token)
+%p Captain Santa
+
+= image_tag("santa_with_sack_med.png")
