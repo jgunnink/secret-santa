@@ -1,5 +1,6 @@
 # This class handles the organising of santas and recipients
-class List::ShuffleAndAssignSantas
+class List::ShuffleAndAssignSantas < ActiveJob::Base
+  queue_as :default
 
   def initialize(list)
     @list = list
@@ -9,7 +10,7 @@ class List::ShuffleAndAssignSantas
   def assign_and_email
     randomise_and_assign(@santas)
     @santas.each do |santa|
-      AssignmentMailer.send_assignment(santa).deliver_now
+      AssignmentMailer.send_assignment(santa).deliver_later
     end
     # We override the validation here otherwise the is_locked validation kicks in
     # which prevents us from saving the instance of list.
