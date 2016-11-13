@@ -1,0 +1,4 @@
+:backtrace: true
+:queues:
+  - default
+  - mailers
