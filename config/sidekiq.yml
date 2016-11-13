@@ -3,4 +3,4 @@
   - default
   - mailers
 production:
-  :concurrency: 7
+  :concurrency: 3
