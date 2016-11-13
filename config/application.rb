@@ -11,6 +11,8 @@ module SecretSanta
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
 
+    config.active_job.queue_adapter = :sidekiq
+
     config.autoload_paths << Rails.root.join('lib')
 
     config.should_seed_application_data = false

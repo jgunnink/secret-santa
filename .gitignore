@@ -10,6 +10,7 @@
 /tmp
 /.sass-cache
 /.byebug_history
+dump.rdb
 
 # Ignore spec files
 results/rspec.xml
