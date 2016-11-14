@@ -8,6 +8,7 @@ gem 'deep_cloneable'
 gem 'paranoia'
 gem 'pg'
 gem 'ransack'
+gem 'sidekiq'
 
 # Authentication & Authorization
 gem 'devise'
@@ -20,6 +21,7 @@ gem 'bootstrap-sass'
 gem 'bourbon'
 gem 'cocoon'
 gem 'coffee-rails'
+gem 'foreman'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'jquery-timepicker-rails'
@@ -72,6 +74,7 @@ group :staging do
 end
 
 group :staging, :production do
+  gem 'puma'
   gem 'rails_12factor'
   gem 'exception_notification'
 end

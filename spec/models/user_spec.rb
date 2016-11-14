@@ -1,8 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User do
 
-  describe '@email' do
+  describe "@given_names" do
+    it { should validate_presence_of(:given_names) }
+    it { should validate_length_of(:given_names).is_at_least(2).is_at_most(20) }
+  end
+
+  describe "@email" do
     let!(:user)    { FactoryGirl.create(:user) }
     let(:new_user) { FactoryGirl.build(:user, email: user.email) }
 
@@ -24,6 +29,45 @@ RSpec.describe User do
       new_user.deleted_at = user.deleted_at
       expect(new_user).to be_valid
     end
+
+    context "testing validity of email address with regex matcher" do
+      let!(:user) { FactoryGirl.build(:user, email: email) }
+
+      context "where the email is abc@example.com" do
+        let(:email) { "abc@example.com" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is q@123.com" do
+        let(:email) { "q@123.com" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is user@staff.secretsanta.website" do
+        let(:email) { "user@staff.secretsanta.website" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is user@secret-staff.secretsanta.website" do
+        let(:email) { "user@secret-staff.secretsanta.website" }
+        specify { expect(user).to be_valid }
+      end
+
+      context "where the email is craig@gmail" do
+        let(:email) { "craig@gmail" }
+        specify { expect(user).to_not be_valid }
+      end
+
+      context "where the email is someone@example.c" do
+        let(:email) { "someone@example.c" }
+        specify { expect(user).to_not be_valid }
+      end
+
+      context "where the email is (&^%(@example.com" do
+        let(:email) { "(&^%(@example.com" }
+        specify { expect(user).to_not be_valid }
+      end
+    end
   end
 
   describe "@lists" do
@@ -35,15 +79,15 @@ RSpec.describe User do
     end
   end
 
-  describe '@password' do
+  describe "@password" do
     it { should validate_presence_of(:password) }
   end
 
-  describe '@role' do
+  describe "@role" do
     it { should validate_presence_of(:role) }
   end
 
-  describe '#to_s' do
+  describe "#to_s" do
     specify { expect(User.new(email: "yolo").to_s).to eq("yolo") }
   end
 

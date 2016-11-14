@@ -21,7 +21,7 @@ RSpec.describe List::ShuffleAndAssignSantas do
       expect(givers.size).to be(santas.size)
     end
 
-    scenario 'each santa should recieve an email' do
+    scenario 'each santa should recieve an email', sidekiq: :inline do
       expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(5)
     end
 

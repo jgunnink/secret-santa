@@ -11,6 +11,8 @@ module SecretSanta
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
 
+    config.active_job.queue_adapter = :sidekiq
+
     config.autoload_paths << Rails.root.join('lib')
 
     config.should_seed_application_data = false
@@ -19,5 +21,7 @@ module SecretSanta
     config.time_zone = "Australia/Perth"
 
     config.responders.flash_keys = [ :success, :danger ]
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

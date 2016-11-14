@@ -1,0 +1,6 @@
+:backtrace: true
+:queues:
+  - default
+  - mailers
+production:
+  :concurrency: 3

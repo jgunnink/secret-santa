@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'A visitor can sign up' do
+feature "A visitor can sign up" do
   background do
     visit root_path
-    within('nav') { click_link 'Sign up' }
+    within("nav") { click_link "Sign up" }
   end
 
-  scenario 'User signs up successfully' do
+  scenario "User signs up successfully" do
     fill_in("Email", with: "email@example.com")
     fill_in("Given name", with: "John")
     fill_in("user_password", with: "password", exact: true)
@@ -14,8 +14,8 @@ feature 'A visitor can sign up' do
 
     submit_form
 
-    expect(page).to have_content("Welcome! You have signed up successfully.")
-    expect(current_path).to eq(member_dashboard_index_path)
+    expect(page).to have_content("A message with a confirmation link has been sent to your email address. Please open the link to activate your account.")
+    expect(current_path).to eq(root_path)
 
     # Signing up should create the user as a member
     expect(User.first).to be_member

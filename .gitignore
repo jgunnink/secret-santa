@@ -10,6 +10,7 @@
 /tmp
 /.sass-cache
 /.byebug_history
+dump.rdb
 
 # Ignore spec files
 results/rspec.xml
@@ -17,3 +18,4 @@ coverage/*
 
 # Ignore config files
 config/database.yml
+.env
