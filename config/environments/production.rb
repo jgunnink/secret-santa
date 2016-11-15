@@ -41,7 +41,7 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # ActionMailer settings
-  config.action_mailer.default_url_options = { host: 'staging.secretsanta.website' }
+  config.action_mailer.default_url_options = { host: 'secretsanta.website' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.delivery_method = :smtp
