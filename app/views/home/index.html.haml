@@ -11,6 +11,7 @@
   .col-md-8.tc
     = image_tag("santa_with_sack_full.png")
 .container
+  %br
   .row.tc
     .col-lg-4
       = image_tag("checklist.png", height: "140", width: "140", class: "img-circle")
@@ -27,6 +28,10 @@
         It will shuffle all your users around, no matter how big your list is, and
         randomly assign each person a Santa. Once everyone is assigned, each Santa
         recieves a notification email letting them know what the details are.
+      %button.btn.btn-large.btn-primary.btn-raised{"data-target" => "#youtube_explainer", "data-toggle" => "modal", type: "button"}
+        Watch video & learn more
+      #youtube_explainer.modal.fade{"aria-labelledby" => "youtube_explainerLabel", role: "dialog", tabindex: "-1"}
+        = render 'youtube_explainer'
     .col-lg-4
       = image_tag("gift.png", height: "140", width: "140", class: "img-circle")
       %h3 It's free!
