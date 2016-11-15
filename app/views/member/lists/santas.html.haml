@@ -7,6 +7,7 @@
       %ul
         %li Currently, all lists are capped at a maximum of 15.
         %li Don't forget to include your own Name and Email if you're taking part
+      = render partial: "paypal_buy"
   = simple_form_for [:member, @list], html: { class: 'form', novalidate: false  } do |f|
     - if @list.santas.size > 15
       %button.btn.btn-large.btn-warning{"data-target" => "#more_than_15", "data-toggle" => "modal", type: "button"}
