@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   end
 
   def letsencrypt
-    render text: "KQLjtwDsyfZbQmWH4eK8qXP2zlTxDDtOHWohfALS7Tk"
+    render text: "4vnFoLiqmRvvXALVcteKz_7yM3CuwFtDexGTCt3rnwM"
   end
 
 end
