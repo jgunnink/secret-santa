@@ -13,6 +13,9 @@ feature 'Existing users can reset their passwords' do
     fill_in 'Email', with: user.email
     submit_form
 
+    expect(page).to have_content "You will receive an email with instructions on how to reset your password in a few minutes."
+    expect(page).to_not have_content "Hash was successfully created."
+
     open_email(user.email)
     visit_in_email 'Change my password'
 

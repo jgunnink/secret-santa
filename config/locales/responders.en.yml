@@ -13,3 +13,12 @@ en:
       copy_list:
         success: '%{resource_name} was successfully copied. Please update details below.'
         warning: "%{resource_name} is not locked, or the gift day hasn't passed, please edit it instead!"
+
+    devise:
+      passwords:
+        create:
+          success: ""
+    devise_customisations:
+      registrations:
+        create:
+          success: ""
