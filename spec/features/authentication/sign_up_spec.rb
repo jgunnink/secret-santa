@@ -14,7 +14,8 @@ feature "A visitor can sign up" do
 
     submit_form
 
-    expect(page).to have_content("A message with a confirmation link has been sent to your email address. Please open the link to activate your account.")
+    expect(page).to have_flash :success, "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+    expect(page).to_not have_content "User was successfully created"
     expect(current_path).to eq(root_path)
 
     # Signing up should create the user as a member
