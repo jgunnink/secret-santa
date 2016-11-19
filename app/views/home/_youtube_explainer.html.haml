@@ -1,0 +1,10 @@
+.modal-dialog{role: "document"}
+  .modal-content
+    .modal-header
+      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+        %span{"aria-hidden" => "true"} ×
+      %h4#youtube_explainerLabel.modal-title How it works
+    .modal-body
+      %iframe{allowfullscreen: "", frameborder: "0", height: "315", width: "560", src: "https://www.youtube.com/embed/BCUq2gmUDpw"}
+    .modal-footer
+      %button.btn.btn-large.btn-primary{"data-dismiss" => "modal"} Close
