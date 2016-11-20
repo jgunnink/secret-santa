@@ -92,13 +92,12 @@ class Member::ListsController < Member::BaseController
     response = validate_IPN_notification(request.raw_post)
     @new_payment = params
     @list = List.find(@new_payment["list_id"])
-    case response
-    when "VERIFIED"
+    if response == "VERIFIED"
       # Check the payment is complete, that the transaction hasn't already been saved,
       # that the payment receiver's email is correct, that the value is $3.00, in AUD
-      if @new_payment["payment_status"] == "Pending" &&
+      if @new_payment["payment_status"] == "Completed" &&
       ProcessedTransaction.find_by(transaction_id: @new_payment["txn_id"]) == nil &&
-      @new_payment["receiver_email"] == "accounts@secretsanta.website" &&
+      @new_payment["receiver_email"] == "accounts-facilitator@secretsanta.website" &&
       @new_payment["mc_gross"] == "3.00" && @new_payment["mc_currency"] == "AUD"
 
         # If all the above is true, then we create a new transaction
@@ -107,21 +106,13 @@ class Member::ListsController < Member::BaseController
           list_id: @new_payment["item_number"]
         )
         @list.update_attributes(limited: false)
-        render nothing: true
       else
         TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
-        flash[:warning] = "Something unexpected happened processing your payment."
-        redirect_to member_list_santas_path(@list)
       end
-    when "INVALID"
-      TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
-      flash[:warning] = "PayPal sent back an invalid status for the transaction, please check your statement and try again."
-      redirect_to member_dashboard_index_path
     else
       TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
-      flash[:danger] = "There was a problem processing your payment."
-      redirect_to member_dashboard_index_path
     end
+    render nothing: true
   end
 
 protected
