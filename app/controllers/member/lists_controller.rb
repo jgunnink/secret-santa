@@ -97,7 +97,7 @@ class Member::ListsController < Member::BaseController
       # that the payment receiver's email is correct, that the value is $3.00, in AUD
       if @new_payment["payment_status"] == "Completed" &&
       ProcessedTransaction.find_by(transaction_id: @new_payment["txn_id"]) == nil &&
-      @new_payment["receiver_email"] == "accounts-facilitator@secretsanta.website" &&
+      @new_payment["receiver_email"] == "accounts@secretsanta.website" &&
       @new_payment["mc_gross"] == "3.00" && @new_payment["mc_currency"] == "AUD"
 
         # If all the above is true, then we create a new transaction
@@ -119,7 +119,7 @@ class Member::ListsController < Member::BaseController
 protected
 
   def validate_IPN_notification(raw)
-    uri = URI.parse("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate")
+    uri = URI.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate")
     http = Net::HTTP.new(uri.host, uri.port)
     http.open_timeout = 60
     http.read_timeout = 60
