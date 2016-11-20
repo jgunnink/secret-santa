@@ -43,9 +43,10 @@ RSpec.describe List do
   end
 
   describe "#list_size_limit" do
-    let!(:size_limited_list) { FactoryGirl.build(:list, santas: santas) }
-    let!(:santas) { FactoryGirl.build_list(:santa, number) }
     subject { size_limited_list }
+    let!(:size_limited_list) { FactoryGirl.build(:list, santas: santas, limited: limited) }
+    let!(:santas) { FactoryGirl.build_list(:santa, number) }
+    let(:limited) { true } # Default action
 
     context "where the number of santas is less than 15" do
       let(:number) { 14 }
@@ -64,6 +65,18 @@ RSpec.describe List do
         subject.valid?
         expect(size_limited_list.errors.first).to include "This list is limited to 15 Santas"
       end
+    end
+
+    context "where the user has an unlimited list" do
+      let(:limited) { false }
+      let(:number) { 16 }
+      it { should be_valid }
+    end
+
+    context "where the user has a limited list" do
+      let(:limited) { true }
+      let(:number) { 16 }
+      it { should_not be_valid}
     end
   end
 

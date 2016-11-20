@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20161109144120) do
     t.date     "gift_day"
     t.boolean  "is_locked",  default: false, null: false
     t.integer  "gift_value"
-    t.boolean  "limited",    default: false, null: false
+    t.boolean  "limited",    default: true,  null: false
   end
 
   add_index "lists", ["created_at"], name: "index_lists_on_created_at", using: :btree
