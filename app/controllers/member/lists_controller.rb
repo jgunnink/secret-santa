@@ -89,7 +89,6 @@ class Member::ListsController < Member::BaseController
   end
 
   def list_payment
-    debugger
     response = validate_IPN_notification(request.raw_post)
     @new_payment = request.raw_post
     @list = List.find(@new_payment["item_number"])
