@@ -2,6 +2,7 @@ class Member::ListsController < Member::BaseController
 
   before_filter :redirect_if_locked, only: [:lock_and_assign, :santas, :edit, :update]
   protect_from_forgery except: :list_payment # So PayPal can post to this action
+  skip_before_action only: :list_payment # So PayPal can post to this action
 
   def new
     @list = current_user.lists.build
