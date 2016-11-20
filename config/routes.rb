@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       patch :lock_and_assign
       post :copy_list
       get :santas
+      post :list_payment
     end
   end
 

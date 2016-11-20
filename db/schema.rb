@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109144120) do
+ActiveRecord::Schema.define(version: 20161120065941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 20161109144120) do
   add_index "lists", ["name"], name: "index_lists_on_name", using: :btree
   add_index "lists", ["updated_at"], name: "index_lists_on_updated_at", using: :btree
   add_index "lists", ["user_id"], name: "index_lists_on_user_id", using: :btree
+
+  create_table "processed_transactions", force: :cascade do |t|
+    t.string   "transaction_id", null: false
+    t.integer  "list_id",        null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "processed_transactions", ["created_at"], name: "index_processed_transactions_on_created_at", using: :btree
+  add_index "processed_transactions", ["list_id"], name: "index_processed_transactions_on_list_id", using: :btree
+  add_index "processed_transactions", ["transaction_id"], name: "index_processed_transactions_on_transaction_id", using: :btree
+  add_index "processed_transactions", ["updated_at"], name: "index_processed_transactions_on_updated_at", using: :btree
 
   create_table "santas", force: :cascade do |t|
     t.string   "email",      null: false

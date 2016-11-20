@@ -1,0 +1,51 @@
+An example of the params hash that PayPal sends through:
+
+Parameters : {
+  "mc_gross"=>"3.00",
+  "protection_eligibility"=>"Ineligible",
+  "address_status"=>"unconfirmed",
+  "payer_id"=>"FEYU9EEC2KSZ2",
+  "tax"=>"0.00",
+  "address_street"=>"1 Cheeseman Ave Brighton East",
+  "payment_date"=>"22:54:13 Nov 19, 2016 PST",
+  "payment_status"=>"Pending",
+  "charset"=>"windows-1252",
+  "address_zip"=>"3001",
+  "first_name"=>"test",
+  "address_country_code"=>"AU",
+  "address_name"=>"test buyer",
+  "notify_version"=>"3.8",
+  "custom"=>"",
+  "payer_status"=>"verified",
+  "address_country"=>"Australia",
+  "address_city"=>"Melbourne",
+  "quantity"=>"1",
+  "verify_sign"=>"ACUe-E7Hjxmeel8FjYAtjnx-yjHAAUL396.vUhdgbbqwsDqFARqHdG3O",
+  "payer_email"=>"accounts-buyer@secretsanta.website",
+  "txn_id"=>"6GB18536PY1610648",
+  "payment_type"=>"instant",
+  "last_name"=>"buyer",
+  "address_state"=>"Victoria",
+  "receiver_email"=>"accounts@secretsanta.website",
+  "pending_reason"=>"unilateral",
+  "txn_type"=>"web_accept",
+  "item_name"=>"Unlimited List",
+  "mc_currency"=>"AUD",
+  "item_number"=>"80085",
+  "residence_country"=>"AU",
+  "test_ipn"=>"1",
+  "handling_amount"=>"0.00",
+  "transaction_subject"=>"",
+  "payment_gross"=>"",
+  "shipping"=>"0.00",
+  "ipn_track_id"=>"fb63086875eb",
+  "controller"=>"member/lists", "action"=>"create"
+}
+
+Secretsanta does not keep any personally identifiable information which is sent back.
+At this time, only the confirmation of payment success is evaluated and the list is
+updated to be limited or unlimited.
+The following is saved
+- The transaction ID. (eg 6GB18536PY1610648)
+- The item_number - list_id. (eg: 123)
+- A timestamp is also saved indicating when the transaction took place.
