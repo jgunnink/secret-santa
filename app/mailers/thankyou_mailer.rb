@@ -1,4 +1,4 @@
-class TransactionErrorMailer < ApplicationMailer
+class ThankyouMailer < ApplicationMailer
   def notify_user(list)
     @list = list
     @email = list.user.email
