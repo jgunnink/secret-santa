@@ -1,6 +1,7 @@
 class Member::ListsController < Member::BaseController
 
   before_filter :redirect_if_locked, only: [:lock_and_assign, :santas, :edit, :update]
+  protect_from_forgery except: :list_payment # So PayPal can post to this action
 
   def new
     @list = current_user.lists.build
@@ -37,7 +38,7 @@ class Member::ListsController < Member::BaseController
     authorize!(:copy, @list)
     if @list.is_locked? || Time.now > @list.gift_day
       new_list = @list.deep_clone include: :santas
-      new_list.update_attributes(gift_day: Time.now + 2.months, is_locked: false)
+      new_list.update_attributes(gift_day: Time.now + 2.months, is_locked: false, limited: true)
       @list = new_list
       respond_with(@list, location: edit_member_list_path(@list))
     else
@@ -81,6 +82,56 @@ class Member::ListsController < Member::BaseController
   def show
     find_list
     authorize!(:show, @list)
+  end
+
+  def list_payment
+    authorize!(:payment, List)
+    response = validate_IPN_notification(request.raw_post)
+    @new_payment = request.raw_post
+    @list = List.find(@new_payment["item_number"])
+    case response
+    when "VERIFIED"
+      # Check the payment is complete, that the transaction hasn't already been saved,
+      # that the payment receiver's email is correct, that the value is $3.00, in AUD
+      if @new_payment["payment_status"] == "Complete" &&
+      ProcessedTransaction.find_by(transaction_id: @new_payment["txn_id"]) == nil &&
+      @new_payment["receiver_email"] == "accounts@secretsanta.website" &&
+      @new_payment["mc_gross"] == "3.00" && @new_payment["mc_currency"] == "AUD"
+
+        # If all the above is true, then we create a new transaction
+        ProcessedTransaction.create!(
+          transaction_id: @new_payment["txn_id"],
+          list_id: @new_payment["item_number"]
+        )
+        @list.update_attributes(limited: false)
+      else
+        TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
+        flash[:warning] = "Something unexpected happened processing your payment."
+        redirect_to member_list_santas_path(@list)
+      end
+    when "INVALID"
+      TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
+      flash[:warning] = "PayPal sent back an invalid status for the transaction, please check your statement and try again."
+      redirect_to member_dashboard_index_path
+    else
+      TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
+      flash[:danger] = "There was a problem processing your payment."
+      redirect_to member_dashboard_index_path
+    end
+  end
+
+protected
+
+  def validate_IPN_notification(raw)
+    uri = URI.parse("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.open_timeout = 60
+    http.read_timeout = 60
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    http.use_ssl = true
+    response = http.post(uri.request_uri, raw,
+                         "Content-Length" => "#{raw.size}"
+                       ).body
   end
 
 private
