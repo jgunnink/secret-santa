@@ -1,0 +1,20 @@
+%p Dear #{@given_names}
+
+%p Thank you for supporting Secret Santa!
+
+%p
+  This email is to confirm that we've recieved your payment and your list can
+  now accept as many users as you like for the list:
+
+%p= link_to @list.name, member_list_santas_url(@list)
+
+%p
+  If you are stuck or need any help, please send through an email to:
+  help@secretsanta.website and I'll be more than happy to help you out with any
+  questions you may have.
+
+%p Thanks again for supporting Secret Santa.
+
+%p Captain Santa
+
+= image_tag(attachments["santa_with_sack.png"].url)

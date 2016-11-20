@@ -1,0 +1,14 @@
+Dear <%= @given_names %>
+
+Thank you for supporting Secret Santa!
+
+This email is to confirm that we've recieved your payment and your list can now accept as many users as you like for the list:
+
+<%= @list.name %>.
+You can acceess this list here: <%= member_list_santas_url(@list) %>.
+
+If you are stuck or need any help, please send through an email to: help@secretsanta.website and I'll be more than happy to help you out with any questions you may have.
+
+Thanks again for supporting Secret Santa.
+
+Captain Santa
