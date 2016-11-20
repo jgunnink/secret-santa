@@ -97,7 +97,7 @@ class Member::ListsController < Member::BaseController
       # that the payment receiver's email is correct, that the value is $3.00, in AUD
       if @new_payment["payment_status"] == "Completed" &&
       ProcessedTransaction.find_by(transaction_id: @new_payment["txn_id"]) == nil &&
-      @new_payment["receiver_email"] == "accounts-facilitator@secretsanta.website" &&
+      @new_payment["receiver_email"] == "accounts@secretsanta.website" &&
       @new_payment["mc_gross"] == "3.00" && @new_payment["mc_currency"] == "AUD"
 
         # If all the above is true, then we create a new transaction
@@ -106,6 +106,7 @@ class Member::ListsController < Member::BaseController
           list_id: @new_payment["item_number"]
         )
         @list.update_attributes(limited: false)
+        ThankyouMailer.notify_user(@list).deliver_later
       else
         TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
       end
