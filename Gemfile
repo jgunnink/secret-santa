@@ -58,6 +58,7 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'simplecov', require: false
   gem 'simplecov-rcov', require: false
+  gem 'webmock'
 end
 
 group :test do

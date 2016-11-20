@@ -265,4 +265,75 @@ RSpec.describe Member::ListsController do
     it_behaves_like 'action requiring authentication'
     it_behaves_like 'action authorizes roles', [:member, :admin]
   end
+
+  describe "POST list_payment" do
+    subject { post :list_payment, params: params, list_id: list.id }
+    let!(:list) { FactoryGirl.create(:list, :unpaid) }
+
+
+    context "with valid parameters" do
+      let(:params) { paypal_params }
+
+      it { should be_success }
+
+      # it "sends a payment confirmation" do
+      #   instance = double
+      #   expect(List::ThankyouNotification).to receive(:new).with(list).and_return(instance)
+      #   expect(instance).to receive(:create_confirmation)
+      #   subject
+      # end
+
+      it "updates the list limited status" do
+        debugger
+        subject
+        expect(list.reload.limited).to be_falsey
+      end
+    end
+  end
+
+private
+
+  def paypal_params
+    {
+      "mc_gross"=>"3.00",
+      "protection_eligibility"=>"Ineligible",
+      "address_status"=>"unconfirmed",
+      "payer_id"=>"FEYU9EEC2KSZ2",
+      "tax"=>"0.00",
+      "address_street"=>"1 Cheeseman Ave Brighton East",
+      "payment_date"=>"03:41:29 Nov 20, 2016 PST",
+      "payment_status"=>"Completed",
+      "charset"=>"windows-1252",
+      "address_zip"=>"3001",
+      "first_name"=>"test",
+      "address_country_code"=>"AU",
+      "address_name"=>"test buyer",
+      "notify_version"=>"3.8",
+      "custom"=>"",
+      "payer_status"=>"verified",
+      "address_country"=>"Australia",
+      "address_city"=>"Melbourne",
+      "quantity"=>"1",
+      "verify_sign"=>"AbzlMQfnGCW1kgs7W9U77Rx7TroaA.pq3M5WDGo744v8gNMR2AyPVR5j",
+      "payer_email"=>"accounts-buyer@secretsanta.website",
+      "txn_id"=>"081563299T6312119",
+      "payment_type"=>"instant",
+      "last_name"=>"buyer",
+      "address_state"=>"Victoria",
+      "receiver_email"=>"accounts@secretsanta.website",
+      "pending_reason"=>"unilateral",
+      "txn_type"=>"web_accept",
+      "item_name"=>"Unlimited List",
+      "mc_currency"=>"AUD",
+      "item_number"=>"25",
+      "residence_country"=>"AU",
+      "test_ipn"=>"1",
+      "handling_amount"=>"0.00",
+      "transaction_subject"=>"",
+      "payment_gross"=>"",
+      "shipping"=>"0.00",
+      "ipn_track_id"=>"bd03175920be4"
+    }
+  end
+
 end
