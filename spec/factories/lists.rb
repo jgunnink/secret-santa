@@ -11,5 +11,13 @@ FactoryGirl.define do
         FactoryGirl.create_list(:santa, 8, list_id: list.id)
       end
     end
+
+    trait :paid do
+      limited { false }
+    end
+
+    trait :unpaid do
+      limited { true }
+    end
   end
 end

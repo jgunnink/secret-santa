@@ -21,7 +21,9 @@ class List < ActiveRecord::Base
   end
 
   def list_size_limit
-    errors.add(:santa, "This list is limited to 15 Santas") if santas.size > 15
+    if limited?
+      errors.add(:santa, "This list is limited to 15 Santas") if santas.size > 15
+    end
   end
 
 private

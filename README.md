@@ -11,15 +11,17 @@ Rails application which handles the secret santa operations for an organiser of 
 
 The Frontier Group's [Rails Template](https://github.com/thefrontiergroup/rails-template)
 
+## Dependencies
+
+- Redis
+- Sidekiq
+- PostgreSQL
+
 ## Getting Started
 
 1. Run `bin/setup` to configure the app
-2. Run `rails s` to run the app
-
-## Staging Environment Information
-
-URL: http://staging.secretsanta.website/
+2. Run `foreman s` to run the app
 
 ## Production Environment Information
 
-TODO: Add production information.
+URL: https://www.secretsanta.website/
