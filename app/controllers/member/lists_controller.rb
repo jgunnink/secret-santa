@@ -90,8 +90,8 @@ class Member::ListsController < Member::BaseController
 
   def list_payment
     response = validate_IPN_notification(request.raw_post)
-    @new_payment = request.raw_post
-    @list = List.find(@new_payment["item_number"])
+    @new_payment = params
+    @list = List.find(@new_payment["list_id"])
     case response
     when "VERIFIED"
       # Check the payment is complete, that the transaction hasn't already been saved,
