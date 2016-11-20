@@ -106,12 +106,12 @@ class Member::ListsController < Member::BaseController
           list_id: @new_payment["item_number"]
         )
         @list.update_attributes(limited: false)
-        ThankyouMailer.notify_user(@list).deliver_later
+        List::ThankyouNotification.new.create_confirmation(@list)
       else
-        TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
+        TransactionErrorNotification.new.create_notification(@new_payment, response)
       end
     else
-      TransactionErrorMailer.notify_new_error(@new_payment, response).deliver_later
+      TransactionErrorNotification.new.create_notification(@new_payment, response)
     end
     render nothing: true
   end
