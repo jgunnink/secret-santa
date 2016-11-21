@@ -108,10 +108,10 @@ class Member::ListsController < Member::BaseController
         @list.update_attributes(limited: false)
         List::ThankyouNotification.new.create_confirmation(@list)
       else
-        TransactionErrorNotification.new.create_notification(@new_payment, response)
+        List::TransactionErrorNotification.new.create_notification(@new_payment, response)
       end
     else
-      TransactionErrorNotification.new.create_notification(@new_payment, response)
+      List::TransactionErrorNotification.new.create_notification(@new_payment, response)
     end
     render nothing: true
   end

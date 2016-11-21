@@ -3,7 +3,7 @@
 class List::TransactionErrorNotification < ActiveJob::Base
   queue_as :default
 
-  def create_confirmation(new_payment, response)
+  def create_notification(new_payment, response)
     TransactionErrorMailer.notify_new_error(new_payment, response).deliver_later
   end
 end
