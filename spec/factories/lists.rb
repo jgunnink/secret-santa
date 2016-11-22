@@ -14,6 +14,9 @@ FactoryGirl.define do
 
     trait :paid do
       limited { false }
+      after(:create) do |list|
+        FactoryGirl.create(:processed_transaction, list_id: list.id)
+      end
     end
 
     trait :unpaid do

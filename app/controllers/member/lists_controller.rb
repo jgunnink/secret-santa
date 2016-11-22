@@ -128,7 +128,7 @@ protected
     http.use_ssl = true
     response = http.post(uri.request_uri, raw,
                          "Content-Length" => "#{raw.size}"
-                       ).body
+                        ).body
   end
 
 private

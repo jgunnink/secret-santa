@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'webmock/rspec'
 
 RSpec.describe Member::ListsController do
   let(:user) { FactoryGirl.create(:user, :member) }
@@ -264,5 +265,118 @@ RSpec.describe Member::ListsController do
 
     it_behaves_like 'action requiring authentication'
     it_behaves_like 'action authorizes roles', [:member, :admin]
+  end
+
+  describe "POST list_payment" do
+    subject {
+      post :list_payment,
+      list_id: list.id,
+      "payment_status"=>"Completed",
+      "txn_id"=>"081563299T6312119",
+      "receiver_email"=>"jgunnink@gmail.com",
+      "business"=>"accounts@secretsanta.website",
+      "mc_gross"=>"3.00",
+      "mc_currency"=>"AUD",
+      "item_number"=>list.id
+    }
+    let!(:list) { FactoryGirl.create(:list, :unpaid) }
+
+    shared_examples_for "a payment error" do
+      it "sends a transaction error" do
+        instance = double
+        expect(List::TransactionErrorNotification).to receive(:new).and_return(instance)
+        expect(instance).to receive(:create_notification).with(new_payment, response)
+        subject
+      end
+
+      it "doesn't create a new transaction record" do
+        expect{ subject }.to_not change{ ProcessedTransaction.count }
+      end
+
+      it "updates the list limited status" do
+        subject
+        expect(list.reload.limited).to be_truthy
+      end
+    end
+
+    context "when the PayPal response is VERIFIED" do
+      before do
+        stub_request(:post, "https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate").to_return(
+        body: "VERIFIED"
+        )
+      end
+      let!(:response) { "VERIFIED" }
+
+      context "with valid parameters" do
+        it "creates a new transaction record" do
+          expect{ subject }.to change{ ProcessedTransaction.count }.by 1
+        end
+
+        it "updates the list limited status" do
+          subject
+          expect(list.reload.limited).to be_falsey
+        end
+
+        it "sends a payment confirmation" do
+          instance = double
+          expect(List::ThankyouNotification).to receive(:new).and_return(instance)
+          expect(instance).to receive(:create_confirmation).with(list)
+          subject
+        end
+      end
+
+      context "when the payee email has been changed" do
+        subject {
+          post :list_payment,
+          list_id: list.id,
+          "payment_status"=>"Completed",
+          "txn_id"=>"081563299T6312119",
+          "receiver_email"=>"someoneelse@example.com",
+          "business"=>"accounts@secretsanta.website",
+          "mc_gross"=>"3.00",
+          "mc_currency"=>"AUD",
+          "item_number"=>"#{list.id}"
+        }
+        let!(:new_payment) do {
+          "payment_status"=>"Completed",
+          "txn_id"=>"081563299T6312119",
+          "receiver_email"=>"someoneelse@example.com",
+          "business"=>"accounts@secretsanta.website",
+          "mc_gross"=>"3.00",
+          "mc_currency"=>"AUD",
+          "item_number"=>"#{list.id}",
+          "list_id"=>"#{list.id}",
+          "controller"=>"member/lists",
+          "action"=>"list_payment"
+          }
+        end
+
+        it_behaves_like "a payment error"
+      end
+    end
+
+    context "when the PayPal response is not VERIFIED" do
+      before do
+        stub_request(:post, "https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate").to_return(
+        body: "INVALID"
+        )
+      end
+      let!(:response) { "INVALID" }
+
+      let!(:new_payment) do {
+        "payment_status"=>"Completed",
+        "txn_id"=>"081563299T6312119",
+        "receiver_email"=>"jgunnink@gmail.com",
+        "business"=>"accounts@secretsanta.website",
+        "mc_gross"=>"3.00",
+        "mc_currency"=>"AUD",
+        "item_number"=>"#{list.id}",
+        "list_id"=>"#{list.id}",
+        "controller"=>"member/lists",
+        "action"=>"list_payment"
+        }
+      end
+      it_behaves_like "a payment error"
+    end
   end
 end
