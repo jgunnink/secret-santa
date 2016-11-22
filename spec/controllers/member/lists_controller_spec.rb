@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'webmock/rspec'
 
 RSpec.describe Member::ListsController do
   let(:user) { FactoryGirl.create(:user, :member) }
