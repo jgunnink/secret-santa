@@ -267,73 +267,115 @@ RSpec.describe Member::ListsController do
   end
 
   describe "POST list_payment" do
-    subject { post :list_payment, params: params, list_id: list.id }
+    subject {
+      post :list_payment,
+      list_id: list.id,
+      "payment_status"=>"Completed",
+      "txn_id"=>"081563299T6312119",
+      "receiver_email"=>"jgunnink@gmail.com",
+      "business"=>"accounts@secretsanta.website",
+      "mc_gross"=>"3.00",
+      "mc_currency"=>"AUD",
+      "item_number"=>list.id
+    }
     let!(:list) { FactoryGirl.create(:list, :unpaid) }
 
+    shared_examples_for "a payment error" do
+      it "sends a transaction error" do
+        instance = double
+        expect(List::TransactionErrorNotification).to receive(:new).and_return(instance)
+        expect(instance).to receive(:create_notification).with(new_payment, response)
+        subject
+      end
 
-    context "with valid parameters" do
-      let(:params) { paypal_params }
-
-      it { should be_success }
-
-      # it "sends a payment confirmation" do
-      #   instance = double
-      #   expect(List::ThankyouNotification).to receive(:new).with(list).and_return(instance)
-      #   expect(instance).to receive(:create_confirmation)
-      #   subject
-      # end
+      it "doesn't create a new transaction record" do
+        expect{ subject }.to_not change{ ProcessedTransaction.count }
+      end
 
       it "updates the list limited status" do
-        debugger
         subject
-        expect(list.reload.limited).to be_falsey
+        expect(list.reload.limited).to be_truthy
       end
     end
+
+    context "when the PayPal response is VERIFIED" do
+      before do
+        stub_request(:post, "https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate").to_return(
+        body: "VERIFIED"
+        )
+      end
+      let!(:response) { "VERIFIED" }
+
+      context "with valid parameters" do
+        it "creates a new transaction record" do
+          expect{ subject }.to change{ ProcessedTransaction.count }.by 1
+        end
+
+        it "updates the list limited status" do
+          subject
+          expect(list.reload.limited).to be_falsey
+        end
+
+        it "sends a payment confirmation" do
+          instance = double
+          expect(List::ThankyouNotification).to receive(:new).and_return(instance)
+          expect(instance).to receive(:create_confirmation).with(list)
+          subject
+        end
+      end
+
+      context "when the payee email has been changed" do
+        subject {
+          post :list_payment,
+          list_id: list.id,
+          "payment_status"=>"Completed",
+          "txn_id"=>"081563299T6312119",
+          "receiver_email"=>"someoneelse@example.com",
+          "business"=>"accounts@secretsanta.website",
+          "mc_gross"=>"3.00",
+          "mc_currency"=>"AUD",
+          "item_number"=>"#{list.id}"
+        }
+        let!(:new_payment) do {
+          "payment_status"=>"Completed",
+          "txn_id"=>"081563299T6312119",
+          "receiver_email"=>"someoneelse@example.com",
+          "business"=>"accounts@secretsanta.website",
+          "mc_gross"=>"3.00",
+          "mc_currency"=>"AUD",
+          "item_number"=>"#{list.id}",
+          "list_id"=>"#{list.id}",
+          "controller"=>"member/lists",
+          "action"=>"list_payment"
+          }
+        end
+
+        it_behaves_like "a payment error"
+      end
+    end
+
+    context "when the PayPal response is not VERIFIED" do
+      before do
+        stub_request(:post, "https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate").to_return(
+        body: "INVALID"
+        )
+      end
+      let!(:response) { "INVALID" }
+
+      let!(:new_payment) do {
+        "payment_status"=>"Completed",
+        "txn_id"=>"081563299T6312119",
+        "receiver_email"=>"jgunnink@gmail.com",
+        "business"=>"accounts@secretsanta.website",
+        "mc_gross"=>"3.00",
+        "mc_currency"=>"AUD",
+        "item_number"=>"#{list.id}",
+        "list_id"=>"#{list.id}",
+        "controller"=>"member/lists",
+        "action"=>"list_payment"
+        }
+      end
+      it_behaves_like "a payment error"
+    end
   end
-
-private
-
-  def paypal_params
-    {
-      "mc_gross"=>"3.00",
-      "protection_eligibility"=>"Ineligible",
-      "address_status"=>"unconfirmed",
-      "payer_id"=>"FEYU9EEC2KSZ2",
-      "tax"=>"0.00",
-      "address_street"=>"1 Cheeseman Ave Brighton East",
-      "payment_date"=>"03:41:29 Nov 20, 2016 PST",
-      "payment_status"=>"Completed",
-      "charset"=>"windows-1252",
-      "address_zip"=>"3001",
-      "first_name"=>"test",
-      "address_country_code"=>"AU",
-      "address_name"=>"test buyer",
-      "notify_version"=>"3.8",
-      "custom"=>"",
-      "payer_status"=>"verified",
-      "address_country"=>"Australia",
-      "address_city"=>"Melbourne",
-      "quantity"=>"1",
-      "verify_sign"=>"AbzlMQfnGCW1kgs7W9U77Rx7TroaA.pq3M5WDGo744v8gNMR2AyPVR5j",
-      "payer_email"=>"accounts-buyer@secretsanta.website",
-      "txn_id"=>"081563299T6312119",
-      "payment_type"=>"instant",
-      "last_name"=>"buyer",
-      "address_state"=>"Victoria",
-      "receiver_email"=>"accounts@secretsanta.website",
-      "pending_reason"=>"unilateral",
-      "txn_type"=>"web_accept",
-      "item_name"=>"Unlimited List",
-      "mc_currency"=>"AUD",
-      "item_number"=>"25",
-      "residence_country"=>"AU",
-      "test_ipn"=>"1",
-      "handling_amount"=>"0.00",
-      "transaction_subject"=>"",
-      "payment_gross"=>"",
-      "shipping"=>"0.00",
-      "ipn_track_id"=>"bd03175920be4"
-    }
-  end
-
 end
