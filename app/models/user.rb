@@ -25,4 +25,9 @@ class User < ActiveRecord::Base
     email
   end
 
+  # Override Devise notification to use background messaging queue.
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
 end
