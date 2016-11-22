@@ -97,7 +97,8 @@ class Member::ListsController < Member::BaseController
       # that the payment receiver's email is correct, that the value is $3.00, in AUD
       if @new_payment["payment_status"] == "Completed" &&
       ProcessedTransaction.find_by(transaction_id: @new_payment["txn_id"]) == nil &&
-      @new_payment["receiver_email"] == "accounts@secretsanta.website" &&
+      @new_payment["business"] == "accounts@secretsanta.website" &&
+      @new_payment["receiver_email"] == "jgunnink@gmail.com" &&
       @new_payment["mc_gross"] == "3.00" && @new_payment["mc_currency"] == "AUD"
 
         # If all the above is true, then we create a new transaction
@@ -127,7 +128,7 @@ protected
     http.use_ssl = true
     response = http.post(uri.request_uri, raw,
                          "Content-Length" => "#{raw.size}"
-                       ).body
+                        ).body
   end
 
 private
