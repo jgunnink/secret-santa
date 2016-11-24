@@ -4,6 +4,7 @@ class List < ActiveRecord::Base
   has_many :santas, dependent: :destroy, inverse_of: :list
 
   accepts_nested_attributes_for :santas, reject_if: :all_blank, allow_destroy: true
+  validates_associated :santas
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :gift_day, presence: true
