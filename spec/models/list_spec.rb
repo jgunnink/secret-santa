@@ -86,7 +86,7 @@ RSpec.describe List do
 
     it { should have_many(:santas).inverse_of(:list) }
     it "deletes associated santas if the list is deleted" do
-      expect { list.destroy }.to change { Santa.count }.by(-1)
+      expect { list.reload.destroy }.to change { Santa.count }.by(-1)
     end
   end
 
