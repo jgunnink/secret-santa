@@ -51,6 +51,14 @@ class Member::ListsController < Member::BaseController
     end
   end
 
+  def reveal_santas
+    find_list
+    authorize!(:update, @list)
+    @list.update_attribute(:revealed, true)
+    flash[:success] = "List has been revealed!"
+    render :show
+  end
+
   def edit
     find_list
     authorize!(:edit, @list)
