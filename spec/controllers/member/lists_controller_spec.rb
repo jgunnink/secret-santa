@@ -153,6 +153,34 @@ RSpec.describe Member::ListsController do
     it_behaves_like 'action authorizes roles', [:member, :admin]
   end
 
+  describe 'PATCH reveal_santas' do
+    subject { patch :reveal_santas, list_id: list.id }
+    let(:other_user) { FactoryGirl.create(:user, :member) }
+    let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
+
+    context 'user can edit their own list' do
+      authenticated_as(:user) do
+        it { should be_success }
+
+        it 'should set the revealed flag on the list to be true' do
+          subject
+          expect(list.reload.revealed).to be_truthy
+        end
+
+        it 'sets a flash for the user' do
+          subject
+          expect(controller).to set_flash[:success].to('List has been revealed!')
+        end
+      end
+    end
+
+    context 'user cannot edit a list they do not own' do
+      authenticated_as(:other_user) do
+        it { should_not be_success }
+      end
+    end
+  end
+
   describe 'GET edit' do
     subject { get :edit, id: list.id }
     let(:other_user) { FactoryGirl.create(:user, :member) }

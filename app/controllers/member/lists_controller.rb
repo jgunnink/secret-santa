@@ -55,7 +55,7 @@ class Member::ListsController < Member::BaseController
     find_list
     authorize!(:update, @list)
     @list.update_attribute(:revealed, true)
-    flash.now[:success] = "List has been revealed!"
+    flash[:success] = "List has been revealed!"
     render :show
   end
 
