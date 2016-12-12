@@ -25,17 +25,32 @@
           = render 'confirm_modal'
     - else
       %i Note: List is locked. Santas have been assigned and emailed.
+      %br
+      %br
+      - unless @list.revealed?
+        %p
+          If you like, you can reveal your list. This will show you who has been
+          assigned to who. It won't notify anyone, it will just show it to you.
+        %p= link_to "Reveal List", member_list_reveal_santas_path(@list), method: :patch, class: "btn btn-warning btn-raised"
 
     %table.table.table-hover
       %thead
         %tr
           %th Name
           %th Email
+          - if @list.revealed?
+            %th Giving to
         %tbody
           - @list.santas.each do |santa|
             %tr
               %td= santa.name
               %td= santa.email
+              - if @list.revealed?
+                %td
+                  - if santa.giving_to.present?
+                    = santa.recipient.name
+                  - else
+                    This person has not been assigned.
   - else
     %p There aren't any Santas in this list yet!
     = link_to "Add some?", member_list_santas_path(@list),

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       post :copy_list
       get :santas
       post :list_payment
+      patch :reveal_santas
     end
   end
 
