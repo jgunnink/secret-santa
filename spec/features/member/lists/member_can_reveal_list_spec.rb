@@ -10,6 +10,8 @@ feature "Member reveal list to show santas", :js do
     visit member_list_path(list)
     click_on('Lock, assign and send')
     within('.modal-footer') do
+      # We add the sleep here to give enough time for the modal to pop up in JS
+      sleep 1
       click_on('Lock, assign and send')
     end
   end
