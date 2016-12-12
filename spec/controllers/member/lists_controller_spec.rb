@@ -179,6 +179,9 @@ RSpec.describe Member::ListsController do
         it { should_not be_success }
       end
     end
+    
+    it_behaves_like 'action requiring authentication'
+    it_behaves_like 'action authorizes roles', [:member, :admin]
   end
 
   describe 'GET edit' do
