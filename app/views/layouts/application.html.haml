@@ -2,6 +2,7 @@
 %html
   %head
     = render "/layouts/analytics" if Rails.env.production?
+    %meta{content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport"}
   %title= page_title
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
