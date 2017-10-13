@@ -1,4 +1,6 @@
 class Member::ListsController < Member::BaseController
+  require "net/http"
+  require "net/https"
 
   before_filter :redirect_if_locked, only: [:lock_and_assign, :santas, :edit, :update]
 
