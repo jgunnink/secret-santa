@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', "~> 4.2.1"
 
 # Database & ORM
 gem 'circular_list'
 gem 'deep_cloneable'
 gem 'paranoia'
-gem 'pg'
+gem 'pg', '~> 0.15'
 gem 'ransack'
 gem 'sidekiq'
 
