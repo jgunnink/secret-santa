@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :list do
     # Using City as it's the most suitable for the length validations.
     name { FFaker::AddressAU.city }
@@ -8,14 +8,14 @@ FactoryGirl.define do
 
     trait :with_santas do
       after(:create) do |list|
-        FactoryGirl.create_list(:santa, 8, list_id: list.id)
+        FactoryBot.create_list(:santa, 8, list_id: list.id)
       end
     end
 
     trait :paid do
       limited { false }
       after(:create) do |list|
-        FactoryGirl.create(:processed_transaction, list_id: list.id)
+        FactoryBot.create(:processed_transaction, list_id: list.id)
       end
     end
 

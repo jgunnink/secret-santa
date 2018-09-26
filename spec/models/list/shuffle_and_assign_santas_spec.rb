@@ -4,8 +4,8 @@ RSpec.describe List::ShuffleAndAssignSantas do
   describe '#assign_and_email' do
     subject { List::ShuffleAndAssignSantas.new(test_list.reload).assign_and_email }
 
-    let!(:test_list)   { FactoryGirl.create(:list) }
-    let!(:santas) { FactoryGirl.create_list(:santa, 5, list: test_list) }
+    let!(:test_list)   { FactoryBot.create(:list) }
+    let!(:santas) { FactoryBot.create_list(:santa, 5, list: test_list) }
 
     scenario 'all santas are assigned a recipient and no santa is unassigned' do
       subject

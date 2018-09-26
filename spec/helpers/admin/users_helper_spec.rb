@@ -4,7 +4,7 @@ RSpec.describe Admin::UsersHelper do
 
   describe "#edit_path_for_user" do
     subject { helper.edit_path_for_user(user) }
-    let(:user) { FactoryGirl.build(:user, role: role, id: 666) }
+    let(:user) { FactoryBot.build(:user, role: role, id: 666) }
 
     context "when the user is admin" do
       let(:role) { :admin }
@@ -24,7 +24,7 @@ RSpec.describe Admin::UsersHelper do
 
   describe "#delete_path_for_user" do
     subject { helper.delete_path_for_user(user) }
-    let(:user) { FactoryGirl.build(:user, role: role, id: 666) }
+    let(:user) { FactoryBot.build(:user, role: role, id: 666) }
 
     context "when the user is admin" do
       let(:role) { :admin }

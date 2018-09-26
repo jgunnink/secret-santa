@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', "~> 4.2.1"
 
 # Database & ORM
 gem 'circular_list'
 gem 'deep_cloneable'
 gem 'paranoia'
-gem 'pg'
+gem 'pg', '~> 0.15'
 gem 'ransack'
 gem 'sidekiq'
 
@@ -43,7 +43,6 @@ gem 'uri_query_merger'
 group :development do
   gem 'better_errors'
   gem 'letter_opener'
-  gem 'quiet_assets'
   gem 'seed_helper'
   gem 'web-console'
 end
@@ -52,7 +51,7 @@ group :development, :test do
   gem 'byebug'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'ffaker'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'

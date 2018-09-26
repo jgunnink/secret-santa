@@ -14,13 +14,13 @@ RSpec.describe Santa do
 
   describe '@email' do
     # this record is required for the uniqueness matcher
-    subject { FactoryGirl.build(:santa) }
+    subject { FactoryBot.build(:santa) }
 
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email).scoped_to(:list_id) }
 
     context "testing validity of email address with regex matcher" do
-      let!(:santa) { FactoryGirl.build(:santa, email: email) }
+      let!(:santa) { FactoryBot.build(:santa, email: email) }
 
       context "where the email is abc@example.com" do
         let(:email) { "abc@example.com" }

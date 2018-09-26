@@ -12,7 +12,7 @@ module Feature
       if role_or_user.is_a?(User)
         @current_user = role_or_user
       else
-        @current_user = FactoryGirl.create :user, role_or_user, *traits_and_attributes
+        @current_user = FactoryBot.create :user, role_or_user, *traits_and_attributes
       end
 
       login_as(@current_user, scope: :user)

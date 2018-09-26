@@ -9,12 +9,12 @@ RSpec.describe AfterSignInPath do
     subject { path.to_s }
 
     context "when admin" do
-      let(:user) { FactoryGirl.build(:user, :admin) }
+      let(:user) { FactoryBot.build(:user, :admin) }
       it { should eq(admin_dashboard_index_path) }
     end
 
     context "when member" do
-      let(:user) { FactoryGirl.build(:user, :member) }
+      let(:user) { FactoryBot.build(:user, :member) }
       it { should eq(member_dashboard_index_path) }
     end
 

@@ -7,7 +7,7 @@ if defined?(SeedHelper)
       SeedHelper.find_or_create_resource(User, primary_attributes) do
         attributes = primary_attributes.merge({password: "password"})
                                        .merge(additional_attributes)
-        FactoryGirl.build(:user, role, attributes)
+        FactoryBot.build(:user, role, attributes)
       end
     end
 

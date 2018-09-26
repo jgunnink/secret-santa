@@ -8,7 +8,7 @@ module Controller
             send(role_or_user)
           # Otherwise assume it is the name of a role, and return that
           else
-            FactoryGirl.create(:user, role_or_user)
+            FactoryBot.create(:user, role_or_user)
           end
         end
 

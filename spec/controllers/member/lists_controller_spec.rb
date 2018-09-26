@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'webmock/rspec'
 
 RSpec.describe Member::ListsController do
-  let(:user) { FactoryGirl.create(:user, :member) }
+  let(:user) { FactoryBot.create(:user, :member) }
 
   describe 'GET new' do
     subject { get :new }
@@ -57,9 +57,9 @@ RSpec.describe Member::ListsController do
 
   describe 'PATCH lock_and_assign' do
     subject { patch :lock_and_assign, list_id: list.id }
-    let(:other_user) { FactoryGirl.create(:user, :member) }
-    let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
-    let!(:santas)    { FactoryGirl.create_list(:santa, 5, list_id: list.id) }
+    let(:other_user) { FactoryBot.create(:user, :member) }
+    let(:list)       { FactoryBot.create(:list, user_id: user.id) }
+    let!(:santas)    { FactoryBot.create_list(:santa, 5, list_id: list.id) }
     let(:instance)   { double }
 
     context 'user can lock and assign their own list' do
@@ -74,7 +74,7 @@ RSpec.describe Member::ListsController do
         end
 
         context 'there are less than three santas' do
-          let!(:santas) { FactoryGirl.create_list(:santa, 2, list_id: list.id) }
+          let!(:santas) { FactoryBot.create_list(:santa, 2, list_id: list.id) }
 
           it 'will not run, and will display an error' do
             expect(List::ShuffleAndAssignSantas).to_not receive(:new).with(list)
@@ -97,7 +97,7 @@ RSpec.describe Member::ListsController do
 
   describe 'POST copy_list' do
     subject { post :copy_list, list_id: list_with_santas.id }
-    let!(:list_with_santas) { FactoryGirl.create(:list, :with_santas, user: user) }
+    let!(:list_with_santas) { FactoryBot.create(:list, :with_santas, user: user) }
 
     context 'user can copy their own list' do
       authenticated_as(:user) do
@@ -155,8 +155,8 @@ RSpec.describe Member::ListsController do
 
   describe 'PATCH reveal_santas' do
     subject { patch :reveal_santas, list_id: list.id }
-    let(:other_user) { FactoryGirl.create(:user, :member) }
-    let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
+    let(:other_user) { FactoryBot.create(:user, :member) }
+    let(:list)       { FactoryBot.create(:list, user_id: user.id) }
 
     context 'user can edit their own list' do
       authenticated_as(:user) do
@@ -186,8 +186,8 @@ RSpec.describe Member::ListsController do
 
   describe 'GET edit' do
     subject { get :edit, id: list.id }
-    let(:other_user) { FactoryGirl.create(:user, :member) }
-    let(:list)       { FactoryGirl.create(:list, user_id: user.id) }
+    let(:other_user) { FactoryBot.create(:user, :member) }
+    let(:list)       { FactoryBot.create(:list, user_id: user.id) }
 
     context 'user can edit their own list' do
       authenticated_as(:user) do
@@ -219,8 +219,8 @@ RSpec.describe Member::ListsController do
   describe 'PATCH update' do
     subject(:update_list) { post :update, id: target_list.id, list: params }
     let(:params) { {} }
-    let(:other_user) { FactoryGirl.create(:user, :member) }
-    let(:target_list) { FactoryGirl.create(:list, user_id: user.id) }
+    let(:other_user) { FactoryBot.create(:user, :member) }
+    let(:target_list) { FactoryBot.create(:list, user_id: user.id) }
 
     authenticated_as(:user) do
 
@@ -276,8 +276,8 @@ RSpec.describe Member::ListsController do
 
   describe 'DELETE destroy' do
     subject { delete :destroy, id: target_list.id }
-    let!(:target_list) { FactoryGirl.create(:list, user_id: user.id) }
-    let(:other_user) { FactoryGirl.create(:user, :member) }
+    let!(:target_list) { FactoryBot.create(:list, user_id: user.id) }
+    let(:other_user) { FactoryBot.create(:user, :member) }
 
     authenticated_as(:user) do
       it 'deletes the list' do
@@ -310,7 +310,7 @@ RSpec.describe Member::ListsController do
       "mc_currency"=>"AUD",
       "item_number"=>list.id
     }
-    let!(:list) { FactoryGirl.create(:list, :unpaid) }
+    let!(:list) { FactoryBot.create(:list, :unpaid) }
 
     shared_examples_for "a payment error" do
       it "sends a transaction error" do

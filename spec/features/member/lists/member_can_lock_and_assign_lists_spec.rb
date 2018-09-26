@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Member can lock and assign santas within a list' do
-  let(:list)    { FactoryGirl.create(:list, user_id: user.id) }
-  let(:user)    { FactoryGirl.create(:user, :member) }
-  let!(:santas) { FactoryGirl.create_list(:santa, 5, list_id: list.id) }
+  let(:list)    { FactoryBot.create(:list, user_id: user.id) }
+  let(:user)    { FactoryBot.create(:user, :member) }
+  let!(:santas) { FactoryBot.create_list(:santa, 5, list_id: list.id) }
 
   background do
     sign_in_as(user)
@@ -29,7 +29,7 @@ feature 'Member can lock and assign santas within a list' do
   end
 
   context 'where there are fewer than 3 santas in a list' do
-    let!(:santas) { FactoryGirl.create_list(:santa, 2, list_id: list.id) }
+    let!(:santas) { FactoryBot.create_list(:santa, 2, list_id: list.id) }
     specify { expect(page).to have_content('Please add some more Santas to your list. We need at least three.') }
   end
 end

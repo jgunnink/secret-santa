@@ -2,8 +2,8 @@ require 'rails_helper'
 
 feature 'Admin can view an index of users' do
   signed_in_as(:admin) do
-    let!(:other_admin) { FactoryGirl.create(:user, :admin) }
-    let!(:member)      { FactoryGirl.create(:user, :member) }
+    let!(:other_admin) { FactoryBot.create(:user, :admin) }
+    let!(:member)      { FactoryBot.create(:user, :member) }
 
     before do
       click_header_option("Administration")

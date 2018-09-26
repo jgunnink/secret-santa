@@ -6,7 +6,7 @@ feature "member can make payment for a list", :js do
     background { visit member_list_santas_path(list) }
 
     context "where the user has not paid" do
-      let!(:list) { FactoryGirl.create(:list, :unpaid, user: current_user) }
+      let!(:list) { FactoryBot.create(:list, :unpaid, user: current_user) }
 
       scenario "the buy now button shows" do
         within ".panel-body" do
@@ -23,7 +23,7 @@ feature "member can make payment for a list", :js do
     end
 
     context "where the user has paid" do
-      let!(:list) { FactoryGirl.create(:list, :paid, user: current_user) }
+      let!(:list) { FactoryBot.create(:list, :paid, user: current_user) }
 
       scenario "the buy now button is hidden" do
         within ".panel-body" do

@@ -8,8 +8,8 @@ RSpec.describe User do
   end
 
   describe "@email" do
-    let!(:user)    { FactoryGirl.create(:user) }
-    let(:new_user) { FactoryGirl.build(:user, email: user.email) }
+    let!(:user)    { FactoryBot.create(:user) }
+    let(:new_user) { FactoryBot.build(:user, email: user.email) }
 
     it { should validate_presence_of(:email) }
 
@@ -31,7 +31,7 @@ RSpec.describe User do
     end
 
     context "testing validity of email address with regex matcher" do
-      let!(:user) { FactoryGirl.build(:user, email: email) }
+      let!(:user) { FactoryBot.build(:user, email: email) }
 
       context "where the email is abc@example.com" do
         let(:email) { "abc@example.com" }
@@ -71,8 +71,8 @@ RSpec.describe User do
   end
 
   describe "@lists" do
-    let!(:user) { FactoryGirl.create(:user) }
-    let!(:santa_list) { FactoryGirl.create(:list, user_id: user.id) }
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:santa_list) { FactoryBot.create(:list, user_id: user.id) }
 
     it "deletes associated lists if the user account is deleted" do
       expect { user.destroy }.to change { List.count }.by(-1)

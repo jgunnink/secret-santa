@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Member can view an existing list' do
-  let!(:list)  { FactoryGirl.create(:list, user_id: user.id) }
-  let!(:user)  { FactoryGirl.create(:user, :member) }
-  let!(:santa) { FactoryGirl.create(:santa, list: list) }
+  let!(:list)  { FactoryBot.create(:list, user_id: user.id) }
+  let!(:user)  { FactoryBot.create(:user, :member) }
+  let!(:santa) { FactoryBot.create(:santa, list: list) }
 
   background do
     sign_in_as(user)

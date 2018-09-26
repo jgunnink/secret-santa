@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Admin can search for admins by email' do
 
   signed_in_as(:admin) do
-    let!(:matching_admin) { FactoryGirl.create(:user, :admin) }
+    let!(:matching_admin) { FactoryBot.create(:user, :admin) }
 
     before do
       click_header_option("Administration")

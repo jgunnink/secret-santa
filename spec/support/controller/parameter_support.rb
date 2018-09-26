@@ -1,10 +1,10 @@
 module Controller
   module ParameterSupport
 
-    # FactoryGirl.attributes_for ignores associations, which is problematic for us. So we make
+    # FactoryBot.attributes_for ignores associations, which is problematic for us. So we make
     # our own implementation.
     def parameters_for(*factory_args)
-      sanitize_attributes(FactoryGirl.build(*factory_args))
+      sanitize_attributes(FactoryBot.build(*factory_args))
     end
 
   private

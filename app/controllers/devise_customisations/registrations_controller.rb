@@ -1,6 +1,6 @@
 class DeviseCustomisations::RegistrationsController < Devise::RegistrationsController
 
-  def build_resource(args)
+  def build_resource(args = nil)
     super.tap do |user|
       user.role = User.roles["member"]
     end

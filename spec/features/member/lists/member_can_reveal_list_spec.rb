@@ -1,9 +1,9 @@
 require "rails_helper"
 
 feature "Member reveal list to show santas", :js do
-  let(:list)    { FactoryGirl.create(:list, user_id: user.id) }
-  let(:user)    { FactoryGirl.create(:user, :member) }
-  let!(:santas) { FactoryGirl.create_list(:santa, 5, list_id: list.id) }
+  let(:list)    { FactoryBot.create(:list, user_id: user.id) }
+  let(:user)    { FactoryBot.create(:user, :member) }
+  let!(:santas) { FactoryBot.create_list(:santa, 5, list_id: list.id) }
 
   background do
     sign_in_as(user)
