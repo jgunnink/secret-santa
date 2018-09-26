@@ -43,7 +43,6 @@ gem 'uri_query_merger'
 group :development do
   gem 'better_errors'
   gem 'letter_opener'
-  gem 'quiet_assets'
   gem 'seed_helper'
   gem 'web-console'
 end
