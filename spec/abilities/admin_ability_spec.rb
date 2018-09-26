@@ -5,7 +5,7 @@ describe AdminAbility do
   subject { ability }
 
   let(:ability) { AdminAbility.new(user) }
-  let(:user) { FactoryGirl.create(:user, :admin) }
+  let(:user) { FactoryBot.create(:user, :admin) }
 
   it { should be_able_to(:manage, :all) }
 

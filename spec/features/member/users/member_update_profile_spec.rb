@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Member can update their profile' do
 
-  let(:member) { FactoryGirl.create(:user, :member, email: "jk@example.com") }
+  let(:member) { FactoryBot.create(:user, :member, email: "jk@example.com") }
 
   background do
     sign_in_as(member)

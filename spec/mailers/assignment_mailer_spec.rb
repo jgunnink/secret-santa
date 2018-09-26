@@ -4,9 +4,9 @@ describe AssignmentMailer do
   describe '#notify_approved_users_of_new_event_update' do
     subject(:email_user) { AssignmentMailer.send_assignment(santa) }
 
-    let!(:other_santa) { FactoryGirl.create(:santa) }
+    let!(:other_santa) { FactoryBot.create(:santa) }
     let!(:santa) do
-      FactoryGirl.create(:santa,
+      FactoryBot.create(:santa,
                          list: other_santa.list,
                          giving_to: other_santa.id)
     end

@@ -13,8 +13,8 @@ RSpec.describe Admin::MembersController do
         subject(:users) { get_index; assigns(:users) }
 
         describe "filtering by role" do
-          it { should include(FactoryGirl.create(:user, :member)) }
-          it { should_not include(FactoryGirl.create(:user, :admin)) }
+          it { should include(FactoryBot.create(:user, :member)) }
+          it { should_not include(FactoryBot.create(:user, :admin)) }
         end
       end
     end
@@ -73,7 +73,7 @@ RSpec.describe Admin::MembersController do
 
   describe 'GET edit' do
     subject { get :edit, id: target_user.id }
-    let(:target_user) { FactoryGirl.create(:user, :member) }
+    let(:target_user) { FactoryBot.create(:user, :member) }
 
     authenticated_as(:admin) do
       it { should be_success }
@@ -86,7 +86,7 @@ RSpec.describe Admin::MembersController do
   describe 'POST update' do
     subject(:update_user) { post :update, id: target_user.id, user: params }
     let(:params) { {} }
-    let(:target_user) { FactoryGirl.create(:user, :member, email: "pending@example.com") }
+    let(:target_user) { FactoryBot.create(:user, :member, email: "pending@example.com") }
 
     authenticated_as(:admin) do
 
@@ -133,7 +133,7 @@ RSpec.describe Admin::MembersController do
 
   describe 'DELETE destroy' do
     subject { delete :destroy, id: target_user.id }
-    let(:target_user) { FactoryGirl.create(:user, :member) }
+    let(:target_user) { FactoryBot.create(:user, :member) }
 
     authenticated_as(:admin) do
       it "deletes the user" do

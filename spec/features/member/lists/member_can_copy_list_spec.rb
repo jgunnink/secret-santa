@@ -1,8 +1,8 @@
 require "rails_helper"
 
 feature "Member can copy an existing list" do
-  let!(:list) { FactoryGirl.create(:list, :with_santas, user_id: user.id) }
-  let!(:user) { FactoryGirl.create(:user, :member) }
+  let!(:list) { FactoryBot.create(:list, :with_santas, user_id: user.id) }
+  let!(:user) { FactoryBot.create(:user, :member) }
 
   background { sign_in_as(user) }
 

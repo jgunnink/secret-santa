@@ -51,7 +51,7 @@ group :development, :test do
   gem 'byebug'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'ffaker'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'

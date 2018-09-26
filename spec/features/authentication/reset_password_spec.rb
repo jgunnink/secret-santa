@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Existing users can reset their passwords' do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   background do
     visit root_path

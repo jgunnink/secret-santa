@@ -48,7 +48,7 @@ feature "member can add santas to a list", :js do
     end
 
     context "a list already exists" do
-      let!(:list) { FactoryGirl.create(:list, user: current_user) }
+      let!(:list) { FactoryBot.create(:list, user: current_user) }
 
       scenario "Member edits list and adds a santa" do
         visit member_dashboard_index_path

@@ -11,17 +11,17 @@ RSpec.describe AbilityLocator do
     end
 
     context "when user is an admin" do
-      let(:user) { FactoryGirl.build(:user, :admin) }
+      let(:user) { FactoryBot.build(:user, :admin) }
       it { should be_kind_of(AdminAbility) }
     end
 
     context "when user is a member" do
-      let(:user) { FactoryGirl.build(:user, :member) }
+      let(:user) { FactoryBot.build(:user, :member) }
       it { should be_kind_of(MemberAbility) }
     end
 
     context "when user is not a known role" do
-      let(:user) { FactoryGirl.build(:user, role: "paladin") }
+      let(:user) { FactoryBot.build(:user, role: "paladin") }
       it "raises an exception" do
         expect { subject }.to raise_error(ArgumentError)
       end

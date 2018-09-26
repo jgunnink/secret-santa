@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Admin can update an existing User' do
 
   signed_in_as(:admin) do
-    let!(:target_user) { FactoryGirl.create(:user, :admin, email: "something@nothing.com") }
+    let!(:target_user) { FactoryBot.create(:user, :admin, email: "something@nothing.com") }
 
     before do
       click_header_option("Administration")

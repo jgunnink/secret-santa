@@ -8,7 +8,7 @@ feature 'A user can sign in' do
   end
 
   context "As admin" do
-    let!(:user) { FactoryGirl.create(:user, :admin) }
+    let!(:user) { FactoryBot.create(:user, :admin) }
 
     scenario 'Admin signs in with valid credentials' do
       expect_sign_in_to_redirect_to(user, admin_dashboard_index_path)
@@ -16,7 +16,7 @@ feature 'A user can sign in' do
   end
 
   context "As member" do
-    let!(:user) { FactoryGirl.create(:user, :member) }
+    let!(:user) { FactoryBot.create(:user, :member) }
 
     scenario 'Member signs in with valid credentials' do
       expect_sign_in_to_redirect_to(user, member_dashboard_index_path)
@@ -24,7 +24,7 @@ feature 'A user can sign in' do
   end
 
   context "As a deleted User" do
-    let!(:user) { FactoryGirl.create(:user, :admin, deleted_at: 19.minutes.ago) }
+    let!(:user) { FactoryBot.create(:user, :admin, deleted_at: 19.minutes.ago) }
 
     scenario "Candidate signs in" do
       user_fills_in_sign_in_form(user)

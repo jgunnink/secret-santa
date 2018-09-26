@@ -16,7 +16,7 @@ RSpec.describe List do
     it { should validate_presence_of(:gift_day) }
 
     context "the gift day is set in the past" do
-      let!(:list) { FactoryGirl.build(:list, gift_day: Date.yesterday) }
+      let!(:list) { FactoryBot.build(:list, gift_day: Date.yesterday) }
 
       it "should not be valid and give errors" do
         expect(list).to_not be_valid
@@ -25,7 +25,7 @@ RSpec.describe List do
     end
 
     context "the gift day is set in the future" do
-      let!(:list) { FactoryGirl.build(:list, gift_day: Date.tomorrow) }
+      let!(:list) { FactoryBot.build(:list, gift_day: Date.tomorrow) }
 
       it "should be valid" do
         expect(list).to be_valid
@@ -33,7 +33,7 @@ RSpec.describe List do
     end
 
     context "the gift day is not set" do
-      let!(:list) { FactoryGirl.build(:list, gift_day: nil) }
+      let!(:list) { FactoryBot.build(:list, gift_day: nil) }
 
       it "should not be valid and give errors" do
         expect(list).to_not be_valid
@@ -44,8 +44,8 @@ RSpec.describe List do
 
   describe "#list_size_limit" do
     subject { size_limited_list }
-    let!(:size_limited_list) { FactoryGirl.build(:list, santas: santas, limited: limited) }
-    let!(:santas) { FactoryGirl.build_list(:santa, number) }
+    let!(:size_limited_list) { FactoryBot.build(:list, santas: santas, limited: limited) }
+    let!(:santas) { FactoryBot.build_list(:santa, number) }
     let(:limited) { true } # Default action
 
     context "where the number of santas is less than 15" do
@@ -81,8 +81,8 @@ RSpec.describe List do
   end
 
   describe "@santas" do
-    let!(:list) { FactoryGirl.create(:list) }
-    let!(:santa) { FactoryGirl.create(:santa, list_id: list.id) }
+    let!(:list) { FactoryBot.create(:list) }
+    let!(:santa) { FactoryBot.create(:santa, list_id: list.id) }
 
     it { should have_many(:santas).inverse_of(:list) }
     it "deletes associated santas if the list is deleted" do
@@ -91,8 +91,8 @@ RSpec.describe List do
   end
 
   describe "@cannot_be_changed" do
-    let!(:list) { FactoryGirl.create(:list, is_locked: status) }
-    let!(:santa) { FactoryGirl.create(:santa, list_id: list.id) }
+    let!(:list) { FactoryBot.create(:list, is_locked: status) }
+    let!(:santa) { FactoryBot.create(:santa, list_id: list.id) }
 
     context "where the list is locked" do
       let(:status) { true }
