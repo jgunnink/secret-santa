@@ -1,0 +1,24 @@
+FROM ruby:2.5.3-alpine
+
+# Installation of dependencies
+RUN apk update && apk upgrade
+RUN apk add --update alpine-sdk postgresql-dev nodejs nodejs-npm
+
+# Install PhantomJS for headless browser testing
+RUN wget -qO- "https://github.com/dustinblackman/phantomized/releases/download/2.1.1a/dockerized-phantomjs.tar.gz" | tar xz -C / \
+&& npm config set user 0 \
+&& npm install -g phantomjs-prebuilt
+
+# Add Gemfile, install gems and copy over our application code
+ENV RACK_ENV test
+ENV APP_HOME /secretsanta
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+ADD Gemfile* $APP_HOME/
+RUN bundle install
+ADD . $APP_HOME
+
+# Remove some directories to trim down the size of the image
+RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+
+CMD rm -f tmp/pids/server.pid

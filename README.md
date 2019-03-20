@@ -28,6 +28,20 @@ Once built, execute `docker-compose up`.
 
 The application should now be running and available on http://localhost:5000
 
-## Production Environment Information
+## Running the tests
 
-URL: https://www.secretsanta.website/
+Similar to getting the environment up for development, testing follows a similar pattern.
+
+Setup your testing docker container:
+`docker build --file Dockerfile-tests -t secretsanta-testing .`
+
+Run the compose file:
+`docker-compose --file docker-compose-testing.yml run rspec`
+
+The above will run your entire test suite, so you can use it, for example on CI.
+
+Note (20th March 2019): there is a known issue at the moment with the test runner failing on the create list tests.
+Specifically, this file: ./spec/features/member/santas/member_can_add_santas_to_list_spec.rb
+
+I am currently looking into this, however I have a feeling it's something around PhantomJS and
+running it in an alpine linux container.

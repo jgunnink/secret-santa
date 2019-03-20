@@ -2,7 +2,8 @@ base: &base
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: db
+  host: <%= ENV["DB_HOST_URL"] || 'db' %>
+  port: 5432
 
 development:
   <<: *base
@@ -15,7 +16,6 @@ test:
   database: santa_test
   username: postgres
   password: postgres
-  port: 5432
 
 production:
   <<: *base
