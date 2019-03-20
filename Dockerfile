@@ -1,38 +1,23 @@
-FROM ruby:2.3.0
-# Setup environment variables that will be available to the instance
-ENV APP_HOME /secretsanta
+FROM ruby:2.5.3-alpine
 
 # Installation of dependencies
-RUN apt-get update -qq \
-  && apt-get install -y \
-  # Needed for certain gems
-  build-essential \
-  # Needed for postgres gem
-  libpq-dev \
-  # Needed for asset compilation
-  nodejs \
-  # The following are used to trim down the size of the image by removing unneeded data
-  && apt-get clean autoclean \
-  && apt-get autoremove -y \
-  && rm -rf \
-    /var/lib/apt \
-    /var/lib/dpkg \
-    /var/lib/cache \
-    /var/lib/log
+RUN apk update && apk upgrade
+RUN apk add --update alpine-sdk postgresql-dev nodejs
 
-# Create a directory for our application
-# and set it as the working directory
+# Add Gemfile, install gems and copy over our application code
+ENV APP_HOME /secretsanta
+ENV SECRET_KEY_BASE mykey
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
-
-# Add our Gemfile
-# and install gems
-
 ADD Gemfile* $APP_HOME/
+# RUN bundle install --without development test
 RUN bundle install
-
-# Copy over our application code
 ADD . $APP_HOME
 
+# Remove some directories to trim down the size of the image
+RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+
 # Run our app
-ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD bundle exec rake db:create \
+  && bundle exec rake db:migrate \
+  && bundle exec foreman s

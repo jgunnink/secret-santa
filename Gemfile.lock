@@ -315,6 +315,8 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2018.9)
+      tzinfo (>= 1.0.0)
     uglifier (4.1.19)
       execjs (>= 0.3.0, < 3)
     uri_query_merger (1.0.0)
@@ -389,10 +391,12 @@ DEPENDENCIES
   simplecov-rcov
   tachyons-rails
   turbolinks
+  tzinfo
+  tzinfo-data
   uglifier
   uri_query_merger
   web-console
   webmock
 
 BUNDLED WITH
-   1.16.5
+   1.17.2

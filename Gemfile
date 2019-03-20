@@ -39,6 +39,8 @@ gem 'uglifier'
 # Misc
 gem 'responders'
 gem 'uri_query_merger'
+gem 'tzinfo'
+gem 'tzinfo-data'
 
 group :development do
   gem 'better_errors'

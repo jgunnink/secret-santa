@@ -5,12 +5,11 @@ services:
   redis:
     image: redis:alpine
   web:
-    build: .
+    image: secretsanta-web
     volumes:
       - .:/secretsanta
     ports:
       - '5000:5000'
-    entrypoint: ./docker-entrypoint.sh
     depends_on:
       - db
       - redis
