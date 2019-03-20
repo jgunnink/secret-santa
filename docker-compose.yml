@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: postgres:alpine
+  redis:
+    image: redis:alpine
+  web:
+    build: .
+    volumes:
+      - .:/secretsanta
+    ports:
+      - '5000:5000'
+    entrypoint: ./docker-entrypoint.sh
+    depends_on:
+      - db
+      - redis

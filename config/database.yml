@@ -1,0 +1,25 @@
+base: &base
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: db
+
+development:
+  <<: *base
+  database: santa_development
+  username: postgres
+  password: postgres
+
+test:
+  <<: *base
+  database: santa_test
+  username: postgres
+  password: postgres
+  port: 5432
+
+production:
+  <<: *base
+  database: santa_production
+  username: secretsanta
+  password: <%= ENV["DB_PASSWORD"] %>
+  host: <%= ENV["DB_HOST_URL"] %>
