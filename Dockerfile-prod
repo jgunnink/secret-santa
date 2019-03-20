@@ -9,11 +9,16 @@ ENV APP_HOME /secretsanta
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 ADD Gemfile* $APP_HOME/
-RUN bundle install
+RUN bundle install --without development test
 ADD . $APP_HOME
+
+ENV SECRET_KEY_BASE mykey
+RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 # Remove some directories to trim down the size of the image
 RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
 
-# Start the app in development mode
-CMD bin/setup && bundle exec foreman s
+# Run our app
+CMD bundle exec rake db:create \
+  && bundle exec rake db:migrate \
+  && bundle exec foreman s
