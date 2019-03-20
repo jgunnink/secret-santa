@@ -19,8 +19,14 @@ The Frontier Group's [Rails Template](https://github.com/thefrontiergroup/rails-
 
 ## Getting Started
 
-1. Run `bin/setup` to configure the app
-2. Run `foreman s` to run the app
+This project now requires docker. So install that, along with docker-compose, if your OS doesn't
+come with the docker-compose toolchain.
+
+After cloning the repo, cd into the project and run:
+`docker build -t secretsanta-web .`
+Once built, execute `docker-compose up`.
+
+The application should now be running and available on http://localhost:5000
 
 ## Production Environment Information
 
