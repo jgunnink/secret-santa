@@ -39,10 +39,3 @@ Run the compose file:
 `docker-compose --file docker-compose-testing.yml run rspec`
 
 The above will run your entire test suite, so you can use it, for example on CI.
-
-Note (20th March 2019): there is a known issue at the moment with the test runner failing on the
-create list tests. Specifically, this file:
-./spec/features/member/santas/member_can_add_santas_to_list_spec.rb
-
-I am currently looking into this, however I have a feeling it's something around PhantomJS and
-running it in an alpine linux container.

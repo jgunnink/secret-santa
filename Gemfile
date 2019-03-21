@@ -63,11 +63,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'selenium-webdriver'
-  gem 'poltergeist'
+  gem 'geckodriver-helper'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'shoulda-matchers'
+  gem 'selenium-webdriver'
 end
 
 group :staging do
