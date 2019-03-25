@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '--file', 'Dockerfile-prod', '-t', 'gcr.io/$PROJECT_ID/secretsanta-web:latest', '.' ]
+images:
+- 'gcr.io/$PROJECT_ID/secretsanta-web'

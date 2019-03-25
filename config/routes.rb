@@ -30,7 +30,4 @@ Rails.application.routes.draw do
       patch :reveal_santas
     end
   end
-
-  get '/.well-known/acme-challenge/:id' => 'home#letsencrypt'
-
 end
