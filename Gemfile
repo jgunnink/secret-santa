@@ -8,7 +8,6 @@ gem 'deep_cloneable'
 gem 'paranoia'
 gem 'pg', '~> 0.15'
 gem 'ransack'
-gem 'sidekiq'
 
 # Authentication & Authorization
 gem 'devise'
@@ -50,6 +49,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'sidekiq'
   gem 'byebug'
   gem 'capybara'
   gem 'capybara-screenshot'
@@ -76,6 +76,7 @@ group :staging do
 end
 
 group :staging, :production do
+  gem 'activejob-google_cloud_pubsub'
   gem 'puma'
   gem 'rails_12factor'
   gem 'exception_notification'

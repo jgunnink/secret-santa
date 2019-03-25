@@ -2,14 +2,14 @@ FROM ruby:2.5.3-alpine
 
 # Installation of dependencies
 RUN apk update && apk upgrade
-RUN apk add --update alpine-sdk postgresql-dev nodejs
+RUN apk add --update alpine-sdk postgresql-dev nodejs libc6-compat
 
 # Add Gemfile, install gems and copy over our application code
 ENV APP_HOME /secretsanta
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 ADD Gemfile* $APP_HOME/
-RUN bundle install --without development test
+RUN BUNDLE_FORCE_RUBY_PLATFORM=1 bundle install --jobs $(nproc) --without development test
 ADD . $APP_HOME
 
 ENV SECRET_KEY_BASE mykey
@@ -21,4 +21,4 @@ RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
 # Run our app
 CMD bundle exec rake db:create \
   && bundle exec rake db:migrate \
-  && bundle exec foreman s
+  && bundle exec foreman s --procfile Procfile-prod

@@ -18,3 +18,4 @@ coverage/*
 
 # Ignore config files
 .env
+app.yaml
