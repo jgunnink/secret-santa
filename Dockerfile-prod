@@ -1,15 +1,18 @@
-FROM ruby:2.5.3-alpine
+FROM ruby:2.5.3
 
 # Installation of dependencies
-RUN apk update && apk upgrade
-RUN apk add --update alpine-sdk postgresql-dev nodejs libc6-compat
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y nodejs
+
+# Do not generate documentation when installing gems and fix shebang lines
+RUN echo "gem: --no-rdoc --no-ri --env-shebang" >> "$HOME/.gemrc"
 
 # Add Gemfile, install gems and copy over our application code
 ENV APP_HOME /secretsanta
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 ADD Gemfile* $APP_HOME/
-RUN BUNDLE_FORCE_RUBY_PLATFORM=1 bundle install --jobs $(nproc) --without development test
+RUN bundle install --without development test
 ADD . $APP_HOME
 
 ENV SECRET_KEY_BASE mykey

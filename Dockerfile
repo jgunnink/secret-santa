@@ -1,8 +1,8 @@
-FROM ruby:2.5.3-alpine
+FROM ruby:2.5.3
 
 # Installation of dependencies
-RUN apk update && apk upgrade
-RUN apk add --update alpine-sdk postgresql-dev nodejs
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y nodejs
 
 # Add Gemfile, install gems and copy over our application code
 ENV APP_HOME /secretsanta

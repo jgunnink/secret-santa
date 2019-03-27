@@ -1,8 +1,8 @@
-FROM ruby:2.5.3-alpine
+FROM ruby:2.5.3
 
 # Installation of dependencies
-RUN apk update && apk upgrade
-RUN apk add --update alpine-sdk postgresql-dev nodejs nodejs-npm chromium-chromedriver chromium
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y nodejs chromedriver chromium
 
 # Do not generate documentation when installing gems and fix shebang lines
 RUN echo "gem: --no-rdoc --no-ri --env-shebang" >> "$HOME/.gemrc"
