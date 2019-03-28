@@ -7,4 +7,9 @@ RSpec.describe HomeController do
     it { should render_template(:index) }
   end
 
+  describe 'GET health_check' do
+    before { get :health_check }
+    it { should render_template nil }
+  end
+
 end

@@ -76,6 +76,7 @@ group :staging do
 end
 
 group :staging, :production do
+  gem 'bundler'
   gem 'activejob-google_cloud_pubsub'
   gem 'puma'
   gem 'rails_12factor'

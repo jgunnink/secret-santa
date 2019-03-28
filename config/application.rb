@@ -11,10 +11,11 @@ module SecretSanta
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
 
-    if ENV['production']
+    if ENV['RAILS_ENV'] == 'production'
       puts 'Running in production mode. Setting GCP Pub/Sub instead of redis...'
       config.active_job.queue_adapter = :google_cloud_pubsub
     else
+      puts 'Setting SIDEKIQ as queue adapter'
       config.active_job.queue_adapter = :sidekiq
     end
 

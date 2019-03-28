@@ -8,7 +8,7 @@ RUN apt-get install -y nodejs chromedriver chromium
 RUN echo "gem: --no-rdoc --no-ri --env-shebang" >> "$HOME/.gemrc"
 
 # Add Gemfile, install gems and copy over our application code
-ENV RACK_ENV test
+ENV RAILS_ENV test
 ENV APP_HOME /secretsanta
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
