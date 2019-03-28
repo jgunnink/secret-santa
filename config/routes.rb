@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  require 'sidekiq/web'
-  Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
-  authenticate :user, lambda { |u| u.admin? } do
-    mount Sidekiq::Web => '/sidekiq'
+  if ENV['RAILS_ENV'] != 'production'
+    require 'sidekiq/web'
+    Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+    authenticate :user, lambda { |u| u.admin? } do
+      mount Sidekiq::Web => '/sidekiq'
+    end
   end
 
   # Override registrations controller so we can manually set the role to 'Member'
