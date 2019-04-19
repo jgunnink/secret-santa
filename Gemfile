@@ -36,6 +36,7 @@ gem 'turbolinks'
 gem 'uglifier'
 
 # Misc
+gem 'sidekiq'
 gem 'responders'
 gem 'uri_query_merger'
 gem 'tzinfo'
@@ -49,7 +50,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sidekiq'
   gem 'byebug'
   gem 'capybara'
   gem 'capybara-screenshot'
@@ -77,7 +77,6 @@ end
 
 group :staging, :production do
   gem 'bundler'
-  gem 'activejob-google_cloud_pubsub'
   gem 'puma'
   gem 'rails_12factor'
   gem 'exception_notification'

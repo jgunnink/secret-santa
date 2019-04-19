@@ -1,8 +1,8 @@
-FROM ruby:2.5.3
+FROM ruby:2.5.3-alpine
 
 # Installation of dependencies
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y nodejs
+RUN apk update && apk upgrade
+RUN apk add --update alpine-sdk postgresql-dev nodejs
 
 # Do not generate documentation when installing gems and fix shebang lines
 RUN echo "gem: --no-rdoc --no-ri --env-shebang" >> "$HOME/.gemrc"
@@ -25,5 +25,5 @@ RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
 # Run our app
 CMD rm -f tmp/pids/server.pid \
   && bundle exec rake db:create \
-  && bundle exec rake db:migrate \
+  && bundle exec rake db:migrate\
   && bundle exec foreman s --procfile Procfile-prod

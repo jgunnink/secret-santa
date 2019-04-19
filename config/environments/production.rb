@@ -2,7 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Force the use of SSL in the application
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Code is not reloaded between requests.
   config.cache_classes = true
