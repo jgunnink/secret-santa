@@ -13,7 +13,7 @@ steps:
     '.'
         ]
 - name: 'gcr.io/$PROJECT_ID/docker-compose'
-  args: [ '--file', 'docker-compose-testing.yml', 'run', 'rspec' ]
+  args: [ '--file', 'docker-compose-ci.yml', 'run', 'rspec' ]
 
 images:
 - 'gcr.io/$PROJECT_ID/secretsanta-web:testing'
