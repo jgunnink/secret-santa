@@ -1,0 +1,56 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "redis"
+  namespace: "default"
+  labels:
+    app: "redis"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "redis"
+  template:
+    metadata:
+      labels:
+        app: "redis"
+    spec:
+      containers:
+      - name: "redis"
+        image: "redis:5.0.4-alpine"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "redis-hpa"
+  namespace: "default"
+  labels:
+    app: "redis"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "redis"
+    apiVersion: "apps/v1beta1"
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "memory"
+      targetAverageUtilization: 80
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "redis"
+  namespace: "default"
+  labels:
+    app: "redis"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 6379
+  selector:
+    app: "redis"
+  type: "ClusterIP"

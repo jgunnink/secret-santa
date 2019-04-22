@@ -1,0 +1,103 @@
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "secretsanta-web-config"
+  namespace: "default"
+  labels:
+    app: "secretsanta-web"
+data:
+  RAILS_ENV: "production"
+  SECRET_KEY_BASE: "<CHANGE ME>"
+  sendgrid_username: "<CHANGE ME>"
+  sendgrid_password: "<CHANGE ME>"
+  DB_USERNAME: "<CHANGE ME>"
+  DB_PASSWORD: "<CHANGE ME>"
+  DB_HOST_URL: "<VM Machine Name>"
+  PORT: "80" # The load balancer will forward 443 and 80 to this value.
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "secretsanta-web"
+  namespace: "default"
+  labels:
+    app: "secretsanta-web"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "secretsanta-web"
+  template:
+    metadata:
+      labels:
+        app: "secretsanta-web"
+    spec:
+      containers:
+      - name: "secretsanta-web"
+        image: "gcr.io/secretsanta-web/secretsanta-web:latest"
+        env:
+        - name: "RAILS_ENV"
+          valueFrom:
+            configMapKeyRef:
+              key: "RAILS_ENV"
+              name: "secretsanta-web-config"
+        - name: "SECRET_KEY_BASE"
+          valueFrom:
+            configMapKeyRef:
+              key: "SECRET_KEY_BASE"
+              name: "secretsanta-web-config"
+        - name: "sendgrid_username"
+          valueFrom:
+            configMapKeyRef:
+              key: "sendgrid_username"
+              name: "secretsanta-web-config"
+        - name: "sendgrid_password"
+          valueFrom:
+            configMapKeyRef:
+              key: "sendgrid_password"
+              name: "secretsanta-web-config"
+        - name: "DB_USERNAME"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_USERNAME"
+              name: "secretsanta-web-config"
+        - name: "DB_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_PASSWORD"
+              name: "secretsanta-web-config"
+        - name: "DB_HOST_URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_HOST_URL"
+              name: "secretsanta-web-config"
+        - name: "PORT"
+          valueFrom:
+            configMapKeyRef:
+              key: "PORT"
+              name: "secretsanta-web-config"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "secretsanta-web-hpa"
+  namespace: "default"
+  labels:
+    app: "secretsanta-web"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "secretsanta-web"
+    apiVersion: "apps/v1beta1"
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
+  - type: "Resource"
+    resource:
+      name: "memory"
+      targetAverageUtilization: 80

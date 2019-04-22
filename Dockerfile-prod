@@ -20,7 +20,7 @@ ENV SECRET_KEY_BASE mykey
 RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 # Remove some directories to trim down the size of the image
-RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+RUN rm -rf /var/lib/apk /var/lib/cache /var/lib/log
 
 # Run our app
 CMD rm -f tmp/pids/server.pid \
