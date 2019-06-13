@@ -1,0 +1,19 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker pull gcr.io/$PROJECT_ID/secretsanta-web:testing || exit 0
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build', '--file', 'Dockerfile-tests',
+    '--cache-from', 'gcr.io/$PROJECT_ID/secretsanta-web:testing',
+    '-t', 'gcr.io/$PROJECT_ID/secretsanta-web:testing',
+    '.'
+        ]
+- name: 'gcr.io/$PROJECT_ID/docker-compose'
+  args: [ '--file', 'docker-compose-ci.yml', 'run', 'rspec' ]
+
+images:
+- 'gcr.io/$PROJECT_ID/secretsanta-web:testing'
