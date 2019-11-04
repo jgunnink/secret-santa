@@ -1,0 +1,20 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:alpine
+    ports:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: santa_test
+
+  rspec:
+    image: secretsanta-testing
+    volumes:
+      - .:/secretsanta
+    command: "./run-tests.sh"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST_URL: postgres

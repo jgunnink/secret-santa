@@ -1,0 +1,22 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "secretsanta-web-service"
+  namespace: "default"
+  labels:
+    app: "secretsanta-web"
+spec:
+  ports:
+  - name: "80-to-80-tcp"
+    protocol: "TCP"
+    port: 80
+    targetPort: 80
+  - name: "443-to-80-tcp"
+    protocol: "TCP"
+    port: 443
+    targetPort: 80
+  selector:
+    app: "secretsanta-web"
+  type: "LoadBalancer"
+  loadBalancerIP: ""

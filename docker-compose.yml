@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: postgres:alpine
+  redis:
+    image: redis:alpine
+  web:
+    image: secretsanta-web
+    volumes:
+      - .:/secretsanta
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+      - redis

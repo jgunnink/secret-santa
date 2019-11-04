@@ -1,0 +1,22 @@
+FROM ruby:2.5.3
+
+# Installation of dependencies
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y nodejs chromedriver chromium
+
+# Do not generate documentation when installing gems and fix shebang lines
+RUN echo "gem: --no-rdoc --no-ri --env-shebang" >> "$HOME/.gemrc"
+
+# Add Gemfile, install gems and copy over our application code
+ENV RAILS_ENV test
+ENV APP_HOME /secretsanta
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+ADD Gemfile* $APP_HOME/
+RUN bundle install
+ADD . $APP_HOME
+
+# Remove some directories to trim down the size of the image
+RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+
+CMD rm -f tmp/pids/server.pid

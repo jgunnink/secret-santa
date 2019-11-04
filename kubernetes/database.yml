@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+ name: <VM Machine Name>
+spec:
+ type: ClusterIP
+ ports:
+ - port: 5432
+   targetPort: 5432
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+ name: <VM Machine Name>
+subsets:
+ - addresses:
+     - ip: <VM Subnet IP>
+   ports:
+     - port: 5432

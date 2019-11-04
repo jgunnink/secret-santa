@@ -7,9 +7,17 @@ require 'simplecov'
 require 'simplecov-rcov'
 require 'capybara-screenshot/rspec'
 require 'database_cleaner'
-require 'capybara/poltergeist'
+require 'capybara/rails'
+require 'selenium-webdriver'
 
-Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless disable-gpu no-sandbox]
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.javascript_driver = :chrome
 
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails'

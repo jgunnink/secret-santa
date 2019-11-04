@@ -1,0 +1,17 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker pull gcr.io/$PROJECT_ID/secretsanta-web:latest || exit 0
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+          'build', '--file', 'Dockerfile-prod',
+          '--cache-from', 'gcr.io/$PROJECT_ID/secretsanta-web:latest',
+          '-t', 'gcr.io/$PROJECT_ID/secretsanta-web:latest',
+          '.'
+        ]
+images:
+- 'gcr.io/$PROJECT_ID/secretsanta-web'

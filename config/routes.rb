@@ -11,8 +11,11 @@ Rails.application.routes.draw do
     sessions: "devise_customisations/sessions"
   }
 
-  resources :home, only: :index
+  resources :home, only: [:index, :health_check]
   root to: "home#index"
+
+  # Healthcheck endpoint for validating rails is healthy.
+  get '/health_check', to: 'home#health_check'
 
   namespace :admin do
     resources :dashboard, only: :index
@@ -30,7 +33,4 @@ Rails.application.routes.draw do
       patch :reveal_santas
     end
   end
-
-  get '/.well-known/acme-challenge/:id' => 'home#letsencrypt'
-
 end

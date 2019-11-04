@@ -8,7 +8,6 @@ gem 'deep_cloneable'
 gem 'paranoia'
 gem 'pg', '~> 0.15'
 gem 'ransack'
-gem 'sidekiq'
 
 # Authentication & Authorization
 gem 'devise'
@@ -37,8 +36,11 @@ gem 'turbolinks'
 gem 'uglifier'
 
 # Misc
+gem 'sidekiq'
 gem 'responders'
 gem 'uri_query_merger'
+gem 'tzinfo'
+gem 'tzinfo-data'
 
 group :development do
   gem 'better_errors'
@@ -61,11 +63,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'selenium-webdriver'
-  gem 'poltergeist'
+  gem 'geckodriver-helper'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'shoulda-matchers'
+  gem 'selenium-webdriver'
 end
 
 group :staging do
@@ -74,6 +76,7 @@ group :staging do
 end
 
 group :staging, :production do
+  gem 'bundler'
   gem 'puma'
   gem 'rails_12factor'
   gem 'exception_notification'
