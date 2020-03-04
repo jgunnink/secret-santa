@@ -191,7 +191,7 @@ GEM
       activerecord (>= 4.0, < 5.3)
     pg (0.21.0)
     public_suffix (3.0.3)
-    puma (3.12.2)
+    puma (3.12.4)
     rack (1.6.12)
     rack-dev-mark (0.7.7)
       rack (>= 1.1, < 2.1)
